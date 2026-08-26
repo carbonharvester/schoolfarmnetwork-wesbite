@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — School Farm Network</title>
+<meta name="description" content="Tell School Farm Network what you are exploring: government partnership, catalytic funding, offtake, implementation, or registering a school or network.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contact — School Farm Network">
+<meta property="og:description" content="Tell us what you are exploring. We respond to every serious institutional enquiry.">
+<meta property="og:image" content="/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300..600&family=Schibsted+Grotesk:wght@400..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="wordmark" href="/">School Farm Network</a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="/how-it-works.html">How it works</a>
+    <a href="/impact.html">Impact and evidence</a>
+    <a href="/partners.html">Partners</a>
+    <a href="/about.html">About</a>
+    <a class="btn btn-forest" href="/contact.html" aria-current="page">Partner with us</a>
+  </nav>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+    <span class="bar"></span><span class="bar"></span>
+  </button>
+</header>
+
+<div class="mobile-menu" id="mobile-menu">
+  <div class="menu-head">
+    <span class="wordmark">School Farm Network</span>
+    <button class="menu-close" aria-label="Close menu">&#10005;</button>
+  </div>
+  <nav aria-label="Mobile">
+    <a href="/how-it-works.html">How it works</a>
+    <a href="/impact.html">Impact and evidence</a>
+    <a href="/partners.html">Partners</a>
+    <a href="/about.html">About</a>
+    <a class="active" href="/contact.html">Contact</a>
+    <a class="btn btn-lime" href="/contact.html">Partner with us</a>
+    <a class="platform-link" href="https://schoolfarmnetwork.netlify.app">Platform login &rarr;</a>
+  </nav>
+</div>
+
+<main>
+
+<div class="contact-grid" data-reveal>
+  <div>
+    <div class="eyebrow">Contact</div>
+    <h1>Tell us what you are exploring.</h1>
+    <p style="margin:24px 0 0;font-size:16px;line-height:1.7;color:var(--body);max-width:440px">The more precisely you describe the opportunity, the faster we can route your enquiry to the right conversation. We respond to every serious institutional enquiry.</p>
+    <div class="contact-note">
+      Please do not include sensitive operational or student data in this form. We use your details only to respond to your enquiry.
+    </div>
+  </div>
+  <form class="contact-form" name="partnership-enquiry" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
+    <input type="hidden" name="form-name" value="partnership-enquiry">
+    <p hidden aria-hidden="true"><label>Leave this field empty: <input name="bot-field"></label></p>
+    <div class="field">
+      <label for="f-name">Name</label>
+      <input id="f-name" name="name" type="text" autocomplete="name" required>
+    </div>
+    <div class="field">
+      <label for="f-org">Organisation</label>
+      <input id="f-org" name="organisation" type="text" autocomplete="organization" required>
+    </div>
+    <div class="field">
+      <label for="f-role">Role</label>
+      <input id="f-role" name="role" type="text" autocomplete="organization-title">
+    </div>
+    <div class="field">
+      <label for="f-email">Work email</label>
+      <input id="f-email" name="email" type="email" autocomplete="email" required>
+    </div>
+    <div class="field">
+      <label for="f-country">Country</label>
+      <input id="f-country" name="country" type="text" autocomplete="country-name">
+    </div>
+    <div class="field">
+      <label for="f-type">Partnership type</label>
+      <select id="f-type" name="partnership-type" required>
+        <option value="">Select one</option>
+        <option value="government">Government or education authority</option>
+        <option value="funding">Funding or investment</option>
+        <option value="buyer">Agricultural buyer or offtake</option>
+        <option value="technical">Technical or implementation partnership</option>
+        <option value="school">School or school network</option>
+        <option value="research">Research or evaluation</option>
+        <option value="media">Media</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="field field-full">
+      <label for="f-desc">Brief description of the opportunity</label>
+      <textarea id="f-desc" name="description" rows="5" required></textarea>
+    </div>
+    <div class="field">
+      <label for="f-scale">Approximate number of schools or acres <span class="hint">(if relevant)</span></label>
+      <input id="f-scale" name="scale" type="text" inputmode="numeric">
+    </div>
+    <div class="field">
+      <label for="f-heard">How did you hear about SFN?</label>
+      <input id="f-heard" name="heard-about" type="text">
+    </div>
+    <label class="consent">
+      <input type="checkbox" name="consent" value="yes" required>
+      <span>I consent to School Farm Network storing these details to respond to my enquiry.</span>
+    </label>
+    <div class="field-full">
+      <button type="submit">Send enquiry</button>
+    </div>
+  </form>
+</div>
+
+</main>
+
+<footer class="site-footer bordered">
+  <div class="footer-wordmark">School Farm Network</div>
+  <nav class="footer-nav" aria-label="Footer">
+    <a href="/how-it-works.html">How it works</a>
+    <a href="/impact.html">Impact and evidence</a>
+    <a href="/partners.html">Partners</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+    <a class="platform-link" href="https://schoolfarmnetwork.netlify.app">Platform login</a>
+  </nav>
+</footer>
+
+<script src="/js/main.js"></script>
+<script>
+(function () {
+  var type = new URLSearchParams(location.search).get('type');
+  var select = document.getElementById('f-type');
+  if (type && select && select.querySelector('option[value="' + type + '"]')) {
+    select.value = type;
+  }
+})();
+</script>
+</body>
+</html>
