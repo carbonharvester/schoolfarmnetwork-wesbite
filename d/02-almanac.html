@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SFN — Direction 02, Almanac</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Hanken+Grotesk:wght@400;500;600&family=Young+Serif&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#211B15;          /* Ambrook's warm near-black, taken off the page */
+  --bone:#FAF8F3;
+  --paper:#FFFFFF;
+  --wheat:#E8B672;
+  --forest:#2C3327;
+  --rule:rgba(33,27,21,.16);
+  --muted:rgba(33,27,21,.66);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bone);color:var(--ink);
+  font-family:'Hanken Grotesk',system-ui,sans-serif;font-weight:400;
+  -webkit-font-smoothing:antialiased}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+
+/* ---------- announcement bar, straight from the reference ---------- */
+.bar{background:var(--wheat);color:var(--ink);text-align:center;
+  padding:11px 16px;font-size:14px;font-weight:500}
+.bar a{text-decoration:underline;text-underline-offset:3px}
+
+/* ---------- nav ---------- */
+nav{display:flex;align-items:center;justify-content:space-between;
+  padding:20px 32px;max-width:1200px;margin:0 auto}
+.mark{font-family:'Young Serif',Georgia,serif;font-size:25px;letter-spacing:-.01em;
+  text-decoration:none;display:flex;align-items:center;gap:10px}
+.mark svg{width:23px;height:23px}
+.navlinks{display:flex;gap:30px;font-size:15px;font-weight:500}
+.navlinks a{text-decoration:none}
+.navlinks a:hover{color:var(--muted)}
+.navcta{border:1px solid var(--rule);border-radius:4px;padding:9px 17px;
+  font-size:15px;font-weight:600;text-decoration:none}
+
+/* ---------- hero ---------- */
+.hero{text-align:center;padding:78px 0 54px}
+.eyebrow{display:inline-block;background:rgba(33,27,21,.07);border-radius:4px;
+  padding:6px 13px;font-size:11.5px;font-weight:600;letter-spacing:.11em;
+  text-transform:uppercase}
+h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
+  font-size:clamp(40px,6.4vw,78px);line-height:1.0;letter-spacing:-.028em;
+  margin:26px auto 0;max-width:15ch}
+.hero .sub{margin:24px auto 0;max-width:56ch;font-size:17.5px;line-height:1.62;
+  color:var(--muted)}
+.actions{display:flex;gap:12px;justify-content:center;margin-top:32px;flex-wrap:wrap}
+.btn{background:var(--wheat);color:var(--ink);border-radius:4px;padding:14px 24px;
+  font-weight:600;font-size:15.5px;text-decoration:none;
+  transition:transform .22s ease,box-shadow .22s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(33,27,21,.14)}
+.btn.ghost{background:transparent;border:1px solid var(--rule)}
+.microrow{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;
+  margin-top:26px;font-size:13.5px;color:var(--muted)}
+.microrow span{display:flex;align-items:center;gap:7px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--wheat);flex:none}
+
+/* ---------- tilted evidence strip ---------- */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+  margin:20px auto 0;max-width:1200px;padding:0 32px}
+.strip figure{margin:0;border-radius:4px;overflow:hidden;
+  border:1px solid var(--rule);background:#ddd}
+.strip figure:nth-child(1){transform:rotate(-1.4deg)}
+.strip figure:nth-child(2){transform:rotate(.6deg) translateY(-8px)}
+.strip figure:nth-child(3){transform:rotate(1.6deg)}
+.strip img{width:100%;height:210px;object-fit:cover}
+
+/* ---------- marquee proof ---------- */
+.marq{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  margin-top:64px;overflow:hidden;padding:22px 0;position:relative}
+.marq .track{display:flex;gap:56px;align-items:center;width:max-content;
+  animation:slide 34s linear infinite;font-size:14px;font-weight:500;color:var(--muted)}
+.marq .track b{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
+  color:var(--ink);font-size:16px;white-space:nowrap}
+@keyframes slide{to{transform:translateX(-50%)}}
+.marq:hover .track{animation-play-state:paused}
+
+/* ---------- who we serve, with the engraving layer ---------- */
+.section{padding:92px 0}
+.kicker{text-align:center;font-size:11.5px;font-weight:600;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted)}
+h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
+  font-size:clamp(30px,4.6vw,54px);line-height:1.04;letter-spacing:-.024em;
+  text-align:center;margin:16px auto 0;max-width:17ch}
+.lede{text-align:center;margin:18px auto 0;max-width:52ch;font-size:17px;
+  line-height:1.6;color:var(--muted)}
+
+.engravings{display:grid;grid-template-columns:repeat(4,1fr);margin-top:56px;
+  border-top:1px solid var(--rule)}
+.eng{padding:36px 24px;text-align:center;border-right:1px solid var(--rule)}
+.eng:last-child{border-right:0}
+.eng svg{margin:0 auto;width:132px;height:100px}
+.eng svg *{vector-effect:non-scaling-stroke}
+.eng h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:18px;
+  margin-top:20px;letter-spacing:-.01em}
+.eng p{font-size:14.5px;line-height:1.55;color:var(--muted);margin-top:8px}
+
+/* ---------- ledger panel ---------- */
+.panel{background:var(--forest);color:#EDEAE1;border-radius:4px;
+  padding:56px 44px;margin-top:20px}
+.panel h2{color:#fff;text-align:left;margin:0;max-width:20ch}
+.panel .lede{text-align:left;margin-left:0;color:rgba(237,234,225,.78)}
+.table{margin-top:36px;border-top:1px solid rgba(237,234,225,.24)}
+.trow{display:grid;grid-template-columns:190px 1fr auto;gap:22px;
+  padding:20px 0;border-bottom:1px solid rgba(237,234,225,.2);align-items:start}
+.chip{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:5px 10px;border-radius:4px;display:inline-block;white-space:nowrap}
+.chip.v{background:var(--wheat);color:var(--ink)}
+.chip.p{background:rgba(237,234,225,.16);color:#EDEAE1}
+.chip.n{background:transparent;color:rgba(237,234,225,.55);
+  border:1px solid rgba(237,234,225,.3)}
+.trow .body{font-size:16.5px;line-height:1.56}
+.trow .body strong{font-family:'Bricolage Grotesque',sans-serif;font-weight:800}
+.trow .src{display:block;margin-top:7px;font-size:13px;color:rgba(237,234,225,.6)}
+.figure{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
+  font-size:15px;color:var(--wheat);white-space:nowrap;padding-top:2px}
+
+/* ---------- stages ---------- */
+.stages{margin-top:52px;border-top:1px solid var(--rule)}
+.stage{display:grid;grid-template-columns:70px 250px 1fr;gap:26px;
+  padding:26px 4px;border-bottom:1px solid var(--rule);align-items:baseline;
+  transition:background .3s ease,padding-left .3s ease}
+.stage:hover{background:rgba(232,182,114,.16);padding-left:16px}
+.stage .n{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
+  font-size:15px;color:var(--wheat)}
+.stage h4{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
+  font-size:22px;letter-spacing:-.015em}
+.stage p{font-size:16px;line-height:1.55;color:var(--muted)}
+
+/* ---------- close ---------- */
+.close{text-align:center;padding:100px 0 110px}
+.close h2{max-width:20ch}
+footer{border-top:1px solid var(--rule);padding:30px 32px;font-size:14px;
+  color:var(--muted);display:flex;justify-content:space-between;
+  max-width:1200px;margin:0 auto;flex-wrap:wrap;gap:12px}
+
+.reveal{opacity:0;transform:translateY(20px);
+  transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .engravings{grid-template-columns:repeat(2,1fr)}
+  .eng:nth-child(2){border-right:0}
+  .strip{grid-template-columns:1fr}
+  .trow{grid-template-columns:1fr;gap:10px}
+  .stage{grid-template-columns:44px 1fr;gap:14px}
+  .stage p{grid-column:2}
+  .navlinks{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="bar">First harvest logged at Seeds2Education, Kenya · <a href="/impact.html">See the evidence</a></div>
+
+<nav>
+  <a class="mark" href="/">
+    <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+      <line x1="10" y1="46" x2="54" y2="46" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/>
+      <line x1="16" y1="34" x2="48" y2="34" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/>
+      <line x1="22" y1="22" x2="34" y2="22" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/>
+      <circle cx="42.5" cy="22" r="4" fill="#6da22e"/>
+    </svg>
+    School Farm Network
+  </a>
+  <div class="navlinks">
+    <a href="/how-it-works.html">How it works</a>
+    <a href="/impact.html">Evidence</a>
+    <a href="/partners.html">Partners</a>
+    <a href="/about.html">About</a>
+  </div>
+  <a class="navcta" href="/contact.html">Partner with us</a>
+</nav>
+
+<header class="hero wrap">
+  <span class="eyebrow">Agricultural infrastructure · Africa</span>
+  <h1>Unused school land can feed every generation.</h1>
+  <p class="sub">School Farm Network turns underused land at African schools into professionally
+  managed farms that produce food, create jobs and give young people a pathway into agriculture.</p>
+  <div class="actions">
+    <a class="btn" href="/how-it-works.html">Explore the model</a>
+    <a class="btn ghost" href="/contact.html">Partner with us</a>
+  </div>
+  <div class="microrow">
+    <span><i class="dot"></i>One pilot site operating</span>
+    <span><i class="dot"></i>First harvest weighed</span>
+    <span><i class="dot"></i>Two-school pilot underway</span>
+  </div>
+</header>
+
+<div class="strip">
+  <figure><img src="../assets/img/hero-1600.jpg" alt="Land at the Seeds2Education pilot site"></figure>
+  <figure><img src="../assets/img/irrigation-2000.jpg" alt="Irrigation installed at the pilot site"></figure>
+  <figure><img src="../assets/img/pilot-site-900.jpg" alt="The pilot site under cultivation"></figure>
+</div>
+
+<div class="marq">
+  <div class="track">
+    <span>Land and farm records</span><span>Crop planning and field work</span>
+    <span>Employment and labour</span><b>One operating system across every farm</b>
+    <span>Suppliers and financial controls</span><span>Evidence capture</span>
+    <span>Harvests, sales and school benefits</span><span>Portfolio reporting</span>
+    <span>Land and farm records</span><span>Crop planning and field work</span>
+    <span>Employment and labour</span><b>One operating system across every farm</b>
+    <span>Suppliers and financial controls</span><span>Evidence capture</span>
+    <span>Harvests, sales and school benefits</span><span>Portfolio reporting</span>
+  </div>
+</div>
+
+<section class="section wrap reveal">
+  <div class="kicker">What the land produces</div>
+  <h2>One farm, four outcomes.</h2>
+  <p class="lede">Every outcome comes from the same productive asset, not four disconnected programmes.</p>
+
+  <div class="engravings">
+    <!-- Hand-authored engravings, drawn in the manner of an agricultural almanac. -->
+    <div class="eng">
+      <svg viewBox="0 0 160 120" fill="none" stroke="#211B15" stroke-width="1.6" stroke-linecap="round">
+        <path d="M8 96 Q80 78 152 96"/>
+        <path d="M8 96 Q80 78 152 96" transform="translate(0,8)"/>
+        <path d="M14 88 Q80 70 146 88" opacity=".75"/>
+        <path d="M20 80 Q80 63 140 80" opacity=".6"/>
+        <path d="M26 72 Q80 57 134 72" opacity=".45"/>
+        <path d="M32 64 Q80 51 128 64" opacity=".33"/>
+        <g stroke-width="1.3">
+          <path d="M46 96v-9M58 97v-9M70 97v-9M82 97v-9M94 97v-9M106 96v-9"/>
+        </g>
+        <path d="M118 62c0-9 7-15 14-15s14 6 14 15-7 14-14 14-14-5-14-14z" stroke-width="1.4"/>
+        <path d="M132 76v20" stroke-width="1.4"/>
+        <path d="M8 104h144" stroke-width="1.8"/>
+      </svg>
+      <h3>Meals</h3>
+      <p>Productive land helps fund or supply meals for students.</p>
+    </div>
+
+    <div class="eng">
+      <svg viewBox="0 0 160 120" fill="none" stroke="#211B15" stroke-width="1.6" stroke-linecap="round">
+        <rect x="50" y="18" width="60" height="42" rx="3"/>
+        <path d="M50 28h60M50 38h60M50 48h60" opacity=".45" stroke-width="1.2"/>
+        <path d="M44 18h72" stroke-width="1.8"/>
+        <path d="M58 60v30M102 60v30M58 74h44" stroke-width="1.5"/>
+        <path d="M64 90 58 104M96 90l6 14" stroke-width="1.5"/>
+        <path d="M110 46h16v40" stroke-width="1.5"/>
+        <path d="M126 86q0 8-6 8" stroke-width="1.4"/>
+        <path d="M112 100q4-7 8 0t-4 8q-5-1-4-8z" stroke-width="1.3"/>
+        <path d="M20 104h120" stroke-width="1.8"/>
+      </svg>
+      <h3>Jobs</h3>
+      <p>Farms create paid local work, with emphasis on opportunities for women.</p>
+    </div>
+
+    <div class="eng">
+      <svg viewBox="0 0 160 120" fill="none" stroke="#211B15" stroke-width="1.6" stroke-linecap="round">
+        <path d="M28 52 80 24l52 28"/>
+        <path d="M36 52v48h88V52" />
+        <rect x="52" y="66" width="20" height="18" rx="2" stroke-width="1.3"/>
+        <rect x="88" y="66" width="20" height="18" rx="2" stroke-width="1.3"/>
+        <path d="M62 66v18M52 75h20M98 66v18M88 75h20" stroke-width="1" opacity=".55"/>
+        <path d="M72 100V86h16v14" stroke-width="1.4"/>
+        <path d="M80 24v-9M74 15h12" stroke-width="1.4"/>
+        <path d="M20 100h120" stroke-width="1.8"/>
+      </svg>
+      <h3>Learning</h3>
+      <p>Schools gain a practical agricultural learning environment.</p>
+    </div>
+
+    <div class="eng">
+      <svg viewBox="0 0 160 120" fill="none" stroke="#211B15" stroke-width="1.6" stroke-linecap="round">
+        <path d="M62 60c0-12 8-20 18-20s18 8 18 20-8 24-18 24-18-12-18-24z"/>
+        <path d="M80 40v44M71 44c-3 12-3 28 0 38M89 44c3 12 3 28 0 38" stroke-width="1.1" opacity=".6"/>
+        <path d="M74 40c1-9 3-14 6-18M86 40c-1-9-3-14-6-18" stroke-width="1.3"/>
+        <path d="M80 22c-5-6-12-8-18-6 3 7 9 11 18 12M80 22c5-6 12-8 18-6-3 7-9 11-18 12" stroke-width="1.3"/>
+        <path d="M38 92h84" stroke-width="1.7"/>
+        <path d="M46 92v-8M54 92v-12M114 92v-8M106 92v-12" stroke-width="1.2" opacity=".6"/>
+        <path d="M20 104h120" stroke-width="1.8"/>
+      </svg>
+      <h3>Future farmers</h3>
+      <p>People aged 18 to 35 gain real operational experience and a route into agriculture.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap reveal">
+  <div class="panel">
+    <h2>We publish what is verified, and name what is not.</h2>
+    <p class="lede">SFN is developing and testing a repeatable model. Ambition is never presented as achievement.</p>
+
+    <div class="table">
+      <div class="trow">
+        <span class="chip v">Verified</span>
+        <div class="body">
+          <strong>First harvest.</strong> Approximately 4 tonnes of onions, harvested and weighed
+          at Seeds2Education, the original pilot project.
+          <span class="src">Source: pilot harvest and weighing records, May 2026. A pilot result, not portfolio performance.</span>
+        </div>
+        <div class="figure">May 2026</div>
+      </div>
+
+      <div class="trow">
+        <span class="chip p">In progress</span>
+        <div class="body">
+          The harvest is being sold to market. Proceeds will be paid to Food for Education
+          in exchange for student meals.
+        </div>
+        <div class="figure">Open</div>
+      </div>
+
+      <div class="trow">
+        <span class="chip p">In collection</span>
+        <div class="body">
+          Costs per acre, yields per crop cycle, paid work created, school benefit delivered,
+          and operational lessons across a two-school, two-cycle pilot.
+        </div>
+        <div class="figure">2 schools</div>
+      </div>
+
+      <div class="trow">
+        <span class="chip n">Not yet achieved</span>
+        <div class="body">
+          A model repeatable across thousands of schools and tens of thousands of acres in Africa.
+        </div>
+        <div class="figure">Ambition</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap reveal">
+  <div class="kicker">How it works</div>
+  <h2>Five stages, one accountable model.</h2>
+
+  <div class="stages">
+    <div class="stage"><div class="n">01</div><h4>Assess</h4>
+      <p>Verify land, water, governance, access, security and commercial viability before anything is built.</p></div>
+    <div class="stage"><div class="n">02</div><h4>Build</h4>
+      <p>Establish appropriate irrigation, storage, fencing, soil preparation and operating infrastructure.</p></div>
+    <div class="stage"><div class="n">03</div><h4>Grow</h4>
+      <p>Plan and manage crop cycles against real buyer demand and agronomic requirements.</p></div>
+    <div class="stage"><div class="n">04</div><h4>Deliver value</h4>
+      <p>Sell or exchange produce and deliver the agreed benefit to the school, including meals.</p></div>
+    <div class="stage"><div class="n">05</div><h4>Measure and replicate</h4>
+      <p>Record costs, jobs, yields, school benefits and lessons so the model improves and repeats.</p></div>
+  </div>
+</section>
+
+<section class="close wrap reveal">
+  <h2>Africa does not lack land, talent or demand. It needs the systems that connect them.</h2>
+  <div class="actions"><a class="btn" href="/contact.html">Discuss a partnership</a></div>
+</section>
+
+<footer>
+  <span>School Farm Network</span>
+  <span>Turning unused school land into productive farms</span>
+  <span>schoolfarmnetwork.com</span>
+</footer>
+
+<script>
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+</script>
+</body>
+</html>

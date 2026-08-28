@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>E — Measured</title>
+<meta name="description" content="Route E pilot. Surveying is the device: everything on the page is dimensioned, and anything not yet measured says so.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@700;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ROUTE E — MEASURED
+   Device: the survey drawing. Every element carries a dimension, and
+   anything not yet measured is dimensioned as unknown. The evidence
+   discipline is the visual language, not a section of the page.
+   ============================================================ */
+:root{
+  --sheet:#FAF8F2;
+  --graphite:#22262B;
+  --cyan:#1F6F80;         /* the annotation colour */
+  --cyan-lt:#5FB0C2;
+  --crop:#55712F;
+  --unknown:#B4552A;      /* dimensions that do not exist yet */
+  --muted:rgba(34,38,43,.66);
+  --muted-d:rgba(250,248,242,.72);
+  --rule:rgba(34,38,43,.16);
+  --ease:cubic-bezier(.22,.7,.24,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--sheet);color:var(--graphite);
+  font-family:'DM Sans',system-ui,sans-serif;font-size:17px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.wrap{max-width:1360px;margin:0 auto;padding-left:44px;padding-right:44px}
+
+.dim{font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--cyan)}
+.v{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--unknown);border:1px solid currentColor;
+  padding:2px 6px;display:inline-block;line-height:1.35}
+.on-dark .v{color:#E0854F}
+
+/* ---------- nav: a drawing title block ---------- */
+.nav{position:sticky;top:0;z-index:60;background:var(--sheet);
+  border-bottom:1px solid var(--graphite)}
+.nav-in{max-width:1360px;margin:0 auto;padding:0 44px;height:68px;display:flex;
+  align-items:center;gap:0}
+.wordmark{display:flex;align-items:center;gap:11px;text-decoration:none;
+  font-family:'Chivo',sans-serif;font-weight:900;font-size:17px;letter-spacing:-.01em;
+  text-transform:uppercase;padding-right:26px;border-right:1px solid var(--rule);
+  height:100%;align-self:stretch}
+.wordmark svg{width:19px;height:19px;flex:none}
+.tblock{display:flex;height:100%}
+.tb{padding:0 22px;display:flex;flex-direction:column;justify-content:center;
+  border-right:1px solid var(--rule)}
+.tb .k{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted)}
+.tb .val{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--graphite);
+  margin-top:2px}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:24px;padding-left:22px}
+.nav-right a:not(.btn){text-decoration:none;font-size:14.5px;color:var(--muted)}
+.nav-right a:not(.btn):hover{color:var(--graphite)}
+.btn{display:inline-flex;align-items:center;gap:9px;background:var(--cyan);
+  color:#FFFFFF;text-decoration:none;padding:12px 18px;
+  font-family:'DM Mono',monospace;font-size:12.5px;letter-spacing:.06em;
+  text-transform:uppercase;white-space:nowrap;border:1px solid var(--cyan);
+  transition:background .2s var(--ease),color .2s var(--ease)}
+.btn:hover{background:transparent;color:var(--cyan)}
+.btn svg{width:14px;height:9px}
+.lbl-s{display:none}
+.wm-short{display:none}
+
+/* ---------- dimensioned headline ---------- */
+.hero{padding-block:66px 92px}
+.measured{position:relative;display:inline-block;padding-block:26px}
+.measured .dimline{position:absolute;left:0;right:0;height:1px;background:var(--cyan)}
+.measured .dimline.top{top:8px}
+.measured .dimline.bot{bottom:8px}
+.measured .dimline::before,.measured .dimline::after{content:"";position:absolute;
+  top:-4px;width:1px;height:9px;background:var(--cyan)}
+.measured .dimline::before{left:0}
+.measured .dimline::after{right:0}
+.measured .dimtag{position:absolute;right:0;top:-8px;background:var(--sheet);
+  padding:0 7px}
+h1{font-family:'Chivo',sans-serif;font-weight:900;
+  font-size:clamp(38px,5.6vw,80px);line-height:1.0;letter-spacing:-.03em;max-width:15ch}
+.hero .sup{margin-top:28px;max-width:48ch;font-size:17.5px;color:var(--muted)}
+.hero .act{margin-top:30px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.hero .grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:start;
+  margin-top:56px}
+
+/* a plot drawn to scale, with its unknown dimension called out */
+.plotdraw{border:1px solid var(--rule);padding:22px;background:#FDFCF8}
+.plotdraw svg{width:100%;height:auto}
+.plotdraw .cap{margin-top:14px;display:flex;gap:10px;align-items:flex-start;
+  flex-wrap:wrap}
+
+/* ---------- sections ---------- */
+.sec{padding-block:100px;border-top:1px solid var(--rule)}
+.kick{font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:16px}
+h2{font-family:'Chivo',sans-serif;font-weight:900;
+  font-size:clamp(28px,3.8vw,52px);line-height:1.03;letter-spacing:-.026em;max-width:18ch}
+.lede{margin-top:18px;max-width:52ch;color:var(--muted);font-size:17.5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:58px;align-items:start;margin-top:48px}
+
+/* ---------- the turn: the scale bar zooms out to the network ---------- */
+.turn{background:var(--graphite);color:var(--sheet)}
+.turn .lede{color:var(--muted-d)}
+.turn .kick{color:var(--cyan-lt)}
+.turn-track{height:400vh}
+.turn-stage{position:sticky;top:0;height:100vh;display:flex;align-items:center;
+  overflow:hidden}
+.scene{margin-top:40px;height:44vh;min-height:280px;position:relative;
+  border:1px solid rgba(250,248,242,.22)}
+.scene svg{position:absolute;inset:0;width:100%;height:100%}
+.scalebar{margin-top:22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.sb{width:150px;height:12px;position:relative;border-left:1px solid var(--cyan-lt);
+  border-right:1px solid var(--cyan-lt)}
+.sb::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;
+  background:var(--cyan-lt)}
+.sb-lab{font-family:'DM Mono',monospace;font-size:12.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--cyan-lt)}
+.zoomread{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted-d)}
+.zoomread b{color:var(--sheet);font-weight:500}
+
+/* ---------- record ---------- */
+.entry{border:1px solid var(--graphite);background:#FDFCF8;margin-top:42px}
+.entry-hd{display:flex;align-items:baseline;gap:18px;padding:20px 24px;
+  border-bottom:1px solid var(--graphite);flex-wrap:wrap}
+.entry-hd .n{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--cyan)}
+.entry-hd h3{font-family:'Chivo',sans-serif;font-weight:900;font-size:26px;
+  letter-spacing:-.02em}
+.entry-hd .sc{margin-left:auto}
+.qs{display:grid;grid-template-columns:repeat(5,1fr)}
+.q{padding:22px 24px;border-right:1px solid var(--rule)}
+.q:last-child{border-right:0}
+.q .k{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--muted);display:block;margin-bottom:12px;
+  padding-bottom:9px;border-bottom:1px solid var(--rule)}
+.q .a{font-size:15px;line-height:1.5}
+.entry-ft{padding:18px 24px;border-top:1px solid var(--rule);display:flex;gap:12px;
+  align-items:flex-start;color:var(--muted);font-size:14.5px}
+.stubs{border:1px solid var(--graphite);border-top:0}
+.stub{display:grid;grid-template-columns:56px 1fr auto;align-items:center;
+  border-bottom:1px solid var(--rule);text-decoration:none;
+  transition:background .2s var(--ease)}
+.stub:last-child{border-bottom:0}
+.stub:hover{background:rgba(31,111,128,.07)}
+.stub > *{padding:14px 24px}
+.stub .n{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--cyan)}
+.stub .nm{font-family:'Chivo',sans-serif;font-weight:700;font-size:19px}
+.stub .s{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--muted)}
+
+figure{margin:0;position:relative}
+figcaption{margin-top:10px;font-family:'DM Mono',monospace;font-size:11px;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--muted);line-height:1.7}
+.leader{position:absolute;left:14px;bottom:14px;display:flex;align-items:center;gap:9px}
+.leader .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);flex:none;
+  box-shadow:0 0 0 3px rgba(250,248,242,.85)}
+.leader .txt{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.05em;
+  text-transform:uppercase;background:var(--sheet);color:var(--graphite);
+  padding:3px 7px;border:1px solid var(--rule)}
+.shot{border:1px dashed var(--unknown);padding:18px;min-height:190px;display:flex;
+  flex-direction:column;justify-content:flex-end;background:rgba(180,85,42,.04)}
+.shot .k{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--unknown)}
+.shot .d{font-size:14px;line-height:1.45;margin-top:8px;color:var(--muted)}
+
+.end{padding-block:46px 92px;border-top:1px solid var(--graphite);margin-top:78px;
+  display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.reveal{opacity:0;transform:translateY(18px);
+  transition:opacity .78s var(--ease),transform .78s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.no-js .reveal{opacity:1;transform:none}
+
+@media(max-width:1000px){
+  .hero .grid2,.two{grid-template-columns:1fr;gap:34px}
+  .qs{grid-template-columns:repeat(2,1fr)}
+  .q{border-bottom:1px solid var(--rule)}
+}
+@media(max-width:720px){
+  .wrap{padding-left:20px;padding-right:20px}
+  .nav-in{padding-left:20px;padding-right:20px}
+  body{font-size:16px}
+  .nav-in{height:60px}
+  .tblock{display:none}
+  .wordmark{border-right:0;padding-right:0;font-size:13px;white-space:nowrap;gap:8px}
+  .wordmark svg{width:17px;height:17px}
+  .nav-in{gap:12px}
+  .btn{padding:10px 12px;font-size:11.5px}
+  .nav-right a:not(.btn){display:none}
+  .lbl-l{display:none}.lbl-s{display:inline}
+  .wm-long{display:none}.wm-short{display:inline}
+  h1{font-size:35px}
+  .qs{grid-template-columns:1fr}
+  .q{border-right:0}
+  .stub > *{padding:13px 16px}
+  .scene{height:40vh}
+  .turn-track{height:420vh}
+  .turn-stage{height:100svh}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important;animation:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.className='js';</script>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="wordmark" href="#top">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <line x1="10" y1="46" x2="54" y2="46" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="16" y1="34" x2="48" y2="34" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="22" y1="22" x2="34" y2="22" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="42.5" cy="22" r="4.5" fill="#55712F"/>
+      </svg>
+      <span class="wm-long">School Farm Network</span>
+      <span class="wm-short">SFN</span>
+    </a>
+    <div class="tblock">
+      <div class="tb"><span class="k">Drawing</span><span class="val">Plot 01</span></div>
+      <div class="tb"><span class="k">Scale</span><span class="val" id="navscale">1:100</span></div>
+      <div class="tb"><span class="k">Status</span><span class="val">Assessed</span></div>
+    </div>
+    <div class="nav-right">
+      <a href="#unmeasured">Unmeasured</a>
+      <a href="#turn">Zoom out</a>
+      <a href="#record">Stage 01</a>
+      <a class="btn" href="#turn">
+        <span class="lbl-l">Start with a measurement</span>
+        <span class="lbl-s">Measure</span>
+        <svg viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="M0 4.5h12M8.5 1l3.5 3.5L8.5 8" stroke="currentColor" stroke-width="1.5"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero wrap">
+  <div class="measured">
+    <span class="dimline top" aria-hidden="true"></span>
+    <h1>Nothing is claimed here until somebody has measured it.</h1>
+    <span class="dimline bot" aria-hidden="true"></span>
+    <span class="dim dimtag" aria-hidden="true">Statement 01</span>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <p class="sup">The School Farm Network helps schools turn available land into
+      places to learn, grow food, build practical skills, and create wider opportunity.
+      <span class="v">Verify wording</span></p>
+      <div class="act">
+        <a class="btn" href="#turn">
+          Start with a measurement
+          <svg viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="M0 4.5h12M8.5 1l3.5 3.5L8.5 8" stroke="currentColor" stroke-width="1.5"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="plotdraw">
+      <svg viewBox="0 0 420 210" role="img" aria-label="A plot drawn to scale with its dimensions marked as not yet measured">
+        <!-- the plot -->
+        <rect x="52" y="42" width="300" height="112" fill="rgba(85,113,47,.10)"
+              stroke="#55712F" stroke-width="1.5" stroke-dasharray="7 5"/>
+        <!-- horizontal dimension -->
+        <line x1="52" y1="176" x2="352" y2="176" stroke="#B4552A" stroke-width="1"/>
+        <line x1="52" y1="171" x2="52" y2="181" stroke="#B4552A" stroke-width="1"/>
+        <line x1="352" y1="171" x2="352" y2="181" stroke="#B4552A" stroke-width="1"/>
+        <rect x="163" y="167" width="78" height="18" fill="#FDFCF8"/>
+        <text x="202" y="180" text-anchor="middle" font-family="DM Mono" font-size="11"
+              fill="#B4552A">? m</text>
+        <!-- vertical dimension -->
+        <line x1="28" y1="42" x2="28" y2="154" stroke="#B4552A" stroke-width="1"/>
+        <line x1="23" y1="42" x2="33" y2="42" stroke="#B4552A" stroke-width="1"/>
+        <line x1="23" y1="154" x2="33" y2="154" stroke="#B4552A" stroke-width="1"/>
+        <rect x="14" y="89" width="28" height="18" fill="#FDFCF8"/>
+        <text x="28" y="102" text-anchor="middle" font-family="DM Mono" font-size="11"
+              fill="#B4552A">? m</text>
+        <!-- water leader -->
+        <line x1="352" y1="60" x2="398" y2="34" stroke="#1F6F80" stroke-width="1"/>
+        <circle cx="352" cy="60" r="3" fill="#1F6F80"/>
+        <text x="398" y="30" text-anchor="end" font-family="DM Mono" font-size="10.5"
+              fill="#1F6F80">WATER ?</text>
+        <text x="52" y="30" font-family="DM Mono" font-size="10.5" fill="#22262B">PLOT 01</text>
+      </svg>
+      <div class="cap">
+        <span class="v">Verify: plot dimensions, water source, and boundary</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSED OPPORTUNITY -->
+<section class="sec wrap" id="unmeasured">
+  <div class="two" style="margin-top:0">
+    <div>
+      <span class="kick">02 · Unmeasured</span>
+      <h2>Ground nobody has put a tape across.</h2>
+      <p class="lede">A school day has periods with nothing scheduled on them. A school
+      site has ground with nothing planted on it. Neither has been measured, so neither
+      has been argued for.</p>
+      <p style="margin-top:24px"><span class="v">Verify: measured area of unused or
+      underused land at a named school, with the date it was measured</span></p>
+    </div>
+    <figure>
+      <img src="../assets/img/hero-1600.jpg"
+           srcset="../assets/img/hero-1024.jpg 1024w, ../assets/img/hero-1600.jpg 1600w"
+           sizes="(max-width:1000px) 92vw, 44vw" width="1600" height="1067"
+           decoding="async"
+           alt="School buildings and open ground in the same frame, with people working on the land.">
+      <span class="leader" aria-hidden="true"><i class="dot"></i><i class="txt">Available ground · ? m²</i></span>
+      <figcaption>Shot 01 · school exterior and available land in one frame<br>
+        <span class="v">Verify: location, date, credit, and consent for the people pictured</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- THE TURN: zoom out from one metre to the network -->
+<section class="turn on-dark" id="turn">
+  <div class="turn-track" id="track">
+    <div class="turn-stage">
+      <div class="wrap" style="width:100%">
+        <span class="kick">03 · The turn</span>
+        <h2>One measurement, then the same measurement everywhere.</h2>
+
+        <div class="scene" aria-hidden="true">
+          <svg viewBox="0 0 1000 400" preserveAspectRatio="xMidYMid meet">
+            <g id="z">
+              <!-- a one metre rule -->
+              <g id="l1">
+                <line x1="380" y1="200" x2="620" y2="200" stroke="#5FB0C2" stroke-width="2"/>
+                <line x1="380" y1="188" x2="380" y2="212" stroke="#5FB0C2" stroke-width="2"/>
+                <line x1="620" y1="188" x2="620" y2="212" stroke="#5FB0C2" stroke-width="2"/>
+                <text x="500" y="182" text-anchor="middle" font-family="DM Mono"
+                      font-size="15" fill="#5FB0C2">1 m</text>
+              </g>
+              <!-- the plot -->
+              <rect id="l2" x="380" y="150" width="240" height="100"
+                    fill="rgba(147,179,104,.16)" stroke="#93B368" stroke-width="2"
+                    stroke-dasharray="8 6"/>
+              <!-- the school grounds -->
+              <g id="l3">
+                <rect x="300" y="110" width="400" height="180" fill="none"
+                      stroke="rgba(250,248,242,.5)" stroke-width="2"/>
+                <rect x="640" y="130" width="46" height="34" fill="rgba(250,248,242,.25)"/>
+                <rect x="640" y="176" width="46" height="34" fill="rgba(250,248,242,.25)"/>
+                <text x="300" y="102" font-family="DM Mono" font-size="13"
+                      fill="rgba(250,248,242,.7)">SCHOOL GROUNDS</text>
+              </g>
+              <!-- the network -->
+              <g id="l4">
+                <circle cx="500" cy="200" r="7" fill="#93B368"/>
+                <circle cx="392" cy="146" r="5" fill="none" stroke="rgba(250,248,242,.45)" stroke-width="1.5" stroke-dasharray="3 3"/>
+                <circle cx="612" cy="132" r="5" fill="none" stroke="rgba(250,248,242,.45)" stroke-width="1.5" stroke-dasharray="3 3"/>
+                <circle cx="662" cy="252" r="5" fill="none" stroke="rgba(250,248,242,.45)" stroke-width="1.5" stroke-dasharray="3 3"/>
+                <circle cx="356" cy="268" r="5" fill="none" stroke="rgba(250,248,242,.45)" stroke-width="1.5" stroke-dasharray="3 3"/>
+                <circle cx="540" cy="304" r="5" fill="none" stroke="rgba(250,248,242,.45)" stroke-width="1.5" stroke-dasharray="3 3"/>
+                <circle cx="452" cy="92" r="5" fill="none" stroke="rgba(250,248,242,.45)" stroke-width="1.5" stroke-dasharray="3 3"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <div class="scalebar">
+          <span class="sb" aria-hidden="true"></span>
+          <span class="sb-lab" id="sblab">1 metre</span>
+          <span class="zoomread">Drawing at <b id="zr">1:1</b>. Hollow points are
+          schools that are not verified and are drawn as empty.</span>
+        </div>
+
+        <p style="margin-top:18px;max-width:66ch"><span class="v">Verify: counties,
+        number of schools, and acreage, before any network map is published</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECORD -->
+<section class="sec wrap" id="record">
+  <span class="kick">04 · Stage 01</span>
+  <h2>Each stage is a measurement and a decision.</h2>
+  <p class="lede">The same five questions, for one plot, at one school. This is the unit
+  the network is measured in.</p>
+
+  <div class="entry reveal">
+    <div class="entry-hd">
+      <span class="n">Plot 01 · Stage 01</span>
+      <h3>Assess</h3>
+      <span class="dim sc">Scale 1:100</span>
+    </div>
+    <div class="qs">
+      <div class="q"><span class="k">Who acts</span>
+        <p class="a"><span class="v">Verify: who carries out the assessment, and who signs it off</span></p></div>
+      <div class="q"><span class="k">On the land</span>
+        <p class="a">Walk the site. Measure the ground that is free. Check the water
+        source and mark the boundary.</p></div>
+      <div class="q"><span class="k">What is learned</span>
+        <p class="a"><span class="v">Verify: whether learners take part, and in which subject</span></p></div>
+      <div class="q"><span class="k">What is recorded</span>
+        <p class="a">Area, water source, boundary, and the date of the visit.</p></div>
+      <div class="q"><span class="k">Next decision</span>
+        <p class="a">Whether the plot goes forward to design, or waits a season.</p></div>
+    </div>
+    <div class="entry-ft">
+      <span class="v">Verify</span>
+      <span>The land, record and decision columns are drafted from the method as
+      described so far. Confirm the wording, the real record fields, and who signs the
+      decision.</span>
+    </div>
+  </div>
+
+  <div class="stubs">
+    <a class="stub" href="#record"><span class="n">02</span><span class="nm">Design</span><span class="s">Not yet drawn</span></a>
+    <a class="stub" href="#record"><span class="n">03</span><span class="nm">Prepare</span><span class="s">Not yet drawn</span></a>
+    <a class="stub" href="#record"><span class="n">04</span><span class="nm">Plant</span><span class="s">Not yet drawn</span></a>
+    <a class="stub" href="#record"><span class="n">05</span><span class="nm">Tend</span><span class="s">Not yet drawn</span></a>
+    <a class="stub" href="#record"><span class="n">06</span><span class="nm">Harvest</span><span class="s">Not yet drawn</span></a>
+    <a class="stub" href="#record"><span class="n">07</span><span class="nm">Record</span><span class="s">Not yet drawn</span></a>
+    <a class="stub" href="#record"><span class="n">08</span><span class="nm">Improve</span><span class="s">Not yet drawn</span></a>
+  </div>
+
+  <p style="margin-top:26px;max-width:64ch"><span class="v">Verify: these eight stage
+  names against the method SFN actually runs, including whether stages repeat within one
+  season</span></p>
+
+  <div style="margin-top:44px;max-width:430px">
+    <div class="shot">
+      <span class="k">Shot 02 · to commission</span>
+      <span class="d">Hands measuring or marking a plot. Landscape. Close, at working
+      distance, tape or line visible. No posing to camera.</span>
+    </div>
+  </div>
+
+  <div class="end">
+    <span class="v">Pilot ends here</span>
+    <p style="max-width:56ch;color:var(--muted);font-size:15.5px">Sections 5 to 11 are
+    held until this route is chosen.</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+  var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var track=document.getElementById('track'), z=document.getElementById('z'),
+      l1=document.getElementById('l1'), l2=document.getElementById('l2'),
+      l3=document.getElementById('l3'), l4=document.getElementById('l4'),
+      sblab=document.getElementById('sblab'), zr=document.getElementById('zr'),
+      navscale=document.getElementById('navscale');
+
+  function band(p,a,b){ return Math.max(0,Math.min(1,(p-a)/(b-a))); }
+
+  function turn(){
+    if(!track||!z) return;
+    var r=track.getBoundingClientRect(), total=r.height-innerHeight;
+    var p=total>0?(-r.top)/total:0; p=Math.max(0,Math.min(1,p));
+    if(reduced) p=1;
+
+    // one continuous zoom out, 4x down to 0.55x
+    var s = 4 - 3.45*p;
+    z.setAttribute('transform','translate(500,200) scale('+s.toFixed(3)+') translate(-500,-200)');
+
+    if(l1) l1.style.opacity = String(1 - band(p,0.10,0.26));
+    if(l2) l2.style.opacity = String(band(p,0.14,0.30) * (1 - band(p,0.52,0.68)));
+    if(l3) l3.style.opacity = String(band(p,0.40,0.56) * (1 - band(p,0.74,0.86)));
+    if(l4) l4.style.opacity = String(band(p,0.70,0.86));
+
+    var labels=[['1 metre','1:1'],['One plot','1:100'],['School grounds','1:500'],['The network','1:50000']];
+    var i = p<0.26?0 : p<0.56?1 : p<0.80?2 : 3;
+    if(sblab) sblab.textContent=labels[i][0];
+    if(zr) zr.textContent=labels[i][1];
+    if(navscale) navscale.textContent=labels[i][1];
+  }
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+  },{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+
+  var t=false;
+  addEventListener('scroll',function(){
+    if(t)return;t=true;requestAnimationFrame(function(){turn();t=false});
+  },{passive:true});
+  addEventListener('resize',turn);
+  turn();
+})();
+</script>
+</body>
+</html>

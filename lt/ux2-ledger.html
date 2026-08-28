@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UX2 — The Ledger</title>
+<meta name="description" content="UX model 2. Not a brochure: a working record system. Master and detail panes, real filters, and a status bar that counts what is actually verified.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   UX MODEL 2 — THE LEDGER
+   The claim is that SFN runs farms on one accountable system, so the
+   site behaves like that system. Master and detail, real filters,
+   and a status bar that counts what is verified and what is not.
+   ============================================================ */
+:root{
+  --sheet:#FCFBF7;
+  --panel:#F5F3EC;
+  --ink:#17181A;
+  --muted:rgba(23,24,26,.62);
+  --line:#E4E1D8;
+  --line-2:#CFCBBE;
+  --green:#2E6B4F;
+  --flag:#B4552A;
+  --amber:#9A7213;
+  --ease:cubic-bezier(.22,.7,.24,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--sheet);color:var(--ink);
+  font-family:'Public Sans',system-ui,sans-serif;font-size:14.5px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;
+  letter-spacing:.04em}
+.v{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.02em;
+  text-transform:uppercase;color:var(--flag);border:1px solid currentColor;
+  padding:1px 5px;display:inline-block;line-height:1.45}
+
+.app{display:grid;grid-template-rows:auto auto 1fr auto;height:100%}
+
+/* ---------- status bar ---------- */
+.top{display:flex;align-items:center;gap:18px;padding:10px 16px;
+  border-bottom:1px solid var(--line);flex-wrap:wrap}
+.wm{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;
+  text-decoration:none;white-space:nowrap}
+.wm svg{width:16px;height:16px;flex:none}
+.stat{display:flex;gap:0;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.stat div{padding:5px 12px;border-right:1px solid var(--line);
+  font-family:'JetBrains Mono',monospace;font-size:11px;white-space:nowrap}
+.stat div:last-child{border-right:0}
+.stat b{font-weight:500}
+.stat .g{color:var(--green)}
+.stat .f{color:var(--flag)}
+.claim{margin-left:auto;color:var(--muted);font-size:13px;max-width:52ch;
+  text-align:right}
+
+/* ---------- toolbar ---------- */
+.tools{display:flex;align-items:center;gap:8px;padding:8px 16px;
+  border-bottom:1px solid var(--line);background:var(--panel);flex-wrap:wrap}
+.tools .lbl{font-family:'JetBrains Mono',monospace;font-size:10.5px;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.chip{border:1px solid var(--line-2);border-radius:3px;padding:4px 11px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  transition:background .18s var(--ease),border-color .18s var(--ease)}
+.chip:hover{background:#fff}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--sheet);
+  border-color:var(--ink)}
+.count{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:var(--muted)}
+
+/* ---------- panes ---------- */
+.panes{display:grid;grid-template-columns:380px 1fr;min-height:0}
+.list{border-right:1px solid var(--line);overflow-y:auto;background:var(--panel)}
+.grp{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);padding:12px 14px 6px;
+  position:sticky;top:0;background:var(--panel);border-bottom:1px solid var(--line)}
+.row{display:grid;grid-template-columns:34px 1fr 96px;gap:8px;align-items:center;
+  width:100%;text-align:left;padding:9px 14px;border-bottom:1px solid var(--line);
+  border-left:2px solid transparent;transition:background .15s var(--ease)}
+.row:hover{background:#fff}
+.row[aria-selected="true"]{background:#fff;border-left-color:var(--green)}
+.row .id{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
+.row .nm{font-weight:500}
+.row .nm small{display:block;color:var(--muted);font-weight:400;font-size:12px}
+.badge{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.05em;
+  text-transform:uppercase;padding:2px 6px;border-radius:2px;text-align:center;
+  border:1px solid currentColor;white-space:nowrap}
+.b-ok{color:var(--green)}
+.b-run{color:var(--amber)}
+.b-non{color:var(--muted)}
+.b-un{color:var(--flag)}
+
+/* ---------- detail ---------- */
+.detail{overflow-y:auto;padding:20px 24px 40px}
+.dh{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+  padding-bottom:14px;border-bottom:1px solid var(--line)}
+.dh h1{font-size:22px;font-weight:700;letter-spacing:-.015em}
+.dh .id{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted)}
+.dh .badge{margin-left:auto}
+
+/* stage stepper: the transformation, driven by clicking not scrolling */
+.stepper{margin-top:18px;border:1px solid var(--line);border-radius:3px;
+  background:#fff}
+.stepper .sh{display:flex;align-items:center;gap:10px;padding:9px 12px;
+  border-bottom:1px solid var(--line);flex-wrap:wrap}
+.stepper .sh .t{font-family:'JetBrains Mono',monospace;font-size:10.5px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.steps{display:flex;overflow-x:auto}
+.stp{flex:1;min-width:82px;padding:9px 8px;border-right:1px solid var(--line);
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;text-align:center;
+  color:var(--muted);transition:background .15s var(--ease),color .15s var(--ease)}
+.stp:last-child{border-right:0}
+.stp:hover{background:var(--panel)}
+.stp[aria-pressed="true"]{background:var(--ink);color:var(--sheet)}
+.stp.done{color:var(--green)}
+.plotbox{padding:16px 12px 12px;border-top:1px solid var(--line)}
+.plotbox svg{width:100%;max-width:520px;height:auto;display:block;margin:0 auto}
+.plotbox .cap{margin-top:10px;text-align:center;font-family:'JetBrains Mono',monospace;
+  font-size:10.5px;color:var(--muted)}
+#pbeds line{opacity:0;transition:opacity .4s var(--ease)}
+#pcrop{opacity:0;transition:opacity .4s var(--ease)}
+#punk{opacity:1;transition:opacity .4s var(--ease)}
+.st1 #punk{opacity:0}
+.st1 #pbeds line{opacity:.5}
+.st2 #punk{opacity:0}
+.st2 #pbeds line{opacity:1}
+.st2 #pcrop{opacity:1}
+.projected{opacity:.55}
+
+/* fields table */
+.tbl{margin-top:20px;border:1px solid var(--line);border-radius:3px;
+  background:#fff;overflow:hidden}
+.tr{display:grid;grid-template-columns:170px 1fr;border-bottom:1px solid var(--line)}
+.tr:last-child{border-bottom:0}
+.tr .k{padding:11px 14px;background:var(--panel);
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);border-right:1px solid var(--line)}
+.tr .val{padding:11px 14px}
+.note{margin-top:14px;color:var(--muted);font-size:13.5px;display:flex;gap:10px;
+  align-items:flex-start;max-width:80ch}
+.detail h2{font-size:15px;font-weight:700;margin-top:24px;margin-bottom:8px}
+.detail p{color:var(--muted);margin-bottom:10px;max-width:78ch}
+.detail p.lead{color:var(--ink);font-size:15.5px}
+
+/* ---------- footer ---------- */
+.foot{border-top:1px solid var(--line);padding:8px 16px;display:flex;gap:16px;
+  align-items:center;flex-wrap:wrap;background:var(--panel)}
+.foot .mono{color:var(--muted)}
+.kbd{border:1px solid var(--line-2);border-radius:3px;padding:1px 5px;
+  font-family:'JetBrains Mono',monospace;font-size:10px}
+
+@media (max-width:900px){
+  body{overflow:auto}
+  html,body{height:auto}
+  .app{height:auto;grid-template-rows:auto}
+  .panes{grid-template-columns:1fr}
+  .list{border-right:0;border-bottom:1px solid var(--line);max-height:44vh}
+  .claim{margin-left:0;text-align:left}
+  .top{gap:10px}
+  .tr{grid-template-columns:1fr}
+  .tr .k{border-right:0;border-bottom:1px solid var(--line)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- status bar -->
+  <div class="top">
+    <a class="wm" href="#">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <line x1="10" y1="46" x2="54" y2="46" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="16" y1="34" x2="48" y2="34" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="22" y1="22" x2="34" y2="22" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="42.5" cy="22" r="4.5" fill="#2E6B4F"/>
+      </svg>
+      School Farm Network
+    </a>
+    <div class="stat" role="group" aria-label="Network status">
+      <div>SITES RECORDED <b>1</b></div>
+      <div>STAGES DEFINED <b>8</b></div>
+      <div class="g">STAGES RUN <b>1</b></div>
+      <div class="f">FIELDS AWAITING VERIFICATION <b id="vcount">0</b></div>
+    </div>
+    <p class="claim">School Farm Network helps schools turn available land into places
+    to learn, grow food, build practical skills, and create wider opportunity.
+    <span class="v">Verify wording</span></p>
+  </div>
+
+  <!-- toolbar -->
+  <div class="tools">
+    <span class="lbl">Filter</span>
+    <button class="chip" data-f="all" aria-pressed="true">All</button>
+    <button class="chip" data-f="ok" aria-pressed="false">Verified</button>
+    <button class="chip" data-f="run" aria-pressed="false">In progress</button>
+    <button class="chip" data-f="non" aria-pressed="false">Not yet run</button>
+    <button class="chip" data-f="un" aria-pressed="false">Unmeasured</button>
+    <span class="count" id="rowcount"></span>
+  </div>
+
+  <!-- panes -->
+  <div class="panes">
+    <div class="list" id="list" role="listbox" aria-label="Records" tabindex="0"></div>
+    <div class="detail" id="detail" aria-live="polite"></div>
+  </div>
+
+  <div class="foot">
+    <span class="mono"><i class="kbd">↑</i> <i class="kbd">↓</i> move · <i class="kbd">↵</i> open</span>
+    <span class="mono">Pilot: sections 5 to 11 are not built</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  var V='__V__';
+  var RECORDS=[
+    {g:'Site record', id:'PLOT-01', nm:'Plot 01', sub:'Pilot school '+V+'Verify name',
+     st:'un', badge:'Unmeasured',
+     title:'Plot 01', lead:'A school owns ground it has never used.',
+     paras:['A school day has periods with nothing scheduled on them. A school site has ground with nothing planted on it. The school already has both.',
+            'Until the ground is measured there is nothing to plan, nothing to cost, and nothing to argue for.'],
+     verify:['Verify: measured area of unused or underused land at a named school, with the date it was measured',
+             'Verify: plot dimensions, water source, and boundary'],
+     stepper:true},
+    {g:'Site record', id:'SLOT-02', nm:'Slot 02', sub:'Not entered', st:'non',
+     badge:'Not entered', title:'Slot 02', lead:'No school is entered here yet.',
+     paras:['The register is the network. It is nearly all still blank, and it is shown that way rather than padded.'],
+     verify:['Verify: counties, number of schools, and acreage']},
+    {g:'Site record', id:'SLOT-03', nm:'Slot 03', sub:'Not entered', st:'non',
+     badge:'Not entered', title:'Slot 03', lead:'No school is entered here yet.',
+     paras:['The register is the network. It is nearly all still blank, and it is shown that way rather than padded.'],
+     verify:[]},
+
+    {g:'Stages of Plot 01', id:'ST-01', nm:'01 Assess', sub:'Complete', st:'ok',
+     badge:'Complete', title:'Stage 01 · Assess', lead:'Every stage answers the same five questions.',
+     fields:[['Who acts', V+'Verify: who carries out the assessment, and who signs it off'],
+             ['On the land','Walk the site. Measure the ground that is free. Check the water source and mark the boundary.'],
+             ['What is learned', V+'Verify: whether learners take part, and in which subject'],
+             ['What is recorded','Area, water source, boundary, and the date of the visit.'],
+             ['Next decision','Whether the plot goes forward to design, or waits a season.']],
+     note:'The land, record and decision rows are drafted from the method as described so far. Confirm the wording, the real record fields, and who signs the decision.',
+     stepper:true}
+  ];
+  ['Design','Prepare','Plant','Tend','Harvest','Record','Improve'].forEach(function(n,i){
+    var num=String(i+2).padStart(2,'0');
+    RECORDS.push({g:'Stages of Plot 01', id:'ST-'+num, nm:num+' '+n, sub:'Not yet run',
+      st:'non', badge:'Not yet run', title:'Stage '+num+' · '+n,
+      lead:'This stage has not been run at any site.',
+      paras:['It is defined in the method and will answer the same five questions once it happens. Nothing is filled in ahead of the work.'],
+      verify:['Verify: what this stage records, and who signs it off']});
+  });
+
+  var list=document.getElementById('list'), detail=document.getElementById('detail'),
+      rowcount=document.getElementById('rowcount'), vcount=document.getElementById('vcount'),
+      filter='all', sel=0, visible=[];
+
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+  function mark(s){
+    // renders __V__ prefixed strings as verification chips
+    var parts=String(s).split(V);
+    if(parts.length===1) return esc(s);
+    return esc(parts[0])+'<span class="v">'+esc(parts[1])+'</span>';
+  }
+  function countVerify(){
+    var n=0;
+    RECORDS.forEach(function(r){
+      (r.verify||[]).forEach(function(){n++});
+      (r.fields||[]).forEach(function(f){ if(String(f[1]).indexOf(V)===0) n++; });
+      if(String(r.sub).indexOf(V)>-1) n++;
+    });
+    return n+1; // plus the hero wording
+  }
+
+  function renderList(){
+    visible=RECORDS.filter(function(r){return filter==='all'||r.st===filter});
+    var h='', lastG=null;
+    visible.forEach(function(r,i){
+      if(r.g!==lastG){h+='<div class="grp">'+esc(r.g)+'</div>';lastG=r.g}
+      h+='<button class="row" role="option" data-i="'+i+'" aria-selected="'+(i===sel)+'">'
+       + '<span class="id">'+esc(r.id.split('-')[1])+'</span>'
+       + '<span class="nm">'+esc(r.nm)+'<small>'+mark(r.sub)+'</small></span>'
+       + '<span class="badge b-'+r.st+'">'+esc(r.badge)+'</span></button>';
+    });
+    list.innerHTML=h || '<div class="grp">No records match this filter</div>';
+    rowcount.textContent=visible.length+' of '+RECORDS.length+' records';
+    [].slice.call(list.querySelectorAll('.row')).forEach(function(b){
+      b.addEventListener('click',function(){sel=+b.dataset.i;renderList();renderDetail()});
+    });
+  }
+
+  function plotSvg(state){
+    return ''
+    + '<svg viewBox="0 0 520 200" class="'+state+'" aria-label="Plot state">'
+    + '<rect x="30" y="24" width="460" height="150" fill="none" stroke="#CFCBBE" stroke-width="1"/>'
+    + '<g id="punk"><rect x="30" y="24" width="460" height="150" fill="rgba(180,85,42,.07)"/>'
+    + '<text x="260" y="105" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="#B4552A">UNMEASURED</text></g>'
+    + '<g id="pbeds" stroke="#2E6B4F" stroke-width="3">'
+    + '<line x1="52" y1="52" x2="468" y2="52"/><line x1="52" y1="82" x2="468" y2="82"/>'
+    + '<line x1="52" y1="112" x2="468" y2="112"/><line x1="52" y1="142" x2="468" y2="142"/></g>'
+    + '<g id="pcrop" fill="#7FA85F">'
+    + [70,120,170,220,270,320,370,420].map(function(x){
+        return '<circle cx="'+x+'" cy="52" r="4"/><circle cx="'+x+'" cy="82" r="4"/>'
+             + '<circle cx="'+x+'" cy="112" r="4"/><circle cx="'+x+'" cy="142" r="4"/>';
+      }).join('')
+    + '</g></svg>';
+  }
+
+  var stepState=0;
+  function renderDetail(){
+    var r=visible[sel]; if(!r){detail.innerHTML='';return}
+    var h='<div class="dh"><span class="id">'+esc(r.id)+'</span><h1>'+esc(r.title)+'</h1>'
+        + '<span class="badge b-'+r.st+'">'+esc(r.badge)+'</span></div>';
+    if(r.lead) h+='<p class="lead" style="margin-top:14px">'+esc(r.lead)+'</p>';
+    (r.paras||[]).forEach(function(p){h+='<p>'+esc(p)+'</p>'});
+
+    if(r.stepper){
+      var names=['Assess','Design','Prepare','Plant','Tend','Harvest','Record','Improve'];
+      h+='<div class="stepper"><div class="sh"><span class="t">Advance the plot</span>'
+       + '<span class="t" style="color:var(--flag)">Only stage 01 has actually been run</span></div>'
+       + '<div class="steps">';
+      names.forEach(function(n,i){
+        h+='<button class="stp'+(i===0?' done':'')+'" data-s="'+i+'" aria-pressed="'+(i===stepState)+'">'
+         + String(i+1).padStart(2,'0')+' '+esc(n)+'</button>';
+      });
+      h+='</div><div class="plotbox">'
+       + plotSvg(stepState===0?'':(stepState<4?'st1':'st2'))
+       + '<div class="cap">'
+       + (stepState===0
+          ? 'Ground as found. Nothing measured.'
+          : (stepState<4
+             ? 'Boundary and beds set out. <span class="v">Projected, not yet run</span>'
+             : 'Planted and tended. <span class="v">Projected, not yet run</span>'))
+       + '</div></div></div>';
+    }
+
+    if(r.fields){
+      h+='<div class="tbl">';
+      r.fields.forEach(function(f){
+        h+='<div class="tr"><div class="k">'+esc(f[0])+'</div><div class="val">'+mark(f[1])+'</div></div>';
+      });
+      h+='</div>';
+    }
+    if(r.note) h+='<p class="note"><span class="v">Verify</span><span>'+esc(r.note)+'</span></p>';
+    (r.verify||[]).forEach(function(v){h+='<p style="margin-top:12px"><span class="v">'+esc(v)+'</span></p>'});
+
+    detail.innerHTML=h;
+    [].slice.call(detail.querySelectorAll('.stp')).forEach(function(b){
+      b.addEventListener('click',function(){stepState=+b.dataset.s;renderDetail()});
+    });
+  }
+
+  [].slice.call(document.querySelectorAll('.chip')).forEach(function(c){
+    c.addEventListener('click',function(){
+      filter=c.dataset.f; sel=0;
+      document.querySelectorAll('.chip').forEach(function(x){
+        x.setAttribute('aria-pressed', String(x===c));
+      });
+      renderList(); renderDetail();
+    });
+  });
+
+  list.addEventListener('keydown',function(e){
+    if(e.key==='ArrowDown'){e.preventDefault();sel=Math.min(sel+1,visible.length-1);renderList();renderDetail()}
+    if(e.key==='ArrowUp'){e.preventDefault();sel=Math.max(sel-1,0);renderList();renderDetail()}
+  });
+
+  vcount.textContent=String(countVerify());
+  renderList(); renderDetail();
+})();
+</script>
+</body>
+</html>

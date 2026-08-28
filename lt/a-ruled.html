@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A — Ruled Page</title>
+<meta name="description" content="Pilot sections only: navigation, Before the bell, the empty row, the timetable-to-field transition, and the first view of how one farm works.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   A LIVING TIMETABLE — design tokens
+   ============================================================ */
+:root{
+  /* field colours, from the brief */
+  --blackboard:#17221D;
+  --paper:#F2EBD8;
+  --crop:#6C8B45;
+  --harvest:#D56B35;
+  --ink:#315B70;
+  --chalk:#FFFDF5;
+
+  /* derived, contrast-safe variants (see system.html for ratios) */
+  --paper-well:#E9E0C8;
+  --crop-text:#4A6329;      /* 5.1:1 on paper  */
+  --harvest-text:#A8481C;   /* 4.7:1 on paper  */
+  --crop-dark:#8FB05F;      /* 6.7:1 on blackboard */
+  --harvest-dark:#E4813F;   /* 5.6:1 on blackboard */
+  --text:#17221D;
+  --text-muted:rgba(23,34,29,.70);
+  --rule:rgba(23,34,29,.20);
+  --rule-strong:rgba(23,34,29,.42);
+  --rule-dark:rgba(255,253,245,.20);
+  --rule-dark-strong:rgba(255,253,245,.42);
+  --muted-dark:rgba(255,253,245,.72);
+
+  /* structure */
+  --row:76px;
+  --gutter:88px;
+  --radius:2px;
+  --hair:1px;
+  --pad:40px;
+
+  /* motion */
+  --dur-fast:180ms;
+  --dur:420ms;
+  --ease:cubic-bezier(.22,.7,.24,1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  background:var(--paper);color:var(--text);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;font-weight:400;
+  font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+a{color:inherit}
+
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.blackboard :focus-visible{outline-color:var(--crop-dark)}
+
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:12px;letter-spacing:.09em;text-transform:uppercase}
+.display{font-family:'Fraunces',Georgia,serif;font-weight:600;
+  font-variation-settings:'opsz' 144,'SOFT' 0,'WONK' 0;letter-spacing:-.018em}
+
+/* verification chip: a proof-reading mark, part of the language */
+.v{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--harvest-text);
+  border:1px solid currentColor;border-radius:var(--radius);
+  padding:2px 6px;display:inline-block;line-height:1.35;
+  white-space:normal;vertical-align:baseline}
+.blackboard .v{color:var(--harvest-dark)}
+
+/* ============================================================
+   Shell and 12 column grid with a 2 column timetable rail
+   ============================================================ */
+.shell{max-width:1400px;margin:0 auto;padding:0 var(--pad)}
+/* On large screens every section is indented to clear the fixed timetable rail,
+   while section fields stay full bleed. */
+@media (min-width:1181px){ .shell{padding-left:calc(var(--pad) + 200px)} }
+
+/* ---------- navigation: a record system header ---------- */
+.nav{position:sticky;top:0;z-index:60;background:var(--paper);
+  border-bottom:var(--hair) solid var(--rule-strong)}
+.nav.on-dark{background:var(--blackboard);border-bottom-color:var(--rule-dark-strong);
+  color:var(--chalk)}
+.nav-in{max-width:1400px;margin:0 auto;padding:0 var(--pad);height:64px;
+  display:flex;align-items:center;gap:28px}
+.wordmark{display:flex;align-items:center;gap:9px;text-decoration:none;
+  font-family:'Fraunces',Georgia,serif;font-weight:700;font-size:19px;
+  font-variation-settings:'opsz' 20;letter-spacing:-.01em;white-space:nowrap}
+.wordmark svg{width:19px;height:19px;flex:none}
+.chapmark{display:flex;align-items:center;gap:10px;
+  border-left:var(--hair) solid var(--rule);padding-left:22px;
+  color:var(--text-muted)}
+.nav.on-dark .chapmark{border-left-color:var(--rule-dark);color:var(--muted-dark)}
+.chapmark b{color:var(--text);font-weight:500}
+.nav.on-dark .chapmark b{color:var(--chalk)}
+.nav-links{margin-left:auto;display:flex;align-items:center;gap:26px}
+.nav-links a:not(.btn){text-decoration:none;font-size:14.5px;color:var(--text-muted)}
+.nav.on-dark .nav-links a:not(.btn){color:var(--muted-dark)}
+.nav-links a:not(.btn):hover{color:var(--text)}
+.nav.on-dark .nav-links a:not(.btn):hover{color:var(--chalk)}
+.btn{display:inline-flex;align-items:center;gap:9px;
+  background:var(--blackboard);color:var(--chalk);text-decoration:none;
+  padding:11px 18px;border-radius:var(--radius);
+  font-size:14.5px;font-weight:500;border:var(--hair) solid var(--blackboard);
+  transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease)}
+.btn:hover{background:transparent;color:var(--text)}
+.nav.on-dark .btn{background:var(--chalk);color:var(--blackboard);border-color:var(--chalk)}
+.nav.on-dark .btn:hover{background:transparent;color:var(--chalk)}
+.btn .ar{width:14px;height:9px;flex:none}
+.btn{white-space:nowrap}
+.lbl-short{display:none}
+@media (max-width:860px){
+  .lbl-long{display:none}
+  .lbl-short{display:inline}
+}
+
+/* ---------- the timetable rail (chapter navigation) ---------- */
+.rail{position:fixed;top:118px;z-index:50;width:180px;
+  left:max(var(--pad), calc(50vw - 700px + var(--pad)))}
+.rail ol{list-style:none;position:relative;padding-left:18px}
+.rail ol::before{content:"";position:absolute;left:0;top:4px;bottom:4px;
+  width:var(--hair);background:var(--rule)}
+.rail .mk{position:absolute;left:-2px;width:5px;height:5px;border-radius:50%;
+  background:var(--crop-text);transition:top var(--dur) var(--ease)}
+.rail li{margin-bottom:22px}
+.rail a{text-decoration:none;display:block;color:var(--text-muted);
+  transition:color var(--dur-fast) var(--ease)}
+.rail a:hover{color:var(--text)}
+.rail .n{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.09em;
+  display:block}
+.rail .t{font-size:14.5px;line-height:1.3;display:block;margin-top:3px}
+.rail li[aria-current="true"] a{color:var(--text)}
+.rail li[aria-current="true"] .t{font-weight:500}
+/* the rail crosses both fields, so it inverts over the blackboard */
+.rail a,.rail ol::before,.rail .mk{transition:color var(--dur) var(--ease),
+  background-color var(--dur) var(--ease)}
+.rail.on-dark a{color:var(--muted-dark)}
+.rail.on-dark ol::before{background:var(--rule-dark)}
+.rail.on-dark .mk{background:var(--crop-dark)}
+.rail.on-dark li[aria-current="true"] a{color:var(--chalk)}
+
+/* mobile progress marker */
+.progress{display:none;position:fixed;left:0;top:64px;bottom:0;width:3px;
+  background:var(--rule);z-index:55}
+.progress i{display:block;width:100%;background:var(--crop);height:0}
+
+/* ============================================================
+   1. HERO — Before the bell
+   ============================================================ */
+.hero{padding-bottom:96px}   /* must not reset .shell's left padding */
+.tt{
+  display:grid;
+  grid-template-columns:var(--gutter) repeat(12,1fr);
+  grid-template-rows:repeat(8,var(--row));
+  column-gap:24px;position:relative;padding-top:44px}
+.tt-row{grid-column:1/-1;border-top:var(--hair) solid var(--rule);
+  position:relative;pointer-events:none}
+.r9,.r10{display:none}
+@media (max-width:1180px){ .r9{display:block} }
+@media (max-width:720px){ .r10{display:block} }
+.tt-time{position:absolute;left:0;top:9px;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;
+  color:var(--text-muted)}
+
+/* the one row deliberately marked as a plot */
+.tt-plot{grid-row:6;grid-column:2/8;align-self:stretch;margin:9px 0;
+  border:2px dashed var(--crop-text);border-radius:var(--radius);
+  background:rgba(108,139,69,.10);
+  position:relative;pointer-events:none}
+.tt-plot .lab{position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--crop-text)}
+.tt-plot .dim{position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  display:flex;align-items:center;gap:8px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--crop-text);opacity:.85}
+.tt-plot .dim svg{width:38px;height:7px}
+
+.tt-note{grid-row:7;grid-column:2/8;align-self:center;position:relative;z-index:2;
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--text-muted)}
+
+.tt-head{grid-row:1/6;grid-column:2/10;align-self:start;padding-top:8px;
+  position:relative;z-index:2}
+h1{font-family:'Fraunces',Georgia,serif;font-weight:600;
+  font-variation-settings:'opsz' 144,'SOFT' 0,'WONK' 0;
+  font-size:clamp(38px,4.9vw,68px);line-height:1.02;letter-spacing:-.024em;
+  max-width:16ch}
+.tt-head p{margin-top:20px;max-width:46ch;font-size:17.5px;color:var(--text-muted)}
+.tt-head .act{margin-top:26px}
+
+.tt-fig{grid-row:5/9;grid-column:9/14;margin:9px 0 12px;position:relative;z-index:2;
+  display:flex;flex-direction:column}
+.tt-fig img{flex:1;min-height:0}
+.tt-fig img{width:100%;height:100%;object-fit:cover;border-radius:var(--radius);
+  filter:saturate(.94)}
+.tt-fig figcaption{margin-top:9px;font-family:'IBM Plex Mono',monospace;
+  font-size:11px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--text-muted);line-height:1.6}
+
+/* labelled placeholder, used when a commissioned shot does not exist */
+.shot{background:var(--paper-well);border:var(--hair) dashed var(--rule-strong);
+  border-radius:var(--radius);display:flex;flex-direction:column;
+  justify-content:flex-end;padding:16px;min-height:190px}
+.shot .k{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--harvest-text)}
+.shot .d{font-size:14px;line-height:1.45;margin-top:7px;color:var(--text-muted)}
+
+/* ============================================================
+   2. THE EMPTY ROW — missed opportunity, on the blackboard
+   ============================================================ */
+.blackboard{background:var(--blackboard);color:var(--chalk)}
+.sec{padding:104px 0}
+.sec-head{max-width:34ch}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:16px}
+.blackboard .eyebrow{color:var(--muted-dark)}
+h2{font-family:'Fraunces',Georgia,serif;font-weight:600;
+  font-variation-settings:'opsz' 144,'SOFT' 0,'WONK' 0;
+  font-size:clamp(30px,3.8vw,52px);line-height:1.04;letter-spacing:-.022em}
+.sec-head p{margin-top:18px;font-size:17.5px;color:var(--text-muted);max-width:44ch}
+.blackboard .sec-head p{color:var(--muted-dark)}
+
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:end}
+.split .sec-head{max-width:none}
+.split-p{font-size:18px;line-height:1.6;color:var(--muted-dark);max-width:42ch;
+  padding-bottom:6px}
+@media(max-width:900px){.split{grid-template-columns:1fr;gap:22px;align-items:start}}
+
+.empty{margin-top:64px;display:grid;grid-template-columns:1fr 1fr;gap:0;
+  border-top:var(--hair) solid var(--rule-dark-strong)}
+.empty .side{padding:0}
+.empty .side:first-child{border-right:var(--hair) solid var(--rule-dark-strong)}
+.empty .cap{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--muted-dark);padding:14px 22px 14px 0}
+.empty .side:last-child .cap{padding-left:22px}
+.erow{height:58px;border-top:var(--hair) solid var(--rule-dark);
+  display:flex;align-items:center;gap:16px;padding-right:22px}
+.empty .side:last-child .erow{padding-left:22px;padding-right:0}
+.erow .tm{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;
+  color:var(--muted-dark);width:52px;flex:none}
+.erow .blank{flex:1;height:var(--hair);background:var(--rule-dark)}
+.erow .grd{flex:1;height:26px;border:var(--hair) dashed var(--rule-dark);
+  border-radius:var(--radius)}
+.empty-note{margin-top:26px;display:flex;gap:14px;align-items:flex-start;
+  max-width:62ch}
+
+/* ============================================================
+   3. THE TURN — timetable to field (signature motion)
+   ============================================================ */
+.turn{position:relative;background:var(--blackboard);color:var(--chalk)}
+.turn-track{height:300vh}
+.turn-stage{position:sticky;top:0;height:100vh;display:flex;align-items:center;
+  overflow:hidden}
+.turn-grid{width:100%}
+.turn-head{display:flex;align-items:flex-end;justify-content:space-between;
+  gap:32px;flex-wrap:wrap;margin-bottom:34px}
+.turn-head h2{max-width:18ch}
+.turn-read{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted-dark);white-space:nowrap}
+.turn-read b{color:var(--crop-dark);font-weight:500}
+
+.beds{border-top:var(--hair) solid var(--rule-dark-strong)}
+.bed{
+  --rp:0;
+  display:grid;grid-template-columns:118px 1fr;align-items:center;gap:20px;
+  border-bottom:var(--hair) solid var(--rule-dark);
+  height:calc(30px + (var(--rp) * 34px));
+  transition:height var(--dur-fast) linear}
+/* the time and the stage share one cell, so the label changes in place */
+.bed .tm,.bed .st{grid-column:1;grid-row:1;align-self:center;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.09em}
+/* the time clears out before the stage arrives, so the two never sit on top
+   of each other mid transition */
+.bed .tm{color:var(--muted-dark);
+  opacity:clamp(0, calc(1 - var(--rp) * 3.2), 1);
+  transform:translateY(calc(var(--rp) * -6px))}
+.bed .st{text-transform:uppercase;color:var(--crop-dark);font-weight:500;
+  opacity:clamp(0, calc((var(--rp) - .55) * 3.2), 1);
+  transform:translateY(calc((1 - var(--rp)) * 6px))}
+.bed .soil{grid-column:2;grid-row:1;height:calc(4px + (var(--rp) * 30px));border-radius:var(--radius);
+  background:
+    repeating-linear-gradient(90deg,
+      rgba(143,176,95,calc(var(--rp) * .85)) 0 2px,
+      transparent 2px 26px),
+    linear-gradient(0deg,
+      rgba(108,139,69,calc(.18 + var(--rp) * .34)),
+      rgba(108,139,69,calc(.10 + var(--rp) * .22)));
+  transition:height var(--dur-fast) linear}
+.turn-foot{margin-top:26px;display:flex;gap:14px;align-items:flex-start;max-width:64ch}
+
+/* end state when JS is unavailable or motion is reduced */
+.no-js .bed,
+.reduced .bed{--rp:1}
+
+/* ============================================================
+   4. HOW ONE FARM WORKS — a continuous field record
+   ============================================================ */
+.record{background:var(--paper)}
+.rec-head{display:flex;align-items:flex-end;justify-content:space-between;
+  gap:30px;flex-wrap:wrap}
+.plotid{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--text-muted);
+  border:var(--hair) solid var(--rule-strong);border-radius:var(--radius);
+  padding:7px 12px}
+.ledger{margin-top:54px;border-top:1.5px solid var(--rule-strong)}
+.entry{padding:30px 0;border-bottom:var(--hair) solid var(--rule);
+  display:grid;grid-template-columns:74px 1fr;column-gap:22px}
+.entry-top{display:contents}
+.entry .num{grid-column:1;grid-row:1}
+.entry h3{grid-column:2;grid-row:1}
+.fields{grid-row:2}
+.entry-foot{grid-row:3}
+.entry-media{grid-row:4}
+.entry .num{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.09em;
+  color:var(--crop-text)}
+.entry h3{font-family:'Fraunces',Georgia,serif;font-weight:600;
+  font-variation-settings:'opsz' 48;font-size:27px;letter-spacing:-.015em;
+  line-height:1.1}
+.fields{grid-column:2;display:grid;grid-template-columns:repeat(5,1fr);gap:22px;
+  margin-top:22px}
+.field .k{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--text-muted);
+  padding-bottom:8px;border-bottom:var(--hair) solid var(--rule);display:block}
+.field .val{margin-top:11px;font-size:15px;line-height:1.5}
+.entry-foot{grid-column:2;margin-top:20px;font-size:14.5px;line-height:1.55;
+  color:var(--text-muted);max-width:70ch;display:flex;gap:11px;align-items:flex-start}
+.entry-media{grid-column:2;margin-top:24px;max-width:420px}
+
+/* the remaining stages continue as ruled lines, not cards */
+.stub{display:grid;grid-template-columns:74px 1fr auto;gap:22px;align-items:center;
+  padding:17px 0;border-bottom:var(--hair) solid var(--rule);
+  text-decoration:none;color:inherit;
+  transition:background var(--dur-fast) var(--ease),padding-left var(--dur-fast) var(--ease)}
+.stub:hover{background:rgba(108,139,69,.10);padding-left:10px}
+.stub .num{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.09em;
+  color:var(--crop-text)}
+.stub .nm{font-family:'Fraunces',Georgia,serif;font-weight:600;
+  font-variation-settings:'opsz' 32;font-size:20px}
+.stub .st{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--text-muted)}
+
+.pilot-end{padding:56px 0 90px;border-top:1.5px solid var(--rule-strong);
+  margin-top:70px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+
+/* ============================================================
+   Responsive: 8 columns at tablet, 4 at mobile
+   ============================================================ */
+@media (max-width:1180px){
+  :root{--pad:28px;--row:70px;--gutter:74px}
+  .rail{display:none}
+  .progress{display:block}
+  .tt{grid-template-columns:var(--gutter) repeat(8,1fr);
+    grid-template-rows:repeat(9,var(--row))}
+  .tt-head{grid-column:2/10;grid-row:1/5}
+  .tt-plot{grid-column:2/7;grid-row:5}
+  .tt-note{grid-column:2/8;grid-row:6}
+  .tt-fig{grid-column:2/10;grid-row:7/10}
+  .tt-fig img{height:230px;flex:none}
+  .fields{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:720px){
+  :root{--pad:20px;--row:60px;--gutter:48px}
+  body{font-size:16px}
+  .nav-in{height:58px;gap:14px}
+  .chapmark{display:none}
+  .nav-links a:not(.btn){display:none}   /* the primary action must survive */
+  .nav-links{gap:0}
+  .btn{padding:9px 13px;font-size:13.5px}
+  .wordmark{font-size:16.5px}
+  .tt{grid-template-columns:var(--gutter) repeat(4,1fr);
+    grid-template-rows:repeat(10,var(--row));padding-top:22px}
+  /* content clears the time gutter so the times stay legible in the margin */
+  .tt-head{grid-column:2/6;grid-row:1/6;padding-top:2px}
+  h1{font-size:32px;max-width:13ch}
+  .tt-head p{font-size:16px;max-width:38ch}
+  .tt-plot{grid-column:2/6;grid-row:6}
+  .tt-plot .dim{display:none}
+  .tt-note{grid-column:2/6;grid-row:7;font-size:11px;line-height:1.5}
+  .tt-fig{grid-column:2/6;grid-row:8/11;margin-top:10px}
+  .tt-fig img{height:190px;flex:none}
+  .hero{padding-bottom:60px}
+  .sec{padding:70px 0}
+  .empty{margin-top:40px;grid-template-columns:1fr}
+  .empty .side:first-child{border-right:0;
+    border-bottom:var(--hair) solid var(--rule-dark-strong);margin-bottom:26px;
+    padding-bottom:8px}
+  .empty .side:last-child .cap,
+  .empty .side:last-child .erow{padding-left:0}
+  .erow{height:46px}
+  .turn-track{height:340vh}
+  .turn-stage{height:100svh}
+  .bed{grid-template-columns:76px 1fr;gap:12px;
+    height:calc(26px + (var(--rp) * 26px))}
+  .bed .tm,.bed .st{font-size:11px}
+  .turn-head{margin-bottom:24px}
+  .turn-read{font-size:11px;white-space:normal}
+  /* the record collapses to a single column; nothing may sit in the number rail */
+  .entry{grid-template-columns:1fr;column-gap:0}
+  .entry .num{grid-column:1;grid-row:1;margin-bottom:2px}
+  .entry h3{grid-column:1;grid-row:2}
+  .fields{grid-column:1;grid-row:3;grid-template-columns:1fr;gap:18px;margin-top:20px}
+  .entry-foot{grid-column:1;grid-row:4}
+  .entry-media{grid-column:1;grid-row:5}
+  .stub{grid-template-columns:52px 1fr;gap:14px}
+  .stub .st{grid-column:2;font-size:10.5px}
+  .ledger{margin-top:34px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none !important;animation:none !important}
+  .bed{--rp:1 !important}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.className='js';</script>
+
+<!-- ============ 0. NAVIGATION ============ -->
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="wordmark" href="#top">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <line x1="10" y1="46" x2="54" y2="46" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="16" y1="34" x2="48" y2="34" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="22" y1="22" x2="34" y2="22" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="42.5" cy="22" r="4.5" fill="#6C8B45"/>
+      </svg>
+      School Farm Network
+    </a>
+
+    <div class="chapmark mono" aria-live="polite">
+      <span id="chap-n">01</span>
+      <b id="chap-t">Before the bell</b>
+      <span id="chap-time">08:00</span>
+    </div>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#empty">The empty row</a>
+      <a href="#soil">In the soil</a>
+      <a href="#record">How one farm works</a>
+      <a class="btn" href="#soil">
+        <span class="lbl-long">See how a school farm starts</span>
+        <span class="lbl-short">How it starts</span>
+        <svg class="ar" viewBox="0 0 14 9" fill="none" aria-hidden="true">
+          <path d="M0 4.5h12M8.5 1l3.5 3.5L8.5 8" stroke="currentColor" stroke-width="1.4"/>
+        </svg>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<div class="progress" aria-hidden="true"><i id="prog"></i></div>
+
+<main id="top">
+
+  <!-- timetable rail, chapter navigation -->
+  <aside class="rail" id="rail" aria-label="Chapters">
+    <ol>
+      <span class="mk" id="mk" style="top:4px"></span>
+      <li aria-current="true"><a href="#top"><span class="n">01 · 08:00</span><span class="t">Before the bell</span></a></li>
+      <li><a href="#empty"><span class="n">02 · 09:30</span><span class="t">The empty row</span></a></li>
+      <li><a href="#soil"><span class="n">03 · 10:15</span><span class="t">In the soil</span></a></li>
+      <li><a href="#record"><span class="n">04 · 11:45</span><span class="t">How one farm works</span></a></li>
+    </ol>
+  </aside>
+
+  <!-- ============ 1. HERO — Before the bell ============ -->
+  <section class="hero shell" aria-labelledby="h1">
+      <div class="tt">
+        <div class="tt-row" style="grid-row:1"><span class="tt-time">08:00</span></div>
+        <div class="tt-row" style="grid-row:2"><span class="tt-time">08:45</span></div>
+        <div class="tt-row" style="grid-row:3"><span class="tt-time">09:30</span></div>
+        <div class="tt-row" style="grid-row:4"><span class="tt-time">10:15</span></div>
+        <div class="tt-row" style="grid-row:5"><span class="tt-time">11:00</span></div>
+        <div class="tt-row" style="grid-row:6"><span class="tt-time">11:45</span></div>
+        <div class="tt-row" style="grid-row:7"><span class="tt-time">13:00</span></div>
+        <div class="tt-row" style="grid-row:8"><span class="tt-time">13:45</span></div>
+        <div class="tt-row r9" style="grid-row:9"><span class="tt-time">14:30</span></div>
+        <div class="tt-row r10" style="grid-row:10"><span class="tt-time">15:15</span></div>
+
+        <div class="tt-plot" aria-hidden="true">
+          <span class="lab">Plot 01</span>
+          <span class="dim">
+            <svg viewBox="0 0 38 7" fill="none"><path d="M0 3.5h38M2.5 1L0 3.5 2.5 6M35.5 1L38 3.5 35.5 6" stroke="#4A6329" stroke-width="1"/></svg>
+            <span>to be measured</span>
+          </span>
+        </div>
+
+        <p class="tt-note">One plot marked. The rest of the day is still empty.</p>
+
+        <div class="tt-head">
+          <h1 id="h1">A school can grow more than a syllabus.</h1>
+          <p>The School Farm Network helps schools turn available land into places to
+          learn, grow food, build practical skills, and create wider opportunity.
+          <span class="v">Verify wording</span></p>
+          <div class="act">
+            <a class="btn" href="#soil">
+              See how a school farm starts
+              <svg class="ar" viewBox="0 0 14 9" fill="none" aria-hidden="true">
+                <path d="M0 4.5h12M8.5 1l3.5 3.5L8.5 8" stroke="currentColor" stroke-width="1.4"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <figure class="tt-fig">
+          <img src="../assets/img/hero-1600.jpg"
+               srcset="../assets/img/hero-1024.jpg 1024w, ../assets/img/hero-1600.jpg 1600w, ../assets/img/hero-2560.jpg 2560w"
+               sizes="(max-width:720px) 92vw, 34vw"
+               width="1600" height="1067" fetchpriority="high" decoding="async"
+               alt="School buildings and open ground in the same frame, with people working on the land in the foreground.">
+          <figcaption>
+            Shot 01 · school exterior and available land in one frame<br>
+            <span class="v">Verify: location, date, photographer credit, and consent for the people pictured</span>
+          </figcaption>
+        </figure>
+      </div>
+  </section>
+
+<!-- ============ 2. THE EMPTY ROW ============ -->
+<section class="blackboard sec" id="empty" aria-labelledby="h2-empty">
+  <div class="shell">
+    <div class="split">
+      <div class="sec-head">
+        <span class="eyebrow">02 · 09:30 · The empty row</span>
+        <h2 id="h2-empty">Two records, and both of them are blank.</h2>
+      </div>
+      <p class="split-p">A school day has periods with nothing scheduled on them.
+      A school site has ground with nothing planted on it. The school already has both.</p>
+    </div>
+
+    <div class="empty">
+      <div class="side">
+        <div class="cap">Timetable · free periods</div>
+        <div class="erow"><span class="tm">08:45</span><span class="blank"></span></div>
+        <div class="erow"><span class="tm">10:15</span><span class="blank"></span></div>
+        <div class="erow"><span class="tm">11:45</span><span class="blank"></span></div>
+        <div class="erow"><span class="tm">13:45</span><span class="blank"></span></div>
+      </div>
+      <div class="side">
+        <div class="cap">Site · unplanted ground</div>
+        <div class="erow"><span class="grd"></span></div>
+        <div class="erow"><span class="grd"></span></div>
+        <div class="erow"><span class="grd"></span></div>
+        <div class="erow"><span class="grd"></span></div>
+      </div>
+    </div>
+
+    <p class="empty-note">
+      <span class="v">Verify: measured area of unused or underused land at a named school, with the date it was measured</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============ 3. THE TURN — timetable to field ============ -->
+<section class="turn" id="soil" aria-labelledby="h2-soil">
+  <div class="turn-track" id="track">
+    <div class="turn-stage">
+      <div class="shell turn-grid">
+        <div class="turn-head">
+          <div class="sec-head">
+            <span class="eyebrow">03 · 10:15 · In the soil</span>
+            <h2 id="h2-soil">Put the timetable in the ground.</h2>
+          </div>
+          <div class="turn-read" aria-hidden="true">
+            Reading <b id="read-from">08:00</b> as <b id="read-to">Assess</b>
+          </div>
+        </div>
+
+        <div class="beds" id="beds">
+          <div class="bed"><span class="tm">08:00</span><span class="st">Assess</span><span class="soil"></span></div>
+          <div class="bed"><span class="tm">08:45</span><span class="st">Design</span><span class="soil"></span></div>
+          <div class="bed"><span class="tm">09:30</span><span class="st">Prepare</span><span class="soil"></span></div>
+          <div class="bed"><span class="tm">10:15</span><span class="st">Plant</span><span class="soil"></span></div>
+          <div class="bed"><span class="tm">11:00</span><span class="st">Tend</span><span class="soil"></span></div>
+          <div class="bed"><span class="tm">11:45</span><span class="st">Harvest</span><span class="soil"></span></div>
+          <div class="bed"><span class="tm">13:00</span><span class="st">Record</span><span class="soil"></span></div>
+          <div class="bed"><span class="tm">13:45</span><span class="st">Improve</span><span class="soil"></span></div>
+        </div>
+
+        <p class="turn-foot">
+          <span class="v">Verify: these eight stage names against the method SFN actually runs, including whether stages repeat within one season</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. HOW ONE FARM WORKS ============ -->
+<section class="record sec" id="record" aria-labelledby="h2-rec">
+  <div class="shell">
+    <div class="rec-head">
+      <div class="sec-head">
+        <span class="eyebrow">04 · 11:45 · How one farm works</span>
+        <h2 id="h2-rec">One plot, kept as a single record.</h2>
+      </div>
+      <span class="plotid">Plot 01 · <span class="v">Verify: format</span></span>
+    </div>
+
+    <div class="ledger">
+      <article class="entry">
+        <div class="entry-top">
+          <span class="num">01</span>
+          <h3>Assess</h3>
+        </div>
+
+        <div class="fields">
+          <div class="field">
+            <span class="k">Who acts</span>
+            <p class="val"><span class="v">Verify: who carries out the assessment, and who signs it off</span></p>
+          </div>
+          <div class="field">
+            <span class="k">On the land</span>
+            <p class="val">Walk the site. Measure the ground that is free. Check the water
+            source and mark the boundary.</p>
+          </div>
+          <div class="field">
+            <span class="k">What is learned</span>
+            <p class="val"><span class="v">Verify: whether learners take part at this stage, and in which subject</span></p>
+          </div>
+          <div class="field">
+            <span class="k">What is recorded</span>
+            <p class="val">Area, water source, boundary, and the date of the visit.</p>
+          </div>
+          <div class="field">
+            <span class="k">Next decision</span>
+            <p class="val">Whether the plot goes forward to design, or waits a season.</p>
+          </div>
+        </div>
+
+        <p class="entry-foot">
+          <span class="v">Verify</span>
+          The land, record and decision columns are drafted from the method as described
+          so far. Confirm the wording, the real record fields, and who signs the decision.
+        </p>
+
+        <div class="entry-media">
+          <div class="shot">
+            <span class="k">Shot 02 · to commission</span>
+            <span class="d">Hands measuring or marking a plot. Landscape. Close, at working
+            distance, tape or line visible. No posing to camera.</span>
+          </div>
+        </div>
+      </article>
+
+      <a class="stub" href="#record"><span class="num">02</span><span class="nm">Design</span><span class="st">Record continues</span></a>
+      <a class="stub" href="#record"><span class="num">03</span><span class="nm">Prepare</span><span class="st">Record continues</span></a>
+      <a class="stub" href="#record"><span class="num">04</span><span class="nm">Plant</span><span class="st">Record continues</span></a>
+      <a class="stub" href="#record"><span class="num">05</span><span class="nm">Tend</span><span class="st">Record continues</span></a>
+      <a class="stub" href="#record"><span class="num">06</span><span class="nm">Harvest</span><span class="st">Record continues</span></a>
+      <a class="stub" href="#record"><span class="num">07</span><span class="nm">Record</span><span class="st">Record continues</span></a>
+      <a class="stub" href="#record"><span class="num">08</span><span class="nm">Improve</span><span class="st">Record continues</span></a>
+    </div>
+
+    <div class="pilot-end">
+      <span class="v">Pilot ends here</span>
+      <p style="max-width:56ch;color:var(--text-muted);font-size:15.5px">
+      Sections 5 to 11 of the narrative, at the table, what the farm teaches, the
+      evidence ledger, beyond the gate, people, actions, and footer, are held until
+      this pilot is approved.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced){document.documentElement.classList.add('reduced');}
+
+  var beds  = Array.prototype.slice.call(document.querySelectorAll('.bed'));
+  var track = document.getElementById('track');
+  var stages= ['Assess','Design','Prepare','Plant','Tend','Harvest','Record','Improve'];
+  var times = ['08:00','08:45','09:30','10:15','11:00','11:45','13:00','13:45'];
+  var rFrom = document.getElementById('read-from');
+  var rTo   = document.getElementById('read-to');
+
+  // Signature motion 1: timetable rows become crop beds, staggered on scroll.
+  function turn(){
+    if(reduced || !track) return;
+    var r = track.getBoundingClientRect();
+    var total = r.height - window.innerHeight;
+    var p = total > 0 ? (-r.top) / total : 0;
+    p = Math.max(0, Math.min(1, p));
+
+    var lead = 0;
+    for(var i=0;i<beds.length;i++){
+      var start = i * 0.075;
+      var rp = (p - start) / 0.34;
+      rp = Math.max(0, Math.min(1, rp));
+      beds[i].style.setProperty('--rp', rp.toFixed(3));
+      if(rp > 0.5) lead = i;
+    }
+    if(rFrom){ rFrom.textContent = times[lead]; rTo.textContent = stages[lead]; }
+  }
+
+  // Chapter marker in the header and the rail.
+  var secs = [
+    {id:'top',    n:'01', t:'Before the bell',    time:'08:00'},
+    {id:'empty',  n:'02', t:'The empty row',      time:'09:30'},
+    {id:'soil',   n:'03', t:'In the soil',        time:'10:15'},
+    {id:'record', n:'04', t:'How one farm works', time:'11:45'}
+  ];
+  var cn = document.getElementById('chap-n'),
+      ct = document.getElementById('chap-t'),
+      cti= document.getElementById('chap-time'),
+      mk = document.getElementById('mk'),
+      nav= document.getElementById('nav'),
+      prog=document.getElementById('prog'),
+      items = document.querySelectorAll('.rail li');
+
+  function chapters(){
+    var y = window.scrollY + window.innerHeight * 0.4, cur = 0;
+    for(var i=0;i<secs.length;i++){
+      var el = document.getElementById(secs[i].id);
+      if(el && el.offsetTop <= y) cur = i;
+    }
+    if(cn){cn.textContent = secs[cur].n; ct.textContent = secs[cur].t; cti.textContent = secs[cur].time;}
+    for(var j=0;j<items.length;j++){
+      if(j===cur) items[j].setAttribute('aria-current','true');
+      else items[j].removeAttribute('aria-current');
+    }
+    if(mk && items[cur]) mk.style.top = (items[cur].offsetTop + 6) + 'px';
+
+    // header switches to the blackboard field while dark sections are behind it
+    var dark = false;
+    ['empty','soil'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(!el) return;
+      var r = el.getBoundingClientRect();
+      if(r.top <= 64 && r.bottom > 64) dark = true;
+    });
+    if(nav) nav.classList.toggle('on-dark', dark);
+    var railEl = document.getElementById('rail');
+    if(railEl){
+      var rr = railEl.getBoundingClientRect(), rd = false;
+      ['empty','soil'].forEach(function(id){
+        var el = document.getElementById(id);
+        if(!el) return;
+        var b = el.getBoundingClientRect();
+        if(b.top < rr.bottom && b.bottom > rr.top) rd = true;
+      });
+      railEl.classList.toggle('on-dark', rd);
+    }
+
+    if(prog){
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      prog.style.height = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+    }
+  }
+
+  var ticking = false;
+  function onScroll(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){ turn(); chapters(); ticking = false; });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  turn(); chapters();
+})();
+</script>
+</body>
+</html>

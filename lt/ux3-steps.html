@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UX3 — One at a Time</title>
+<meta name="description" content="UX model 3. One screen, one point, advanced deliberately. A paced sequence rather than a scrolling page, with a read-as-one-page escape.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   UX MODEL 3 — ONE AT A TIME
+   No scrolling narrative. One screen holds one point, and the
+   visitor advances on purpose. Each step owns the whole viewport
+   and its own field colour, so the sequence has a pulse.
+   ============================================================ */
+:root{
+  --bone:#F3F0E7;
+  --ink:#15171B;
+  --clay:#B4552A;
+  --forest:#22402F;
+  --cream:#EFE6D2;
+  --flag:#C25E27;
+  --ease:cubic-bezier(.22,.8,.26,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bone);color:var(--ink);
+  font-family:'Figtree',system-ui,sans-serif;font-size:17px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:11.5px;
+  letter-spacing:.13em;text-transform:uppercase}
+.v{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--flag);border:1.5px solid currentColor;
+  padding:2px 7px;display:inline-block;line-height:1.4;border-radius:2px}
+.on-dark .v{color:#E9A277}
+
+.deck{position:relative;height:100%}
+
+/* ---------- header ---------- */
+.hd{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;
+  align-items:center;gap:16px;padding:20px 28px}
+.wm{display:flex;align-items:center;gap:9px;font-weight:600;font-size:15px;
+  text-decoration:none;color:inherit}
+.wm svg{width:17px;height:17px;flex:none}
+.hd .right{margin-left:auto;display:flex;align-items:center;gap:16px}
+.ghost{border:1px solid currentColor;border-radius:2px;padding:6px 11px;
+  font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;opacity:.7;transition:opacity .2s var(--ease)}
+.ghost:hover{opacity:1}
+
+/* ---------- steps ---------- */
+.step{position:absolute;inset:0;display:flex;align-items:center;
+  padding:92px 28px 108px;opacity:0;visibility:hidden;
+  transition:opacity .5s var(--ease),visibility .5s;
+  overflow-y:auto}
+.step.on{opacity:1;visibility:visible}
+.inner{max-width:1120px;margin:0 auto;width:100%}
+.step .num{margin-bottom:22px;opacity:.62}
+h1{font-family:'Bricolage Grotesque',system-ui,sans-serif;font-weight:800;
+  font-size:clamp(34px,6.4vw,86px);line-height:1.0;letter-spacing:-.032em;
+  max-width:16ch}
+.sub{margin-top:24px;max-width:48ch;font-size:19px;opacity:.78}
+.step .foot{margin-top:30px;max-width:60ch}
+
+/* field colours per step */
+.f-bone{background:var(--bone);color:var(--ink)}
+.f-clay{background:var(--clay);color:#FFF7F0}
+.f-forest{background:var(--forest);color:#EFEDE2}
+.f-ink{background:var(--ink);color:#F1F0EC}
+.f-cream{background:var(--cream);color:var(--ink)}
+
+/* step 3: the measurement, animated on arrival not on scroll */
+.measure{margin-top:34px;max-width:640px}
+.measure svg{width:100%;height:auto}
+#mk-unknown{opacity:1;transition:opacity .6s var(--ease) .15s}
+#mk-plot{opacity:0;transition:opacity .6s var(--ease) .35s}
+#mk-beds line{opacity:0;transition:opacity .5s var(--ease)}
+.step.on.run #mk-unknown{opacity:0}
+.step.on.run #mk-plot{opacity:1}
+.step.on.run #mk-beds line{opacity:1}
+.step.on.run #mk-beds line:nth-child(1){transition-delay:.55s}
+.step.on.run #mk-beds line:nth-child(2){transition-delay:.65s}
+.step.on.run #mk-beds line:nth-child(3){transition-delay:.75s}
+.step.on.run #mk-beds line:nth-child(4){transition-delay:.85s}
+.step.on.run #mk-beds line:nth-child(5){transition-delay:.95s}
+
+/* step 4: the five questions as lines, not a table */
+.qlist{margin-top:30px;max-width:940px}
+.qline{display:grid;grid-template-columns:210px 1fr;gap:24px;padding:15px 0;
+  border-top:1px solid rgba(241,240,236,.24);align-items:baseline}
+.qline:last-child{border-bottom:1px solid rgba(241,240,236,.24)}
+.qline .k{font-family:ui-monospace,monospace;font-size:11.5px;letter-spacing:.1em;
+  text-transform:uppercase;opacity:.62}
+.qline .a{font-size:17px}
+
+/* step 5: remaining stages */
+.slist{margin-top:26px;display:flex;flex-wrap:wrap;gap:9px;max-width:860px}
+.spill{border:1.5px solid rgba(21,23,27,.28);border-radius:2px;padding:8px 14px;
+  font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.06em;
+  text-transform:uppercase}
+
+/* ---------- controls ---------- */
+.ctrl{position:absolute;left:0;right:0;bottom:0;z-index:20;
+  display:flex;align-items:center;gap:18px;padding:18px 28px}
+.dots{display:flex;gap:7px}
+.dot{width:9px;height:9px;border-radius:50%;border:1.5px solid currentColor;
+  opacity:.45;transition:opacity .2s var(--ease),transform .2s var(--ease)}
+.dot[aria-current="true"]{opacity:1;background:currentColor;transform:scale(1.15)}
+.nav{margin-left:auto;display:flex;gap:10px}
+.nb{border:1.5px solid currentColor;border-radius:2px;padding:10px 18px;
+  font-weight:600;font-size:14.5px;display:inline-flex;align-items:center;gap:9px;
+  transition:background .2s var(--ease),color .2s var(--ease)}
+.nb:disabled{opacity:.3;cursor:default}
+.nb.primary{background:currentColor}
+.nb.primary span{color:var(--bone);mix-blend-mode:normal}
+.f-bone .nb.primary span,.f-cream .nb.primary span{color:var(--bone)}
+.f-clay .nb.primary span{color:var(--clay)}
+.f-forest .nb.primary span{color:var(--forest)}
+.f-ink .nb.primary span{color:var(--ink)}
+.bar{position:absolute;left:0;right:0;bottom:0;height:2px;background:currentColor;
+  opacity:.18}
+.bar i{display:block;height:100%;background:currentColor;opacity:1;
+  transition:width .45s var(--ease)}
+
+/* ---------- read as one page ---------- */
+.reader{display:none;overflow-y:auto;height:100%;padding:96px 28px 80px;
+  background:var(--bone);color:var(--ink)}
+body.reading{overflow:auto}
+body.reading .step,body.reading .ctrl{display:none}
+body.reading .reader{display:block}
+.reader .rin{max-width:760px;margin:0 auto}
+.reader section{padding:26px 0;border-bottom:1px solid rgba(21,23,27,.16)}
+.reader h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;
+  letter-spacing:-.02em;margin-bottom:10px}
+.reader p{margin-bottom:10px;opacity:.8}
+.reader dt{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.09em;
+  text-transform:uppercase;opacity:.6;margin-top:12px}
+.reader dd{margin-left:0}
+
+@media (max-width:760px){
+  .step{padding:84px 20px 132px}
+  .hd{padding:16px 20px}
+  .ctrl{padding:14px 20px;flex-wrap:wrap;gap:12px}
+  .nav{margin-left:0;width:100%}
+  .nb{flex:1;justify-content:center}
+  .qline{grid-template-columns:1fr;gap:6px}
+  .sub{font-size:17px}
+  .wm span{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  #mk-unknown{opacity:0}#mk-plot{opacity:1}#mk-beds line{opacity:1}
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <div class="hd" id="hd">
+    <a class="wm" href="#">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <line x1="10" y1="46" x2="54" y2="46" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="16" y1="34" x2="48" y2="34" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="22" y1="22" x2="34" y2="22" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="42.5" cy="22" r="4.5" fill="#7FA85F"/>
+      </svg>
+      <span>School Farm Network</span>
+    </a>
+    <div class="right">
+      <button class="ghost" id="readbtn" aria-pressed="false">Read as one page</button>
+    </div>
+  </div>
+
+  <!-- 1 -->
+  <section class="step f-bone on" data-i="0" aria-label="Step 1 of 6">
+    <div class="inner">
+      <div class="mono num">01 / 06</div>
+      <h1>A school owns ground it has never used.</h1>
+      <p class="sub">The School Farm Network helps schools turn available land into
+      places to learn, grow food, build practical skills, and create wider opportunity.</p>
+      <p class="foot"><span class="v">Verify wording</span></p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="step f-clay on-dark" data-i="1" aria-label="Step 2 of 6">
+    <div class="inner">
+      <div class="mono num">02 / 06</div>
+      <h1>Nobody has measured it.</h1>
+      <p class="sub">A school day has periods with nothing scheduled on them. A school
+      site has ground with nothing planted on it. Until the ground is measured there is
+      nothing to plan, nothing to cost, and nothing to argue for.</p>
+      <p class="foot"><span class="v">Verify: measured area of unused or underused land
+      at a named school, with the date it was measured</span></p>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="step f-forest on-dark" data-i="2" aria-label="Step 3 of 6">
+    <div class="inner">
+      <div class="mono num">03 / 06</div>
+      <h1>Measuring is what turns ground into a plot.</h1>
+      <p class="sub">Walk the site. Measure the ground that is free. Check the water
+      source and mark the boundary.</p>
+      <div class="measure" aria-hidden="true">
+        <svg viewBox="0 0 640 230">
+          <g id="mk-unknown">
+            <rect x="20" y="20" width="600" height="190" fill="rgba(233,162,119,.10)"
+                  stroke="#E9A277" stroke-width="1.5" stroke-dasharray="7 7"/>
+            <text x="320" y="122" text-anchor="middle" font-family="ui-monospace"
+                  font-size="14" fill="#E9A277" letter-spacing="2">UNMEASURED</text>
+          </g>
+          <g id="mk-plot">
+            <rect x="20" y="20" width="600" height="190" fill="rgba(127,168,95,.12)"
+                  stroke="#9FC47A" stroke-width="2"/>
+            <g id="mk-beds" stroke="#9FC47A" stroke-width="3">
+              <line x1="46" y1="52" x2="594" y2="52"/>
+              <line x1="46" y1="86" x2="594" y2="86"/>
+              <line x1="46" y1="120" x2="594" y2="120"/>
+              <line x1="46" y1="154" x2="594" y2="154"/>
+              <line x1="46" y1="188" x2="594" y2="188"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <p class="foot" style="margin-top:20px"><span class="v">Verify: plot dimensions,
+      water source, and boundary</span></p>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="step f-ink on-dark" data-i="3" aria-label="Step 4 of 6">
+    <div class="inner">
+      <div class="mono num">04 / 06</div>
+      <h1>Stage 01. Assess.</h1>
+      <div class="qlist">
+        <div class="qline"><span class="k">Who acts</span>
+          <span class="a"><span class="v">Verify: who carries out the assessment, and who signs it off</span></span></div>
+        <div class="qline"><span class="k">On the land</span>
+          <span class="a">Walk the site. Measure the ground that is free. Check the water source and mark the boundary.</span></div>
+        <div class="qline"><span class="k">What is learned</span>
+          <span class="a"><span class="v">Verify: whether learners take part, and in which subject</span></span></div>
+        <div class="qline"><span class="k">What is recorded</span>
+          <span class="a">Area, water source, boundary, and the date of the visit.</span></div>
+        <div class="qline"><span class="k">Next decision</span>
+          <span class="a">Whether the plot goes forward to design, or waits a season.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="step f-cream" data-i="4" aria-label="Step 5 of 6">
+    <div class="inner">
+      <div class="mono num">05 / 06</div>
+      <h1>Seven more stages, then it starts again.</h1>
+      <div class="slist">
+        <span class="spill">02 Design</span><span class="spill">03 Prepare</span>
+        <span class="spill">04 Plant</span><span class="spill">05 Tend</span>
+        <span class="spill">06 Harvest</span><span class="spill">07 Record</span>
+        <span class="spill">08 Improve</span>
+      </div>
+      <p class="sub" style="margin-top:26px">None of these has been run at any site yet.
+      They are defined, not delivered.</p>
+      <p class="foot"><span class="v">Verify: these eight stage names against the method
+      SFN actually runs, including whether stages repeat within one season</span></p>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="step f-bone" data-i="5" aria-label="Step 6 of 6">
+    <div class="inner">
+      <div class="mono num">06 / 06</div>
+      <h1>The pilot stops here.</h1>
+      <p class="sub">Sections 5 to 11, the crop story, what the farm teaches, the
+      evidence ledger, the network view, the people and the actions, are held until a
+      route is chosen.</p>
+      <p class="foot"><span class="v">Pilot ends here</span></p>
+    </div>
+  </section>
+
+  <!-- controls -->
+  <div class="ctrl f-bone" id="ctrl">
+    <div class="dots" id="dots" role="tablist" aria-label="Steps"></div>
+    <div class="nav">
+      <button class="nb" id="prev" disabled>← Back</button>
+      <button class="nb primary" id="next"><span>Next →</span></button>
+    </div>
+    <div class="bar"><i id="barfill" style="width:16.6%"></i></div>
+  </div>
+
+  <!-- read as one page -->
+  <div class="reader" id="reader"><div class="rin" id="rin"></div></div>
+</div>
+
+<script>
+(function(){
+  var steps=[].slice.call(document.querySelectorAll('.step')),
+      dots=document.getElementById('dots'),
+      prev=document.getElementById('prev'), next=document.getElementById('next'),
+      ctrl=document.getElementById('ctrl'), hd=document.getElementById('hd'),
+      bar=document.getElementById('barfill'),
+      i=0, N=steps.length;
+
+  var fields=['f-bone','f-clay','f-forest','f-ink','f-cream'];
+
+  steps.forEach(function(s,k){
+    var b=document.createElement('button');
+    b.className='dot'; b.setAttribute('role','tab');
+    b.setAttribute('aria-label','Step '+(k+1));
+    b.addEventListener('click',function(){go(k)});
+    dots.appendChild(b);
+  });
+  var dotEls=[].slice.call(dots.children);
+
+  function go(k){
+    i=Math.max(0,Math.min(N-1,k));
+    steps.forEach(function(s,n){
+      s.classList.toggle('on', n===i);
+      if(n===i){ requestAnimationFrame(function(){ s.classList.add('run') }); }
+      else s.classList.remove('run');
+    });
+    dotEls.forEach(function(d,n){ d.setAttribute('aria-current', String(n===i)); });
+    prev.disabled = i===0;
+    next.querySelector('span').textContent = i===N-1 ? 'Start again' : 'Next →';
+    bar.style.width = (((i+1)/N)*100).toFixed(1)+'%';
+
+    // chrome adopts the field colour of the active step
+    var cls = steps[i].className.match(/f-[a-z]+/)[0];
+    fields.forEach(function(f){ ctrl.classList.remove(f); hd.classList.remove(f); });
+    ctrl.classList.add(cls); hd.classList.add(cls);
+    var dark = steps[i].classList.contains('on-dark');
+    hd.style.color = dark ? '#F1F0EC' : '#15171B';
+    ctrl.style.color = dark ? '#F1F0EC' : '#15171B';
+  }
+
+  next.addEventListener('click',function(){ go(i===N-1 ? 0 : i+1) });
+  prev.addEventListener('click',function(){ go(i-1) });
+  addEventListener('keydown',function(e){
+    if(document.body.classList.contains('reading')) return;
+    if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();go(i+1)}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(i-1)}
+  });
+
+  // swipe
+  var x0=null;
+  document.getElementById('deck').addEventListener('touchstart',function(e){
+    x0=e.changedTouches[0].clientX;
+  },{passive:true});
+  document.getElementById('deck').addEventListener('touchend',function(e){
+    if(x0===null) return;
+    var dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>60) go(dx<0 ? i+1 : i-1);
+    x0=null;
+  },{passive:true});
+
+  // read-as-one-page builds from the same DOM, so the two never drift apart
+  var rin=document.getElementById('rin'), rh='';
+  steps.forEach(function(s){
+    var h1=s.querySelector('h1'), sub=s.querySelector('.sub'),
+        foot=s.querySelector('.foot'), ql=s.querySelector('.qlist'),
+        sl=s.querySelector('.slist');
+    rh+='<section><h2>'+h1.textContent+'</h2>';
+    if(sub) rh+='<p>'+sub.textContent+'</p>';
+    if(ql){
+      rh+='<dl>';
+      [].slice.call(ql.querySelectorAll('.qline')).forEach(function(q){
+        rh+='<dt>'+q.querySelector('.k').textContent+'</dt><dd>'+q.querySelector('.a').innerHTML+'</dd>';
+      });
+      rh+='</dl>';
+    }
+    if(sl) rh+='<p>'+[].slice.call(sl.children).map(function(x){return x.textContent}).join(' · ')+'</p>';
+    if(foot) rh+='<p>'+foot.innerHTML+'</p>';
+    rh+='</section>';
+  });
+  rin.innerHTML=rh;
+
+  var rb=document.getElementById('readbtn');
+  rb.addEventListener('click',function(){
+    var on=document.body.classList.toggle('reading');
+    rb.setAttribute('aria-pressed',String(on));
+    rb.textContent=on?'Back to the sequence':'Read as one page';
+    if(on){ hd.style.color='#15171B'; }
+    else { go(i); }
+  });
+
+  go(0);
+})();
+</script>
+</body>
+</html>

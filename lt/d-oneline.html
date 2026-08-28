@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>D — One Line</title>
+<meta name="description" content="Route D pilot. One continuous line runs the whole site: a ruled line on a page becomes a planting row, then a harvest, then the edge of a plate.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ROUTE D — ONE LINE
+   Device: a single unbroken line. It begins as a ruled line on a
+   school page, thickens into a planting row, carries a harvest, and
+   ends as the rim of a plate. School and farm are the same stroke.
+   ============================================================ */
+:root{
+  --bone:#F5F2EA;
+  --ink:#12140F;
+  --orange:#C75B2A;
+  --crop:#5C7A38;
+  --crop-lt:#93B368;
+  --muted:rgba(18,20,15,.66);
+  --muted-d:rgba(245,242,234,.70);
+  --rule:rgba(18,20,15,.18);
+  --ease:cubic-bezier(.22,.7,.24,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--bone);color:var(--ink);
+  font-family:'Manrope',system-ui,sans-serif;font-size:17px;line-height:1.62;
+  font-weight:400;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+.wrap{max-width:1360px;margin:0 auto;padding-left:44px;padding-right:44px}
+
+.lab{font-family:'Manrope',sans-serif;font-weight:600;font-size:11.5px;
+  letter-spacing:.17em;text-transform:uppercase}
+.v{font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--orange);border:1.5px solid currentColor;padding:3px 7px;
+  display:inline-block;line-height:1.35;border-radius:2px}
+.on-dark .v{color:#E8875A}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:60;background:var(--bone);
+  border-bottom:1px solid var(--rule)}
+.nav-in{max-width:1360px;margin:0 auto;padding:0 44px;height:70px;display:flex;
+  align-items:center;gap:30px}
+.wordmark{display:flex;align-items:center;gap:11px;text-decoration:none;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:18px;letter-spacing:-.01em;
+  text-transform:uppercase}
+.wordmark svg{width:20px;height:20px;flex:none}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:26px}
+.nav-right a:not(.btn){text-decoration:none;font-size:14.5px;color:var(--muted);
+  font-weight:500}
+.nav-right a:not(.btn):hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--ink);
+  color:var(--bone);text-decoration:none;padding:13px 20px;border-radius:2px;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:13.5px;letter-spacing:.04em;
+  text-transform:uppercase;white-space:nowrap;border:1.5px solid var(--ink);
+  transition:transform .2s var(--ease),background .2s var(--ease),color .2s var(--ease)}
+.btn:hover{background:var(--orange);border-color:var(--orange);transform:translateY(-2px)}
+.btn svg{width:15px;height:9px}
+.lbl-s{display:none}
+.wm-short{display:none}
+
+/* ---------- hero ---------- */
+.hero{padding:78px 0 0;position:relative}
+h1{font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(42px,7.4vw,108px);line-height:.94;letter-spacing:-.032em;
+  text-transform:uppercase;max-width:13ch}
+h1 .o{color:var(--orange)}
+.hero .sup{margin-top:30px;max-width:46ch;font-size:18px;color:var(--muted)}
+.hero .act{margin-top:32px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+
+/* the line itself, entering from the left edge of the page */
+.hline{margin-top:74px;position:relative;height:120px}
+.hline svg{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible}
+.hline .cap{position:absolute;top:62px;font-size:11.5px;font-weight:600;
+  letter-spacing:.17em;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- sections ---------- */
+.sec{padding-block:104px}
+.kick{font-family:'Syne',sans-serif;font-weight:700;font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--orange);display:block;margin-bottom:18px}
+h2{font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(30px,4.6vw,62px);line-height:1.0;letter-spacing:-.028em;
+  text-transform:uppercase;max-width:16ch}
+.lede{margin-top:20px;max-width:50ch;color:var(--muted);font-size:18px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:52px}
+
+/* ---------- the turn: the line travels and changes ---------- */
+.turn{background:var(--ink);color:var(--bone)}
+.turn .lede{color:var(--muted-d)}
+.turn-track{height:400vh}
+.turn-stage{position:sticky;top:0;height:100vh;display:flex;align-items:center;
+  overflow:hidden}
+.stage-in{width:100%}
+.travel{margin-top:52px;position:relative;height:230px}
+.travel svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.marks{position:absolute;inset:0;pointer-events:none}
+.mk{position:absolute;top:132px;transform:translateX(-50%);text-align:center;
+  opacity:0;transition:opacity .35s var(--ease),transform .35s var(--ease)}
+.mk.on{opacity:1}
+.mk .t{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--crop-lt)}
+.mk .d{font-size:12.5px;color:var(--muted-d);margin-top:5px;max-width:20ch}
+.readout{margin-top:26px;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--muted-d)}
+.readout b{color:var(--crop-lt);font-weight:800}
+
+/* ---------- record: the line becomes the spine ---------- */
+.record{position:relative}
+.spine{position:absolute;left:44px;top:0;bottom:0;width:2px;background:var(--rule)}
+.rec-in{padding-left:52px}
+.stage-row{display:grid;grid-template-columns:1fr;gap:0;margin-top:44px}
+.entry{position:relative;padding-block:30px 34px;border-bottom:1px solid var(--rule)}
+.entry::before{content:"";position:absolute;left:-60px;top:40px;width:18px;height:18px;
+  border-radius:50%;background:var(--crop);border:3px solid var(--bone)}
+.entry .hd{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+.entry .n{font-family:'Syne',sans-serif;font-weight:700;font-size:13px;
+  letter-spacing:.1em;color:var(--orange)}
+.entry h3{font-family:'Syne',sans-serif;font-weight:800;font-size:30px;
+  letter-spacing:-.02em;text-transform:uppercase}
+.qs{display:grid;grid-template-columns:repeat(5,1fr);gap:26px;margin-top:26px}
+.q .k{display:block;font-weight:600;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:10px;
+  padding-bottom:8px;border-bottom:1px solid var(--rule)}
+.q .a{font-size:15px;line-height:1.5}
+.foot{margin-top:22px;display:flex;gap:12px;align-items:flex-start;
+  color:var(--muted);font-size:14.5px;max-width:74ch}
+.stub{position:relative;display:grid;grid-template-columns:52px 1fr auto;gap:20px;
+  align-items:center;padding-block:17px;border-bottom:1px solid var(--rule);
+  text-decoration:none;transition:padding-left .2s var(--ease)}
+.stub::before{content:"";position:absolute;left:-56px;top:50%;width:10px;height:10px;
+  border-radius:50%;background:transparent;border:2px solid var(--rule);
+  transform:translateY(-50%)}
+.stub:hover{padding-left:10px}
+.stub .n{font-family:'Syne',sans-serif;font-weight:700;font-size:12.5px;
+  letter-spacing:.09em;color:var(--muted)}
+.stub .nm{font-family:'Syne',sans-serif;font-weight:800;font-size:21px;
+  text-transform:uppercase;letter-spacing:-.015em}
+.stub .s{font-size:11.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted)}
+
+figure{margin:0}
+figcaption{margin-top:10px;font-size:11.5px;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--muted);line-height:1.7}
+.shot{border:2px dashed var(--orange);padding:18px;min-height:190px;display:flex;
+  flex-direction:column;justify-content:flex-end;background:rgba(199,91,42,.05);
+  border-radius:2px}
+.shot .k{font-weight:700;font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--orange)}
+.shot .d{font-size:14px;line-height:1.45;margin-top:8px;color:var(--muted)}
+
+.end{padding-block:48px 96px;border-top:2px solid var(--ink);margin-top:80px;
+  display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.reveal{opacity:0;transform:translateY(20px);
+  transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.no-js .reveal{opacity:1;transform:none}
+.no-js .mk{opacity:1}
+
+@media(max-width:1000px){
+  .two{grid-template-columns:1fr;gap:34px}
+  .qs{grid-template-columns:repeat(2,1fr);gap:22px}
+}
+@media(max-width:720px){
+  .wrap{padding-left:20px;padding-right:20px}
+  .nav-in{padding-left:20px;padding-right:20px}
+  body{font-size:16px}
+  .nav-right a:not(.btn){display:none}
+  .lbl-l{display:none}.lbl-s{display:inline}
+  .wm-long{display:none}.wm-short{display:inline}
+  .nav-in{height:62px;gap:12px}
+  .wordmark{font-size:13px;white-space:nowrap;gap:8px}
+  .wordmark svg{width:17px;height:17px}
+  .btn{padding:11px 13px;font-size:12px}
+  h1{font-size:40px;max-width:11ch}
+  .hero{padding-top:46px}
+  .hline{height:96px;margin-top:48px}
+  .sec{padding-block:70px}
+  .qs{grid-template-columns:1fr;gap:20px}
+  .spine{left:20px}
+  .rec-in{padding-left:34px}
+  .entry::before{left:-42px;width:14px;height:14px;top:34px}
+  .stub::before{left:-40px;width:8px;height:8px}
+  .entry h3{font-size:24px}
+  .travel{height:200px}
+  .mk .d{display:none}
+  .mk{top:120px}
+  .turn-track{height:420vh}
+  .turn-stage{height:100svh}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important;animation:none!important}
+  .reveal{opacity:1;transform:none}
+  .mk{opacity:1}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.className='js';</script>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="wordmark" href="#top">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <line x1="10" y1="46" x2="54" y2="46" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="16" y1="34" x2="48" y2="34" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="22" y1="22" x2="34" y2="22" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="42.5" cy="22" r="4.5" fill="#5C7A38"/>
+      </svg>
+      <span class="wm-long">School Farm Network</span>
+      <span class="wm-short">SFN</span>
+    </a>
+    <div class="nav-right">
+      <a href="#flat">The line that stayed flat</a>
+      <a href="#turn">The turn</a>
+      <a href="#record">Stage 01</a>
+      <a class="btn" href="#turn">
+        <span class="lbl-l">Follow the line</span>
+        <span class="lbl-s">The line</span>
+        <svg viewBox="0 0 15 9" fill="none" aria-hidden="true"><path d="M0 4.5h13M9.5 1l3.5 3.5L9.5 8" stroke="currentColor" stroke-width="1.6"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero wrap">
+  <h1>One line runs from the page to the <span class="o">plate</span></h1>
+  <p class="sup">The School Farm Network helps schools turn available land into places
+  to learn, grow food, build practical skills, and create wider opportunity.
+  <span class="v">Verify wording</span></p>
+  <div class="act">
+    <a class="btn" href="#turn">
+      Follow the line
+      <svg viewBox="0 0 15 9" fill="none" aria-hidden="true"><path d="M0 4.5h13M9.5 1l3.5 3.5L9.5 8" stroke="currentColor" stroke-width="1.6"/></svg>
+    </a>
+    <span class="lab" style="color:var(--muted)">It is drawn before it is planted</span>
+  </div>
+
+  <div class="hline" aria-hidden="true">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <line x1="0" y1="40" x2="1200" y2="40" stroke="#12140F" stroke-width="2"/>
+    </svg>
+    <span class="cap" style="left:0">A ruled line</span>
+    <span class="cap" style="right:0">Nothing on it yet</span>
+  </div>
+</section>
+
+<!-- MISSED OPPORTUNITY -->
+<section class="sec wrap" id="flat">
+  <div class="two" style="margin-top:0;align-items:start">
+    <div>
+      <span class="kick">02 · The line that stayed flat</span>
+      <h2>Ruled, and then left alone.</h2>
+      <p class="lede">A school day has periods with nothing scheduled on them. A school
+      site has ground with nothing planted on it. Both were ruled and then left, and a
+      line on its own feeds nobody.</p>
+      <p style="margin-top:26px"><span class="v">Verify: measured area of unused or
+      underused land at a named school, with the date it was measured</span></p>
+    </div>
+    <figure>
+      <img src="../assets/img/hero-1600.jpg"
+           srcset="../assets/img/hero-1024.jpg 1024w, ../assets/img/hero-1600.jpg 1600w"
+           sizes="(max-width:1000px) 92vw, 44vw" width="1600" height="1067"
+           decoding="async"
+           alt="School buildings and open ground in the same frame, with people working on the land.">
+      <figcaption>Shot 01 · school exterior and available land in one frame<br>
+        <span class="v">Verify: location, date, credit, and consent for the people pictured</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- THE TURN -->
+<section class="turn on-dark" id="turn">
+  <div class="turn-track" id="track">
+    <div class="turn-stage">
+      <div class="wrap stage-in">
+        <span class="kick">03 · The turn</span>
+        <h2>The same stroke, all the way through.</h2>
+
+        <div class="travel" aria-hidden="true">
+          <svg viewBox="0 0 1200 230" preserveAspectRatio="none" id="tsvg">
+            <!-- the base line, drawn across as you scroll -->
+            <line id="base" x1="0" y1="96" x2="1200" y2="96"
+                  stroke="#93B368" stroke-width="2"
+                  stroke-dasharray="1200" stroke-dashoffset="1200"/>
+            <!-- the bed the line becomes -->
+            <rect id="bed" x="0" y="82" width="0" height="28" fill="rgba(147,179,104,.22)"/>
+            <g id="crop"></g>
+          </svg>
+          <div class="marks">
+            <span class="mk" id="m1" style="left:12%"><span class="t">Ruled</span><span class="d">A line on a page</span></span>
+            <span class="mk" id="m2" style="left:38%"><span class="t">Planted</span><span class="d">The line becomes a row</span></span>
+            <span class="mk" id="m3" style="left:64%"><span class="t">Harvested</span><span class="d">The row is lifted and weighed</span></span>
+            <span class="mk" id="m4" style="left:88%"><span class="t">Eaten</span><span class="d">The rim of a plate</span></span>
+          </div>
+        </div>
+
+        <p class="readout">Now reading the line as <b id="rd">ruled</b></p>
+        <p style="margin-top:16px;max-width:64ch"><span class="v">Verify: whether the
+        produce reaches a school meal, a sale, or both, before this line is published
+        as ending at a plate</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECORD -->
+<section class="sec record" id="record">
+  <div class="wrap" style="position:relative">
+    <div class="spine" aria-hidden="true"></div>
+    <div class="rec-in">
+      <span class="kick">04 · Stage 01</span>
+      <h2>The line, broken into eight pieces of work.</h2>
+      <p class="lede">Every stage answers the same five questions, for one plot, at one
+      school.</p>
+
+      <div class="stage-row reveal">
+        <article class="entry">
+          <div class="hd"><span class="n">01</span><h3>Assess</h3></div>
+          <div class="qs">
+            <div class="q"><span class="k">Who acts</span>
+              <p class="a"><span class="v">Verify: who carries out the assessment, and who signs it off</span></p></div>
+            <div class="q"><span class="k">On the land</span>
+              <p class="a">Walk the site. Measure the ground that is free. Check the
+              water source and mark the boundary.</p></div>
+            <div class="q"><span class="k">What is learned</span>
+              <p class="a"><span class="v">Verify: whether learners take part, and in which subject</span></p></div>
+            <div class="q"><span class="k">What is recorded</span>
+              <p class="a">Area, water source, boundary, and the date of the visit.</p></div>
+            <div class="q"><span class="k">Next decision</span>
+              <p class="a">Whether the plot goes forward to design, or waits a season.</p></div>
+          </div>
+          <p class="foot"><span class="v">Verify</span>
+            <span>The land, record and decision columns are drafted from the method as
+            described so far. Confirm the wording, the real record fields, and who signs
+            the decision.</span></p>
+        </article>
+
+        <a class="stub" href="#record"><span class="n">02</span><span class="nm">Design</span><span class="s">Line continues</span></a>
+        <a class="stub" href="#record"><span class="n">03</span><span class="nm">Prepare</span><span class="s">Line continues</span></a>
+        <a class="stub" href="#record"><span class="n">04</span><span class="nm">Plant</span><span class="s">Line continues</span></a>
+        <a class="stub" href="#record"><span class="n">05</span><span class="nm">Tend</span><span class="s">Line continues</span></a>
+        <a class="stub" href="#record"><span class="n">06</span><span class="nm">Harvest</span><span class="s">Line continues</span></a>
+        <a class="stub" href="#record"><span class="n">07</span><span class="nm">Record</span><span class="s">Line continues</span></a>
+        <a class="stub" href="#record"><span class="n">08</span><span class="nm">Improve</span><span class="s">Line continues</span></a>
+      </div>
+
+      <p style="margin-top:26px;max-width:64ch"><span class="v">Verify: these eight
+      stage names against the method SFN actually runs, including whether stages repeat
+      within one season</span></p>
+
+      <div style="margin-top:44px;max-width:430px">
+        <div class="shot">
+          <span class="k">Shot 02 · to commission</span>
+          <span class="d">Hands measuring or marking a plot. Landscape. Close, at
+          working distance, tape or line visible. No posing to camera.</span>
+        </div>
+      </div>
+
+      <div class="end">
+        <span class="v">Pilot ends here</span>
+        <p style="max-width:56ch;color:var(--muted);font-size:15.5px">Sections 5 to 11
+        are held until this route is chosen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+  var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var track=document.getElementById('track'),
+      base=document.getElementById('base'),
+      bed=document.getElementById('bed'),
+      cropG=document.getElementById('crop'),
+      rd=document.getElementById('rd'),
+      mks=[document.getElementById('m1'),document.getElementById('m2'),
+           document.getElementById('m3'),document.getElementById('m4')];
+
+  // seedlings along the row, drawn once
+  var seeds=[];
+  if(cropG){
+    for(var i=0;i<34;i++){
+      var x=40+i*34;
+      var p=document.createElementNS('http://www.w3.org/2000/svg','path');
+      p.setAttribute('d','M'+x+' 96 L'+x+' 78 M'+x+' 84 l-6 -6 M'+x+' 84 l6 -6');
+      p.setAttribute('stroke','#93B368');
+      p.setAttribute('stroke-width','2');
+      p.setAttribute('fill','none');
+      p.setAttribute('stroke-linecap','round');
+      p.style.opacity='0';
+      p.dataset.at=(x/1200).toFixed(3);
+      cropG.appendChild(p); seeds.push(p);
+    }
+  }
+
+  function turn(){
+    if(!track) return;
+    var r=track.getBoundingClientRect(), total=r.height-innerHeight;
+    var p=total>0?(-r.top)/total:0; p=Math.max(0,Math.min(1,p));
+    if(reduced) p=1;
+
+    if(base) base.setAttribute('stroke-dashoffset', String(1200*(1-p)));
+    // the line thickens into a bed across the middle of the journey
+    var bedP=Math.max(0,Math.min(1,(p-0.22)/0.42));
+    if(bed){
+      bed.setAttribute('width', String(1200*bedP));
+      bed.setAttribute('height', String(6+22*bedP));
+      bed.setAttribute('y', String(96-(6+22*bedP)/2));
+    }
+    for(var i=0;i<seeds.length;i++){
+      var at=parseFloat(seeds[i].dataset.at);
+      seeds[i].style.opacity = (p > 0.24 + at*0.42 && p < 0.80) ? '1' : (p>=0.80 ? '0.25' : '0');
+    }
+    var names=['ruled','planted','harvested','eaten'];
+    var idx = p<0.26?0 : p<0.56?1 : p<0.80?2 : 3;
+    if(rd) rd.textContent=names[idx];
+    for(var j=0;j<mks.length;j++){
+      if(mks[j]) mks[j].classList.toggle('on', j<=idx);
+    }
+  }
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+  },{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+
+  var t=false;
+  addEventListener('scroll',function(){
+    if(t)return;t=true;requestAnimationFrame(function(){turn();t=false});
+  },{passive:true});
+  addEventListener('resize',turn);
+  turn();
+})();
+</script>
+</body>
+</html>

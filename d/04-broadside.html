@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SFN — Direction 04, Broadside</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14120E;
+  --bone:#F2EDE2;
+  --maize:#E9B23C;
+  --clay:#B4542F;
+  --leaf:#5C7F3A;
+  --kraft:#C9A97B;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--ink);color:var(--bone);
+  font-family:'Hanken Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden}
+a{color:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding:0 34px}
+
+nav{display:flex;align-items:center;justify-content:space-between;
+  padding:22px 34px;max-width:1280px;margin:0 auto}
+.mark{display:flex;align-items:center;gap:10px;text-decoration:none;
+  font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:22px;
+  letter-spacing:.02em;text-transform:uppercase}
+.mark svg{width:22px;height:22px}
+.navlinks{display:flex;gap:26px;font-size:12px;font-weight:600;
+  letter-spacing:.13em;text-transform:uppercase}
+.navlinks a{text-decoration:none;opacity:.78}
+.navlinks a:hover{opacity:1}
+
+/* ---------- broadside hero: lines that overlap, like the reference ---------- */
+.broad{padding:44px 0 20px}
+.broad h1{
+  font-family:'Big Shoulders Display',sans-serif;font-weight:800;
+  font-size:clamp(58px,13.2vw,186px);
+  line-height:.92;                 /* mask must contain the caps */
+  letter-spacing:-.005em;text-transform:uppercase;
+  margin:0}
+/* The crowding of Break Maiden comes from pulling the lines together, not from a
+   line-height shorter than the glyphs, which would clip them inside the mask. */
+.broad h1 .l{display:block;overflow:hidden;padding-bottom:.04em}
+.broad h1 .l+.l{margin-top:-.2em}
+.broad h1 .l i{display:block;font-style:normal;
+  transform:translateY(102%);
+  transition:transform 1s cubic-bezier(.16,.84,.3,1)}
+body.ready .broad h1 .l i{transform:none}
+.broad h1 .l:nth-child(2) i{transition-delay:.09s}
+.broad h1 .l:nth-child(3) i{transition-delay:.18s}
+.arrow{display:inline-block;vertical-align:.06em;width:.92em;height:.2em;
+  background:var(--maize);position:relative;margin:0 .12em}
+.arrow::after{content:"";position:absolute;right:-.02em;top:50%;
+  width:.3em;height:.3em;border-top:.2em solid var(--maize);
+  border-right:.2em solid var(--maize);transform:translateY(-50%) rotate(45deg)}
+.broad h1 .hollow{color:transparent;-webkit-text-stroke:2px var(--bone)}
+
+.lede{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:44px;
+  padding-top:26px;border-top:2px solid rgba(242,237,226,.28)}
+.lede p{font-size:17.5px;line-height:1.6;max-width:52ch}
+.lede .right{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;
+  justify-content:flex-end}
+.btn{background:var(--maize);color:var(--ink);text-decoration:none;
+  padding:14px 26px;font-family:'Big Shoulders Display',sans-serif;font-weight:800;
+  font-size:18px;letter-spacing:.06em;text-transform:uppercase;
+  transition:transform .2s ease,box-shadow .2s ease}
+.btn:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--bone)}
+.btn.b2{background:transparent;border:2px solid var(--bone);color:var(--bone)}
+.btn.b2:hover{box-shadow:5px 5px 0 var(--maize)}
+
+/* ---------- hard colour blocks ---------- */
+.blocks{display:grid;grid-template-columns:repeat(4,1fr);margin-top:72px}
+.blk{padding:44px 28px 40px;min-height:330px;display:flex;flex-direction:column;
+  justify-content:space-between;color:var(--ink);
+  transition:transform .35s cubic-bezier(.2,.8,.3,1)}
+.blk:hover{transform:translateY(-10px)}
+.blk:nth-child(1){background:var(--maize)}
+.blk:nth-child(2){background:var(--clay);color:var(--bone)}
+.blk:nth-child(3){background:var(--leaf);color:var(--bone)}
+.blk:nth-child(4){background:var(--kraft)}
+.blk .n{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:15px;
+  letter-spacing:.14em}
+.blk h3{font-family:'Big Shoulders Display',sans-serif;font-weight:800;
+  font-size:clamp(34px,3.4vw,50px);line-height:.9;text-transform:uppercase;
+  margin-top:auto}
+.blk p{font-size:15px;line-height:1.5;margin-top:14px;opacity:.86}
+
+/* ---------- statement band ---------- */
+.band{background:var(--bone);color:var(--ink);padding:104px 0}
+.band h2{font-family:'Big Shoulders Display',sans-serif;font-weight:800;
+  font-size:clamp(40px,7.6vw,108px);line-height:.82;text-transform:uppercase;
+  max-width:16ch}
+.band .sub{margin-top:28px;max-width:56ch;font-size:17.5px;line-height:1.6;opacity:.78}
+
+/* ---------- evidence rows ---------- */
+.ev{margin-top:56px;border-top:3px solid var(--ink)}
+.evrow{display:grid;grid-template-columns:230px 1fr;gap:26px;padding:26px 0;
+  border-bottom:1px solid rgba(20,18,14,.22);align-items:start;
+  transition:padding-left .3s ease,background .3s ease}
+.evrow:hover{padding-left:14px;background:rgba(233,178,60,.2)}
+.tag{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:19px;
+  letter-spacing:.05em;text-transform:uppercase;padding-top:1px}
+.tag.v{color:var(--clay)}
+.tag.p{color:var(--ink);opacity:.72}
+.tag.n{color:var(--ink);opacity:.42}
+.evrow .body{font-size:17px;line-height:1.56}
+.evrow .body strong{font-family:'Big Shoulders Display',sans-serif;
+  font-weight:800;font-size:1.35em;text-transform:uppercase;letter-spacing:.02em;
+  display:block;margin-bottom:4px}
+.evrow .src{display:block;margin-top:8px;font-size:13.5px;opacity:.62}
+
+/* ---------- film ---------- */
+.film{position:relative;height:64vh;min-height:380px;overflow:hidden;
+  display:flex;align-items:flex-end}
+.film img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  filter:saturate(.9) contrast(1.05)}
+.film::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(0deg,rgba(20,18,14,.86),rgba(20,18,14,.1) 60%)}
+.film .cap{position:relative;z-index:2;padding:40px 34px;max-width:1280px;
+  margin:0 auto;width:100%}
+.film .cap h3{font-family:'Big Shoulders Display',sans-serif;font-weight:800;
+  font-size:clamp(30px,5vw,66px);line-height:.86;text-transform:uppercase}
+.film .cap p{margin-top:12px;font-size:15px;opacity:.82}
+
+/* ---------- stages ---------- */
+.stages{padding:96px 0}
+.stage{display:grid;grid-template-columns:90px 1fr 1.3fr;gap:24px;
+  padding:24px 0;border-top:1px solid rgba(242,237,226,.24);align-items:baseline;
+  transition:background .3s ease,padding-left .3s ease}
+.stage:last-child{border-bottom:1px solid rgba(242,237,226,.24)}
+.stage:hover{background:rgba(242,237,226,.07);padding-left:14px}
+.stage .n{font-family:'Big Shoulders Display',sans-serif;font-weight:800;
+  font-size:30px;color:var(--maize)}
+.stage h4{font-family:'Big Shoulders Display',sans-serif;font-weight:800;
+  font-size:clamp(26px,2.8vw,40px);text-transform:uppercase;line-height:.9}
+.stage p{font-size:16px;line-height:1.55;opacity:.8}
+
+.close{padding:110px 0 120px;text-align:left}
+.close h2{font-family:'Big Shoulders Display',sans-serif;font-weight:800;
+  font-size:clamp(42px,8vw,124px);line-height:.8;text-transform:uppercase;max-width:14ch}
+footer{border-top:1px solid rgba(242,237,226,.24);padding:26px 34px;
+  font-size:12px;letter-spacing:.11em;text-transform:uppercase;font-weight:600;
+  display:flex;justify-content:space-between;max-width:1280px;margin:0 auto;
+  flex-wrap:wrap;gap:12px;opacity:.72}
+
+.reveal{opacity:0;transform:translateY(24px);
+  transition:opacity .85s cubic-bezier(.2,.7,.2,1),transform .85s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:1000px){.blocks{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){
+  .navlinks{display:none}
+  .blocks{grid-template-columns:1fr}
+  .lede{grid-template-columns:1fr}
+  .lede .right{justify-content:flex-start}
+  .evrow,.stage{grid-template-columns:1fr;gap:10px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  .reveal{opacity:1;transform:none}
+  .broad h1 .l i{transform:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="mark" href="/">
+    <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+      <line x1="10" y1="46" x2="54" y2="46" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/>
+      <line x1="16" y1="34" x2="48" y2="34" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/>
+      <line x1="22" y1="22" x2="34" y2="22" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/>
+      <circle cx="42.5" cy="22" r="4" fill="#6da22e"/>
+    </svg>
+    School Farm Network
+  </a>
+  <div class="navlinks">
+    <a href="/how-it-works.html">How it works</a>
+    <a href="/impact.html">Evidence</a>
+    <a href="/partners.html">Partners</a>
+    <a href="/contact.html">Partner with us</a>
+  </div>
+</nav>
+
+<header class="broad wrap">
+  <h1>
+    <span class="l"><i>Africa has</i></span>
+    <span class="l"><i>the land<span class="arrow"></span>we</i></span>
+    <span class="l"><i><span class="hollow">build the system</span></i></span>
+  </h1>
+
+  <div class="lede">
+    <p>School Farm Network turns underused land at African schools into professionally
+    managed farms that produce food, create jobs and give young people a pathway
+    into agriculture.</p>
+    <div class="right">
+      <a class="btn" href="/how-it-works.html">Explore the model</a>
+      <a class="btn b2" href="/contact.html">Partner with us</a>
+    </div>
+  </div>
+</header>
+
+<div class="blocks">
+  <div class="blk"><div class="n">01</div><h3>Meals</h3>
+    <p>Productive land helps fund or supply meals for students.</p></div>
+  <div class="blk"><div class="n">02</div><h3>Jobs</h3>
+    <p>Paid local work, with emphasis on opportunities for women.</p></div>
+  <div class="blk"><div class="n">03</div><h3>Learning</h3>
+    <p>Schools gain a practical agricultural learning environment.</p></div>
+  <div class="blk"><div class="n">04</div><h3>Future farmers</h3>
+    <p>Ages 18 to 35 gain real operational experience and a route into agriculture.</p></div>
+</div>
+
+<section class="band">
+  <div class="wrap reveal">
+    <h2>We publish what is verified.</h2>
+    <p class="sub">SFN is developing and testing a repeatable model. We state what is still
+    being measured, and never present ambition as achievement.</p>
+
+    <div class="ev">
+      <div class="evrow">
+        <div class="tag v">Verified · May 2026</div>
+        <div class="body"><strong>First harvest</strong>
+          Approximately 4 tonnes of onions, harvested and weighed at Seeds2Education,
+          the original pilot project.
+          <span class="src">Source: pilot harvest and weighing records, May 2026. A pilot result, not portfolio performance.</span>
+        </div>
+      </div>
+      <div class="evrow">
+        <div class="tag p">In progress</div>
+        <div class="body"><strong>Sale and meal conversion</strong>
+          The harvest is being sold to market. Proceeds will be paid to Food for Education
+          in exchange for student meals.</div>
+      </div>
+      <div class="evrow">
+        <div class="tag p">In collection</div>
+        <div class="body"><strong>Pilot measures</strong>
+          Costs per acre, yields per crop cycle, paid work created, school benefit delivered,
+          and operational lessons across a two-school, two-cycle pilot.</div>
+      </div>
+      <div class="evrow">
+        <div class="tag n">Not yet achieved</div>
+        <div class="body"><strong>Long-term ambition</strong>
+          A model repeatable across thousands of schools and tens of thousands of acres in Africa.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="film">
+  <img src="../assets/img/hero-1600.jpg" alt="The Seeds2Education pilot site in Kenya">
+  <div class="cap">
+    <h3>Seeds2Education<br>Kenya</h3>
+    <p>Photography from the original pilot.</p>
+  </div>
+</section>
+
+<section class="stages wrap reveal">
+  <div class="stage"><div class="n">01</div><h4>Assess</h4>
+    <p>Verify land, water, governance, access, security and commercial viability before anything is built.</p></div>
+  <div class="stage"><div class="n">02</div><h4>Build</h4>
+    <p>Establish appropriate irrigation, storage, fencing, soil preparation and operating infrastructure.</p></div>
+  <div class="stage"><div class="n">03</div><h4>Grow</h4>
+    <p>Plan and manage crop cycles against real buyer demand and agronomic requirements.</p></div>
+  <div class="stage"><div class="n">04</div><h4>Deliver value</h4>
+    <p>Sell or exchange produce and deliver the agreed benefit to the school, including meals.</p></div>
+  <div class="stage"><div class="n">05</div><h4>Measure and replicate</h4>
+    <p>Record costs, jobs, yields, school benefits and lessons so the model improves and repeats.</p></div>
+</section>
+
+<section class="close wrap reveal">
+  <h2>It needs the systems<span class="arrow"></span>that connect them.</h2>
+  <div style="margin-top:38px"><a class="btn" href="/contact.html">Discuss a partnership</a></div>
+</section>
+
+<footer>
+  <span>School Farm Network</span>
+  <span>schoolfarmnetwork.com</span>
+</footer>
+
+<script>
+requestAnimationFrame(function(){document.body.classList.add('ready')});
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+</script>
+</body>
+</html>

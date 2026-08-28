@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SFN — Direction 05, Aerial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;600;800&family=Funnel+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#171512;
+  --cream:#F4F0E6;
+  --moss:#59713F;
+  --lime:#C8DE4B;   /* the single chartreuse pill, after INVERSA */
+  --muted:rgba(23,21,18,.66);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--cream);color:var(--ink);
+  font-family:'Funnel Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden}
+a{color:inherit}
+img,video{display:block;max-width:100%}
+.wrap{max-width:1280px;margin:0 auto;padding:0 34px}
+
+/* ---------- aerial hero ---------- */
+.aerial{position:relative;height:100svh;min-height:560px;overflow:hidden;
+  background:var(--ink)}
+.aerial video,.aerial>img{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;filter:saturate(.92)}
+.aerial::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(23,21,18,.52) 0%,rgba(23,21,18,.06) 30%,rgba(23,21,18,.62) 66%,rgba(23,21,18,.9) 100%)}
+
+.topbar{position:absolute;z-index:3;top:0;left:0;right:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:24px 34px;color:var(--cream)}
+.mark{display:flex;align-items:center;gap:10px;text-decoration:none;
+  font-family:'Funnel Display',sans-serif;font-weight:600;font-size:17px;
+  letter-spacing:-.01em}
+.mark svg{width:22px;height:22px}
+.navlinks{display:flex;gap:26px;font-size:13px;font-weight:500}
+.navlinks a{text-decoration:none;opacity:.85}
+.navlinks a:hover{opacity:1}
+
+/* colossal wordmark down the right edge, after Munro */
+.edge{position:absolute;z-index:2;right:16px;top:0;bottom:0;
+  display:flex;align-items:center;pointer-events:none}
+.edge span{writing-mode:vertical-rl;
+  font-family:'Funnel Display',sans-serif;font-weight:800;
+  font-size:clamp(34px,5.4vw,78px);line-height:1;letter-spacing:-.02em;
+  color:rgba(244,240,230,.22);text-transform:uppercase}
+
+.statement{position:absolute;z-index:3;left:0;right:0;bottom:0;
+  padding:0 34px 46px;color:var(--cream)}
+.statement .inner{max-width:1280px;margin:0 auto}
+.statement h1{font-family:'Funnel Display',sans-serif;font-weight:800;
+  font-size:clamp(34px,5.6vw,74px);line-height:.98;letter-spacing:-.03em;
+  max-width:15ch}
+.statement h1 .l{display:block;overflow:hidden}
+.statement h1 .l i{display:block;font-style:normal;transform:translateY(105%);
+  transition:transform .95s cubic-bezier(.16,.84,.3,1)}
+body.ready .statement h1 .l i{transform:none}
+.statement h1 .l:nth-child(2) i{transition-delay:.1s}
+.pill{display:inline-flex;align-items:center;gap:9px;margin-top:26px;
+  background:var(--lime);color:var(--ink);text-decoration:none;
+  padding:12px 22px;border-radius:100px;font-weight:600;font-size:14.5px;
+  transition:transform .22s ease}
+.pill:hover{transform:translateY(-2px)}
+.sitestate{position:absolute;z-index:3;right:112px;bottom:50px;text-align:right;
+  color:rgba(244,240,230,.8);font-size:12px;letter-spacing:.11em;
+  text-transform:uppercase;line-height:1.9}
+
+/* ---------- cream band, plain-spoken ---------- */
+.band{padding:96px 0 20px}
+.band .grid{display:grid;grid-template-columns:1.15fr 1fr;gap:60px;align-items:start}
+.band h2{font-family:'Funnel Display',sans-serif;font-weight:800;
+  font-size:clamp(28px,4.1vw,50px);line-height:1.04;letter-spacing:-.028em;
+  max-width:18ch}
+.band p{font-size:17.5px;line-height:1.64;color:var(--muted);max-width:54ch}
+.band p+p{margin-top:18px}
+
+/* ---------- counters, after Ecosia ---------- */
+.counters{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:66px;
+  border-top:1px solid rgba(23,21,18,.2)}
+.ct{padding:30px 22px 28px;border-right:1px solid rgba(23,21,18,.2)}
+.ct:last-child{border-right:0}
+.ct .num{font-family:'Funnel Display',sans-serif;font-weight:800;
+  font-size:clamp(38px,4.6vw,62px);line-height:1;letter-spacing:-.035em}
+.ct .num small{font-size:.42em;font-weight:600;letter-spacing:-.01em;margin-left:.14em}
+.ct .lab{margin-top:12px;font-size:13.5px;line-height:1.5;color:var(--muted)}
+.ct.dim .num{color:rgba(23,21,18,.3)}
+
+/* ---------- evidence filmstrip ---------- */
+.evidence{padding:96px 0}
+.kick{font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);font-weight:600}
+.evidence h2{font-family:'Funnel Display',sans-serif;font-weight:800;
+  font-size:clamp(28px,4.1vw,50px);line-height:1.04;letter-spacing:-.028em;
+  margin-top:14px;max-width:20ch}
+.rows{margin-top:44px;border-top:1px solid rgba(23,21,18,.2)}
+.row{display:grid;grid-template-columns:210px 1fr;gap:26px;padding:24px 0;
+  border-bottom:1px solid rgba(23,21,18,.2);align-items:start;
+  transition:padding-left .3s ease}
+.row:hover{padding-left:12px}
+.st{font-size:12px;letter-spacing:.11em;text-transform:uppercase;font-weight:600;
+  padding-top:4px}
+.st.v{color:var(--moss)}
+.st.p{color:var(--muted)}
+.st.n{color:rgba(23,21,18,.4)}
+.row .body{font-size:17px;line-height:1.58}
+.row .body strong{font-family:'Funnel Display',sans-serif;font-weight:800;
+  font-size:1.16em;display:block;margin-bottom:3px;letter-spacing:-.02em}
+.row .src{display:block;margin-top:8px;font-size:13.5px;color:var(--muted)}
+
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:52px}
+.strip figure{margin:0;overflow:hidden;border-radius:3px;background:#ddd}
+.strip img{width:100%;height:230px;object-fit:cover;
+  transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+.strip figure:hover img{transform:scale(1.05)}
+.strip figcaption{margin-top:10px;font-size:12.5px;color:var(--muted)}
+
+/* ---------- stages on ink ---------- */
+.dark{background:var(--ink);color:var(--cream);padding:100px 0}
+.dark h2{font-family:'Funnel Display',sans-serif;font-weight:800;
+  font-size:clamp(28px,4.1vw,50px);line-height:1.04;letter-spacing:-.028em;max-width:18ch}
+.dark .kick{color:rgba(244,240,230,.6)}
+.stages{margin-top:44px;border-top:1px solid rgba(244,240,230,.24)}
+.stage{display:grid;grid-template-columns:64px 230px 1fr;gap:24px;padding:24px 0;
+  border-bottom:1px solid rgba(244,240,230,.24);align-items:baseline;
+  transition:background .3s ease,padding-left .3s ease}
+.stage:hover{background:rgba(244,240,230,.06);padding-left:14px}
+.stage .n{font-family:'Funnel Display',sans-serif;font-weight:800;font-size:15px;
+  color:var(--lime)}
+.stage h4{font-family:'Funnel Display',sans-serif;font-weight:800;font-size:22px;
+  letter-spacing:-.02em}
+.stage p{font-size:16px;line-height:1.55;color:rgba(244,240,230,.76)}
+
+.close{padding:110px 0}
+.close h2{font-family:'Funnel Display',sans-serif;font-weight:800;
+  font-size:clamp(30px,4.6vw,58px);line-height:1.02;letter-spacing:-.03em;max-width:18ch}
+footer{border-top:1px solid rgba(23,21,18,.2);padding:26px 34px;font-size:13px;
+  color:var(--muted);display:flex;justify-content:space-between;max-width:1280px;
+  margin:0 auto;flex-wrap:wrap;gap:12px}
+
+.reveal{opacity:0;transform:translateY(22px);
+  transition:opacity .85s cubic-bezier(.2,.7,.2,1),transform .85s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .band .grid{grid-template-columns:1fr;gap:28px}
+  .counters{grid-template-columns:repeat(2,1fr)}
+  .ct:nth-child(2){border-right:0}
+  .strip{grid-template-columns:1fr}
+  .row,.stage{grid-template-columns:1fr;gap:10px}
+  .navlinks{display:none}
+  .sitestate{display:none}
+  .edge span{font-size:52px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  .reveal{opacity:1;transform:none}
+  .statement h1 .l i{transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="aerial">
+  <video autoplay muted loop playsinline poster="../assets/img/hero-1600.jpg">
+    <source src="../assets/hero-loop.mp4" type="video/mp4">
+  </video>
+
+  <div class="topbar">
+    <a class="mark" href="/">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <line x1="10" y1="46" x2="54" y2="46" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/>
+        <line x1="16" y1="34" x2="48" y2="34" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/>
+        <line x1="22" y1="22" x2="34" y2="22" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/>
+        <circle cx="42.5" cy="22" r="4" fill="#6da22e"/>
+      </svg>
+      School Farm Network
+    </a>
+    <div class="navlinks">
+      <a href="/how-it-works.html">How it works</a>
+      <a href="/impact.html">Evidence</a>
+      <a href="/partners.html">Partners</a>
+      <a href="/contact.html">Partner with us</a>
+    </div>
+  </div>
+
+  <div class="edge"><span>Network</span></div>
+
+  <div class="statement">
+    <div class="inner">
+      <h1>
+        <span class="l"><i>The land is already there.</i></span>
+        <span class="l"><i>The system was not.</i></span>
+      </h1>
+      <a class="pill" href="/how-it-works.html">Explore the model →</a>
+    </div>
+  </div>
+
+  <div class="sitestate">
+    Seeds2Education<br>Kenya<br>First harvest logged
+  </div>
+</header>
+
+<section class="band wrap reveal">
+  <div class="grid">
+    <h2>Unused school land can feed every generation.</h2>
+    <div>
+      <p>School Farm Network turns underused land at African schools into professionally
+      managed farms that produce food, create jobs and give young people a pathway
+      into agriculture.</p>
+      <p>Agricultural programmes usually fail for the same reason: no consistent operations,
+      no committed buyers, no financial controls, no evidence. These are not four separate
+      charitable causes. They are one connected systems problem, and it needs one
+      operating system.</p>
+    </div>
+  </div>
+
+  <div class="counters">
+    <div class="ct"><div class="num" data-to="1">0</div>
+      <div class="lab">Pilot site operating, at Seeds2Education in Kenya</div></div>
+    <div class="ct"><div class="num" data-to="4" data-suffix="t">0</div>
+      <div class="lab">Approximate tonnes of onions harvested and weighed, May 2026</div></div>
+    <div class="ct"><div class="num" data-to="2">0</div>
+      <div class="lab">Schools in the current two-cycle pilot</div></div>
+    <div class="ct dim"><div class="num">—</div>
+      <div class="lab">Cost per meal. Not yet measured, and stated as such</div></div>
+  </div>
+</section>
+
+<section class="evidence wrap reveal">
+  <div class="kick">Evidence and current stage</div>
+  <h2>Built to prove what works, not to report activity.</h2>
+
+  <div class="rows">
+    <div class="row">
+      <div class="st v">Verified · May 2026</div>
+      <div class="body"><strong>First harvest</strong>
+        Approximately 4 tonnes of onions, harvested and weighed at Seeds2Education,
+        the original pilot project.
+        <span class="src">Source: pilot harvest and weighing records, May 2026. A pilot result, not portfolio performance.</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="st p">In progress</div>
+      <div class="body"><strong>Sale and meal conversion</strong>
+        The harvest is being sold to market. Proceeds will be paid to Food for Education
+        in exchange for student meals.</div>
+    </div>
+    <div class="row">
+      <div class="st p">In collection</div>
+      <div class="body"><strong>Pilot measures</strong>
+        Costs per acre, yields per crop cycle, paid work created, school benefit delivered,
+        and operational lessons across a two-school, two-cycle pilot.</div>
+    </div>
+    <div class="row">
+      <div class="st n">Not yet achieved</div>
+      <div class="body"><strong>Long-term ambition</strong>
+        A model repeatable across thousands of schools and tens of thousands of acres in Africa.</div>
+    </div>
+  </div>
+
+  <div class="strip">
+    <figure><img src="../assets/img/hero-1600.jpg" alt="Land at the pilot site">
+      <figcaption>The land, before the build.</figcaption></figure>
+    <figure><img src="../assets/img/irrigation-2000.jpg" alt="Irrigation installed at the pilot site">
+      <figcaption>Irrigation, installed.</figcaption></figure>
+    <figure><img src="../assets/img/pilot-site-900.jpg" alt="The pilot site under cultivation">
+      <figcaption>Under cultivation.</figcaption></figure>
+  </div>
+</section>
+
+<section class="dark">
+  <div class="wrap reveal">
+    <div class="kick">How it works</div>
+    <h2>Five stages, one accountable model.</h2>
+    <div class="stages">
+      <div class="stage"><div class="n">01</div><h4>Assess</h4>
+        <p>Verify land, water, governance, access, security and commercial viability before anything is built.</p></div>
+      <div class="stage"><div class="n">02</div><h4>Build</h4>
+        <p>Establish appropriate irrigation, storage, fencing, soil preparation and operating infrastructure.</p></div>
+      <div class="stage"><div class="n">03</div><h4>Grow</h4>
+        <p>Plan and manage crop cycles against real buyer demand and agronomic requirements.</p></div>
+      <div class="stage"><div class="n">04</div><h4>Deliver value</h4>
+        <p>Sell or exchange produce and deliver the agreed benefit to the school, including meals.</p></div>
+      <div class="stage"><div class="n">05</div><h4>Measure and replicate</h4>
+        <p>Record costs, jobs, yields, school benefits and lessons so the model improves and repeats.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="close wrap reveal">
+  <h2>Africa does not lack land, talent or demand. It needs the systems that connect them.</h2>
+  <a class="pill" href="/contact.html" style="margin-top:32px">Discuss a partnership →</a>
+</section>
+
+<footer>
+  <span>School Farm Network</span>
+  <span>schoolfarmnetwork.com</span>
+</footer>
+
+<script>
+requestAnimationFrame(function(){document.body.classList.add('ready')});
+
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+
+// Count up only the figures that are real.
+var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var cio=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(!e.isIntersecting)return;
+    cio.unobserve(e.target);
+    var el=e.target,to=parseFloat(el.dataset.to),suf=el.dataset.suffix||'';
+    if(reduce){el.innerHTML=to+(suf?'<small>'+suf+'</small>':'');return}
+    var t0=null,dur=1100;
+    function step(t){
+      if(!t0)t0=t;
+      var p=Math.min(1,(t-t0)/dur), e2=1-Math.pow(1-p,3);
+      el.innerHTML=Math.round(to*e2)+(suf?'<small>'+suf+'</small>':'');
+      if(p<1)requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+},{threshold:.5});
+document.querySelectorAll('.num[data-to]').forEach(function(el){cio.observe(el)});
+</script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SFN — five directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1A1712;--bone:#F6F3EC;--rule:rgba(26,23,18,.16);--muted:rgba(26,23,18,.66)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bone);color:var(--ink);font-family:'Hanken Grotesk',system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;line-height:1.55}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 30px}
+header{padding:70px 0 46px;border-bottom:1px solid var(--rule)}
+h1{font-size:clamp(30px,4.4vw,48px);line-height:1.06;letter-spacing:-.03em;font-weight:700;max-width:20ch}
+header p{margin-top:18px;max-width:64ch;font-size:17px;color:var(--muted)}
+header .note{margin-top:22px;font-size:14.5px;color:var(--muted);max-width:64ch}
+header .note a{font-weight:600}
+.list{padding:20px 0 90px}
+.item{display:grid;grid-template-columns:76px 1fr 150px;gap:28px;padding:34px 0;
+  border-bottom:1px solid var(--rule);align-items:start;text-decoration:none;
+  transition:padding-left .3s ease,background .3s ease}
+.item:hover{padding-left:14px;background:rgba(26,23,18,.04)}
+.n{font-size:14px;font-weight:700;letter-spacing:.1em;color:var(--muted);padding-top:6px}
+h2{font-size:26px;letter-spacing:-.02em;font-weight:700}
+.lineage{margin-top:8px;font-size:13px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:#8A6A2F}
+.desc{margin-top:12px;font-size:16px;color:var(--muted);max-width:60ch}
+.risk{margin-top:10px;font-size:14.5px;color:var(--muted);max-width:60ch}
+.risk b{color:var(--ink);font-weight:600}
+.go{text-align:right;font-size:14.5px;font-weight:600;padding-top:6px;white-space:nowrap}
+@media(max-width:760px){
+  .item{grid-template-columns:1fr;gap:8px}
+  .go{text-align:left}
+}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <h1>Five directions for School Farm Network.</h1>
+  <p>Each one traces to a specific site found by searching the refero gallery against SFN's actual
+  business, not picked by taste. Real tokens were pulled off the running pages. No direction reuses
+  a typeface from an earlier attempt.</p>
+  <p class="note">The research trail, including what was searched and why each reference was kept,
+  is in <a href="../RESEARCH.md">RESEARCH.md</a>. Copy and evidence are identical across all five,
+  so you are comparing design and nothing else.</p>
+</header>
+
+<div class="list wrap">
+
+  <a class="item" href="01-register.html">
+    <div class="n">01</div>
+    <div>
+      <h2>The Register</h2>
+      <div class="lineage">After Piet Oudolf · oudolf.com</div>
+      <p class="desc">The homepage is the network itself. Every school named in large type over a
+      wall of the real pilot photography, veiled to a flat warm grey. Hover a school and its own
+      land brightens behind the name. Sites not yet built are drawn as outlined type, so the page
+      shows the frame being filled.</p>
+      <p class="risk"><b>Why it could work:</b> evidence-led by construction, and it grows as the
+      network grows. <b>Risk:</b> with one site live it is a short list, and that honesty has to
+      read as confidence rather than emptiness.</p>
+    </div>
+    <div class="go">Open →</div>
+  </a>
+
+  <a class="item" href="02-almanac.html">
+    <div class="n">02</div>
+    <div>
+      <h2>Almanac</h2>
+      <div class="lineage">After Ambrook · ambrook.com</div>
+      <p class="desc">The closest living business analogue: financial software for working farms.
+      Its real tokens, bone canvas, warm near-black ink and wheat accent, with a forest-green ledger
+      panel. The custom layer is hand-drawn engravings in the manner of an agricultural almanac,
+      and the evidence is presented as an accounting table.</p>
+      <p class="risk"><b>Why it could work:</b> reads as an operating company, not a cause.
+      <b>Risk:</b> the calmest of the five, so it carries the least shock.</p>
+    </div>
+    <div class="go">Open →</div>
+  </a>
+
+  <a class="item" href="03-portrait.html">
+    <div class="n">03</div>
+    <div>
+      <h2>Data Portrait</h2>
+      <div class="lineage">After W.E.B. Du Bois, Paris 1900 · via Vocal Type</div>
+      <p class="desc">Found by following Break Maiden's typeface back to its foundry. In 1900 Du Bois
+      argued for Black American life in front of a sceptical world using hand-drawn geometric charts
+      in cream, crimson, ochre and green. The page becomes a set of numbered plates: the six
+      assessment conditions as a fan, the evidence record as bars where the unmeasured column is
+      drawn as an empty dashed box.</p>
+      <p class="risk"><b>Why it could work:</b> the argument is built into the form, and no NGO site
+      looks remotely like it. <b>Risk:</b> the strongest point of view, so the most polarising.</p>
+    </div>
+    <div class="go">Open →</div>
+  </a>
+
+  <a class="item" href="04-broadside.html">
+    <div class="n">04</div>
+    <div>
+      <h2>Broadside</h2>
+      <div class="lineage">After Break Maiden · breakmaiden.co</div>
+      <p class="desc">Colossal condensed capitals set at a line height tight enough that the lines
+      crowd each other, with arrow glyphs inline in the sentence, over hard blocks of maize, clay,
+      leaf and kraft. This is the boldness you liked, arrived at from the gallery rather than from
+      the one name already in hand, and in earth colour rather than neon.</p>
+      <p class="risk"><b>Why it could work:</b> loudest and most confident in a room of NGO decks.
+      <b>Risk:</b> volume can outrun the evidence when the evidence is one harvest.</p>
+    </div>
+    <div class="go">Open →</div>
+  </a>
+
+  <a class="item" href="05-aerial.html">
+    <div class="n">05</div>
+    <div>
+      <h2>Aerial</h2>
+      <div class="lineage">After INVERSA, Munro Partners and Ecosia</div>
+      <p class="desc">Land from above as the canvas, the drone film running full bleed, a terse
+      two-line declarative at the bottom left and the wordmark set colossal down the right edge.
+      Beneath it a cream band of plain-spoken text and counters that only count the figures that
+      are real, with cost per meal left as a dash because it has not been measured.</p>
+      <p class="risk"><b>Why it could work:</b> the investor register, land first, claims second.
+      <b>Risk:</b> closest to the territory already rejected as a photography site.</p>
+    </div>
+    <div class="go">Open →</div>
+  </a>
+
+</div>
+</body>
+</html>

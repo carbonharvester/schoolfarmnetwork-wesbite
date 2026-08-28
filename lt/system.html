@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Living Timetable — system, manifest and gauntlet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blackboard:#17221D;--paper:#F2EBD8;--crop:#6C8B45;--harvest:#D56B35;
+  --ink:#315B70;--chalk:#FFFDF5;--paper-well:#E9E0C8;
+  --crop-text:#4A6329;--harvest-text:#A8481C;
+  --text:#17221D;--text-muted:rgba(23,34,29,.70);
+  --rule:rgba(23,34,29,.20);--rule-strong:rgba(23,34,29,.42);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--text);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 32px}
+a{color:var(--ink)}
+h1{font-family:'Fraunces',Georgia,serif;font-weight:600;font-variation-settings:'opsz' 144;
+  font-size:clamp(32px,4.4vw,52px);line-height:1.04;letter-spacing:-.024em;max-width:20ch}
+h2{font-family:'Fraunces',Georgia,serif;font-weight:600;font-variation-settings:'opsz' 72;
+  font-size:clamp(23px,2.8vw,32px);line-height:1.1;letter-spacing:-.018em}
+h3{font-family:'IBM Plex Sans';font-size:16px;font-weight:600;margin-bottom:6px}
+header{padding:72px 0 34px;border-bottom:1.5px solid var(--rule-strong)}
+header p{margin-top:16px;max-width:66ch;color:var(--text-muted)}
+section{padding:54px 0;border-bottom:1px solid var(--rule)}
+.kick{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:14px}
+p+p{margin-top:12px}
+.lede{margin-top:14px;max-width:70ch;color:var(--text-muted)}
+
+table{width:100%;border-collapse:collapse;margin-top:24px;font-size:14.5px}
+th,td{text-align:left;vertical-align:top;padding:13px 14px 13px 0;
+  border-bottom:1px solid var(--rule)}
+th{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--text-muted);font-weight:500;
+  border-bottom:1.5px solid var(--rule-strong);white-space:nowrap}
+td.k{font-weight:600;white-space:nowrap}
+.mono{font-family:'IBM Plex Mono',monospace;font-size:13px}
+
+.sw{display:inline-block;width:15px;height:15px;border-radius:2px;
+  border:1px solid var(--rule-strong);vertical-align:-3px;margin-right:8px}
+.pass{color:var(--crop-text);font-weight:600}
+.fail{color:var(--harvest-text);font-weight:600}
+.v{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--harvest-text);border:1px solid currentColor;
+  border-radius:2px;padding:2px 6px;display:inline-block}
+ol,ul{margin-top:12px;padding-left:20px}
+li{margin-bottom:9px;max-width:78ch}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:22px}
+.score{font-family:'IBM Plex Mono',monospace;font-weight:500}
+.round{border-left:2px solid var(--rule-strong);padding-left:20px;margin-top:26px}
+@media(max-width:760px){
+  .grid2{grid-template-columns:1fr}
+  table,thead,tbody,th,td,tr{display:block}
+  th{display:none}
+  td{border:0;padding:3px 0}
+  tr{border-bottom:1px solid var(--rule);padding:14px 0;display:block}
+  td.k{margin-bottom:4px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="kick">School Farm Network · pilot deliverable</span>
+  <h1>A Living Timetable</h1>
+  <p>The pilot covers navigation, the hero, the missed opportunity screen, the
+  timetable-to-field transition, and the first view of how one farm works. Nothing
+  beyond that is built. The prototype is at <a href="index.html">index.html</a>.</p>
+</header>
+
+<!-- 1 -->
+<section>
+  <span class="kick">Deliverable 1</span>
+  <h2>Reference translation table</h2>
+  <p class="lede">What is taken as a principle, what is changed, and what is refused
+  outright so no reference surface is reproduced.</p>
+
+  <table>
+    <thead><tr><th>Reference</th><th>Borrowed</th><th>Transformed</th><th>Refused</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="k">Next Gen Now<br><span class="mono">systems spine</span></td>
+        <td>Numbered chapters carrying a progression; evidence staged as part of the
+        story rather than bolted on as a statistics band.</td>
+        <td>Chapters are school periods with real clock times. The rail is a timetable,
+        so the numbering is diegetic instead of decorative.</td>
+        <td>Acid green on black, condensed headlines, forest imagery, its transitions
+        and its page order.</td>
+      </tr>
+      <tr>
+        <td class="k">Encyclopedia of the Farm<br><span class="mono">material world</span></td>
+        <td>Close observation and exact agricultural detail; editorial pacing that
+        gives one idea a whole screen.</td>
+        <td>Specificity is carried by the record rather than by atmosphere: plot
+        reference, area, water source, boundary, date, next decision.</td>
+        <td>Hospitality mood, its serif styling, the Ibiza setting, the crop index,
+        environmental sound, and its brown palette.</td>
+      </tr>
+      <tr>
+        <td class="k">Boulder County Climate Action<br><span class="mono">transformation device</span></td>
+        <td>One device that changes how everything after it is read.</td>
+        <td>The device is structural, not linguistic. Ruled timetable rows lengthen
+        into crop beds and clock times are replaced in place by growing stages.</td>
+        <td>Blackout poetry, its copy, its initiative cards, its identity, and any
+        literal reuse of its interaction.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 2 -->
+<section>
+  <span class="kick">Deliverable 2</span>
+  <h2>Design tokens</h2>
+
+  <h3 style="margin-top:26px">Colour, with measured contrast</h3>
+  <p class="lede">Blackboard and paper are the dominant fields. Green, orange and blue
+  are functional signals only. Ratios below are computed, not estimated.</p>
+  <table>
+    <thead><tr><th>Token</th><th>Value</th><th>Use</th><th>Ratio</th></tr></thead>
+    <tbody>
+      <tr><td class="k"><span class="sw" style="background:#17221D"></span>blackboard</td><td class="mono">#17221D</td><td>Dominant dark field, ink on paper, button fill</td><td class="mono pass">13.76 on paper</td></tr>
+      <tr><td class="k"><span class="sw" style="background:#F2EBD8"></span>paper</td><td class="mono">#F2EBD8</td><td>Dominant light field</td><td class="mono">field</td></tr>
+      <tr><td class="k"><span class="sw" style="background:#FFFDF5"></span>chalk</td><td class="mono">#FFFDF5</td><td>Text and buttons on blackboard</td><td class="mono pass">16.07 on blackboard</td></tr>
+      <tr><td class="k"><span class="sw" style="background:#6C8B45"></span>crop</td><td class="mono">#6C8B45</td><td>Beds, plot fill, progress marker. Large or non text only</td><td class="mono pass">3.26 on paper</td></tr>
+      <tr><td class="k"><span class="sw" style="background:#4A6329"></span>crop-text</td><td class="mono">#4A6329</td><td>Small crop-green text and the plot outline on paper</td><td class="mono pass">5.68 on paper</td></tr>
+      <tr><td class="k"><span class="sw" style="background:#8FB05F"></span>crop-dark</td><td class="mono">#8FB05F</td><td>Stage names and crop signals on blackboard</td><td class="mono pass">6.66 on blackboard</td></tr>
+      <tr><td class="k"><span class="sw" style="background:#D56B35"></span>harvest</td><td class="mono">#D56B35</td><td>Reserved. Non text use only</td><td class="mono">large only</td></tr>
+      <tr><td class="k"><span class="sw" style="background:#A8481C"></span>harvest-text</td><td class="mono">#A8481C</td><td>Verification marks on paper</td><td class="mono pass">4.89 on paper</td></tr>
+      <tr><td class="k"><span class="sw" style="background:#E4813F"></span>harvest-dark</td><td class="mono">#E4813F</td><td>Verification marks on blackboard</td><td class="mono pass">5.85 on blackboard</td></tr>
+      <tr><td class="k"><span class="sw" style="background:#315B70"></span>ink blue</td><td class="mono">#315B70</td><td>Links and focus ring</td><td class="mono pass">6.17 on paper</td></tr>
+    </tbody>
+  </table>
+
+  <div class="grid2">
+    <div>
+      <h3>Type</h3>
+      <ul>
+        <li><b>Fraunces</b>, display only, optical sizing set explicitly
+        (<span class="mono">opsz 144</span> for h1 and h2, <span class="mono">48</span>
+        for record headings, <span class="mono">20</span> for the wordmark),
+        <span class="mono">SOFT 0 WONK 0</span>. Weight 600.</li>
+        <li><b>IBM Plex Sans</b> for interface and body. 400 and 500. Body 17px, 1.6.</li>
+        <li><b>IBM Plex Mono</b> for times, plot references, field labels, measurements
+        and verification marks. 11 to 13px, tracking 0.08 to 0.13em, uppercase.</li>
+        <li>Scale: 68 / 52 / 32 / 27 / 20 / 17 / 15 / 12 / 11.</li>
+        <li>Licences: all three are SIL Open Font License 1.1 and can be shipped.
+        Self host before production.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Structure and motion</h3>
+      <ul>
+        <li>Grid: 12 columns desktop with a 180px fixed timetable rail; 8 at tablet;
+        4 at mobile where the rail becomes a 3px progress marker.</li>
+        <li>Row unit: 76px desktop, 70px tablet, 60px mobile. Every hero element is
+        placed on this row, including the marked plot.</li>
+        <li>Container 1400px, padding 40 / 28 / 20.</li>
+        <li>Radius 2px. Line weights: hairline 1px rules, 1.5px section openers,
+        2px on the marked plot.</li>
+        <li>Motion: 180ms linear for scrub-driven values, 420ms
+        <span class="mono">cubic-bezier(.22,.7,.24,1)</span> for state changes.
+        Two signature behaviours only, of which the pilot contains the first.</li>
+        <li>Accessibility: focus ring 2px ink blue at 3px offset, inverting to
+        crop-dark on the blackboard; semantic h1 to h3; decorative rules
+        <span class="mono">aria-hidden</span>; the transition resolves to its end
+        state under <span class="mono">prefers-reduced-motion</span> and with no
+        JavaScript.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section>
+  <span class="kick">Deliverable 4</span>
+  <h2>Media manifest</h2>
+  <p class="lede">Everything the pilot renders, and what has to be commissioned. No
+  stock is substituted anywhere.</p>
+  <table>
+    <thead><tr><th>Ref</th><th>Purpose</th><th>Composition</th><th>Orientation</th><th>Fallback and status</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="k">IMG-01</td>
+        <td>Hero. Locate the proposition in one real place.</td>
+        <td>School buildings and open ground legible in the same frame, people working
+        rather than posing.</td>
+        <td>Landscape 3:2, served at 1024 / 1600 / 2560 via srcset.</td>
+        <td>In place, from existing project photography. Labelled grey box if withdrawn.
+        <span class="v">Provenance unconfirmed</span></td>
+      </tr>
+      <tr>
+        <td class="k">SHOT-02</td>
+        <td>Stage 01 Assess. Make the method physical.</td>
+        <td>Hands measuring or marking a plot. Close, at working distance, tape or line
+        visible. No posing to camera.</td>
+        <td>Landscape 4:3.</td>
+        <td>Labelled grey box currently rendered with this direction. To commission.</td>
+      </tr>
+      <tr>
+        <td class="k">Not in pilot</td>
+        <td>Shots 3 to 9 of the brief list: soil macro, one crop through four stages,
+        teacher and learners working, field notebook and records, washing and weighing,
+        named portraits with consent, one elevated or mapped view.</td>
+        <td>Per the brief's shot list.</td>
+        <td>Mixed.</td>
+        <td>Required for sections 5 to 9. Not needed to approve this pilot.</td>
+      </tr>
+      <tr>
+        <td class="k">Video</td>
+        <td>None in the pilot.</td>
+        <td>Short observational film would serve section 5 onward.</td>
+        <td>Landscape, poster frame required.</td>
+        <td>Deferred. The pilot does not depend on autoplay or sound.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 5 -->
+<section>
+  <span class="kick">Deliverable 5</span>
+  <h2>Factual verification list</h2>
+  <p class="lede">Every claim or label in the pilot that needs your input. Each one is
+  marked in the interface with an orange rule, so nothing plausible is passing itself
+  off as confirmed.</p>
+  <ol>
+    <li>Hero support sentence. Is "helps schools turn available land into places to
+    learn, grow food, build practical skills, and create wider opportunity" the approved
+    description?</li>
+    <li>Primary and secondary actions. The brief proposes "Start a school farm" and
+    "Back the network"; the pilot uses "See how a school farm starts". Confirm which is
+    real, and what happens after the click.</li>
+    <li>Plot reference format. Is "Plot 01" how sites are actually identified?</li>
+    <li>Plot dimensions, and the units used.</li>
+    <li>IMG-01: location, date, photographer credit, and informed consent for the people
+    pictured.</li>
+    <li>Measured area of unused or underused land at a named school, with the date it
+    was measured. This is the one fact the missed opportunity screen needs.</li>
+    <li>The eight stage names, and whether stages repeat within a single season.</li>
+    <li>Who carries out the assessment, and who signs it off.</li>
+    <li>Whether learners take part at the assessment stage, and in which subject.</li>
+    <li>The real record fields captured at assessment.</li>
+    <li>Who takes the go or wait decision at the end of stage 01.</li>
+    <li>Countries, number of schools, and acreage, for section 8 and the network view.</li>
+    <li>Whether the school retains the produce, sells it, or both. Needed for section 5.</li>
+  </ol>
+  <p style="margin-top:16px"><b>Resolved without input:</b> font licensing. Fraunces,
+  IBM Plex Sans and IBM Plex Mono are all SIL OFL 1.1 and can be shipped.</p>
+</section>
+
+<!-- gauntlet -->
+<section>
+  <span class="kick">Design gauntlet</span>
+  <h2>Three rounds, rendered at 1440 × 1000 and 390 × 844</h2>
+  <p class="lede">Scored against visible evidence only. Any category below 4 is a
+  failure and was revised before rescoring.</p>
+
+  <div class="round">
+    <h3>Round 1 — three failures</h3>
+    <ul>
+      <li><b>Accessibility 2.</b> The header action rendered as a solid black rectangle
+      with no visible label. <span class="mono">.nav-links a</span> beat
+      <span class="mono">.btn</span> on specificity and set the text to muted dark on
+      the dark fill.</li>
+      <li><b>Editorial hierarchy 2.</b> The hero action, the marked plot and its caption
+      occupied the same row and overlapped.</li>
+      <li><b>Mobile integrity 1.</b> The sticky rail forced a viewport-height row that
+      left a dead band under the hero, and at 390 the clock times sat underneath the
+      headline and body copy.</li>
+    </ul>
+    <p style="margin-top:10px">Fixed: scoped the colour rule to
+    <span class="mono">a:not(.btn)</span>; moved the plot to row 6 and its caption to
+    row 7; replaced the in-grid rail with a fixed rail and indented each section past
+    it; moved all mobile content clear of the time gutter.</p>
+  </div>
+
+  <div class="round">
+    <h3>Round 2 — two failures</h3>
+    <ul>
+      <li><b>Concept ownership 3.</b> During the transition the clock time and the stage
+      name were both half visible in the same place, so the labels read as garbled
+      overprints rather than a substitution.</li>
+      <li><b>Mobile integrity 2.</b> The record's five fields were being placed in the
+      74px number rail, wrapping to two or three words per line.</li>
+      <li>Also noted, not a failure: five verification marks in one viewport read as a
+      broken page rather than a rigorous one.</li>
+    </ul>
+    <p style="margin-top:10px">Fixed: the time now clears out by 31% of the row's
+    progress and the stage arrives from 55%, with a 6px counter shift, so the two never
+    coexist; the record collapses to a true single column at 390; verification marks
+    reduced to the fields that are genuinely unknown, with a single footnote covering
+    drafted wording.</p>
+  </div>
+
+  <div class="round">
+    <h3>Round 3 — pass</h3>
+    <table>
+      <thead><tr><th>Category</th><th>Score</th><th>Visible evidence</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Concept ownership</td><td class="score pass">5</td><td>Ruled rows carrying clock times lengthen into planted beds while the times are replaced by growing stages. The hero marks one plot inside a school day. The record is headed "One plot, kept as a single record".</td></tr>
+        <tr><td class="k">Systems clarity</td><td class="score pass">4</td><td>Plot 01 is explicitly the first of a series; stages 02 to 08 continue as ruled lines marked "record continues". Held back from 5 because the network view is section 8 and out of pilot scope.</td></tr>
+        <tr><td class="k">Material credibility</td><td class="score pass">4</td><td>One real location photograph, one labelled commission box carrying its exact direction, and concrete verbs in the record: walk, measure, check, mark. Held back from 5 because only one real image exists so far.</td></tr>
+        <tr><td class="k">Editorial hierarchy</td><td class="score pass">4</td><td>One dominant point per screen. Display type is set on the rule grid so the headline reads as writing on ruled paper rather than type merely enlarged.</td></tr>
+        <tr><td class="k">Reference distance</td><td class="score pass">4</td><td>Numbered chapters without acid green or condensed heads; agricultural exactness without the hospitality mood; a transformation device that is structural rather than linguistic.</td></tr>
+        <tr><td class="k">Mobile integrity</td><td class="score pass">4</td><td>At 390 the rail becomes a progress marker, times stay in the margin, the transition still resolves stage by stage, the record is a single column, and the header keeps its action under a short label.</td></tr>
+        <tr><td class="k">Truthfulness</td><td class="score pass">5</td><td>No number, place, partner, quotation or outcome is asserted. Thirteen open items are marked in the interface and listed above.</td></tr>
+        <tr><td class="k">Accessibility</td><td class="score pass">4</td><td>All eleven text and control pairings computed at or above their threshold, lowest 3.26 for large non text crop green and 4.89 for the smallest coloured text. Focus ring visible and inverted per field. Verification marks carry a border, not colour alone.</td></tr>
+        <tr><td class="k">Performance realism</td><td class="score pass">4</td><td>No WebGL, sound, autoplay or hover dependency. One rAF-throttled scroll listener drives CSS custom properties. Responsive srcset. Without JavaScript the transition renders in its final state.</td></tr>
+        <tr><td class="k">Anti-template test</td><td class="score pass">5</td><td>Replace SFN with any other charity and the clock times, the marked plot, the stage substitution and the plot record all stop meaning anything.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section style="border-bottom:0">
+  <span class="kick">Proposal</span>
+  <h2>How the system extends, if this is approved</h2>
+  <ol>
+    <li><b>5. At the table.</b> One crop followed from the plot to its destination, laid
+    out as a continuation of the same record: variety, planting date, growing period,
+    labour, harvest, use, lesson.</li>
+    <li><b>6. What the farm teaches.</b> A stepped lesson plan built on the row unit,
+    each step tied to a real action already shown in the record. No benefits grid.</li>
+    <li><b>7. Evidence ledger.</b> Reuses the record's field structure, split three ways
+    into outputs, outcomes, and learning, including what failed. Numbers are never
+    animated.</li>
+    <li><b>8. Beyond the gate.</b> The second signature motion. A completed record
+    contracts to a single plotted point and joins verified sites on a map. If no
+    verified dataset exists, one prototype point is shown and the network view is
+    described as forthcoming.</li>
+    <li><b>9 to 11.</b> Named people with roles and consent, a guided four-way action
+    chooser built as four timetable rows, and a footer that returns to the timetable
+    with the final row reserved for the next verified school.</li>
+  </ol>
+  <p style="margin-top:18px;color:var(--text-muted)">Nothing above is built. The pilot
+  stops at section 4 as instructed.</p>
+</section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UX1 — Site Visit</title>
+<meta name="description" content="UX model 1. A spatial, non-linear interface: the school site is the page, and information is attached to survey pegs on the ground.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Azeret+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   UX MODEL 1 — SITE VISIT
+   Not a scrolling page. One fixed viewport containing the school
+   ground. Information is attached to survey pegs and is reached by
+   choosing a peg, so the order is the visitor's, not ours.
+   ============================================================ */
+:root{
+  --field:#141A1C;
+  --field-2:#1B2325;
+  --sheet:#EBE8DF;
+  --cyan:#4FA3B8;
+  --crop:#8FB05F;
+  --flag:#E0854F;
+  --muted:rgba(235,232,223,.66);
+  --line:rgba(235,232,223,.18);
+  --ease:cubic-bezier(.22,.7,.24,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--field);color:var(--sheet);
+  font-family:'Familjen Grotesk',system-ui,sans-serif;font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.mono{font-family:'Azeret Mono',ui-monospace,monospace;font-size:11px;
+  letter-spacing:.09em;text-transform:uppercase}
+.v{font-family:'Azeret Mono',monospace;font-size:10.5px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--flag);border:1px solid currentColor;
+  padding:2px 6px;display:inline-block;line-height:1.4}
+
+/* ---------- frame ---------- */
+.app{display:grid;grid-template-rows:56px 1fr;height:100%}
+.bar{display:flex;align-items:center;gap:20px;padding:0 20px;
+  border-bottom:1px solid var(--line)}
+.wm{display:flex;align-items:center;gap:9px;text-decoration:none;font-weight:700;
+  font-size:15px;letter-spacing:-.01em;white-space:nowrap}
+.wm svg{width:17px;height:17px;flex:none}
+.bar .sep{color:var(--muted)}
+.bar .right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.linkish{text-decoration:underline;text-underline-offset:3px;color:var(--muted)}
+.linkish:hover{color:var(--sheet)}
+
+.body{display:grid;grid-template-columns:210px 1fr 380px;min-height:0}
+
+/* ---------- peg index ---------- */
+.index{border-right:1px solid var(--line);padding:16px 0;overflow-y:auto}
+.index h2{padding:0 18px 10px;color:var(--muted)}
+.peg{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:center;
+  width:100%;text-align:left;padding:11px 18px;border-left:2px solid transparent;
+  transition:background .2s var(--ease),border-color .2s var(--ease)}
+.peg:hover{background:rgba(235,232,223,.05)}
+.peg[aria-current="true"]{background:rgba(79,163,184,.14);border-left-color:var(--cyan)}
+.peg .n{font-family:'Azeret Mono',monospace;font-size:11px;color:var(--cyan)}
+.peg .t{font-size:14.5px;font-weight:500}
+.peg[aria-current="true"] .t{font-weight:600}
+
+/* ---------- the ground ---------- */
+.ground{position:relative;overflow:hidden;background:
+  radial-gradient(120% 90% at 50% 40%, #1D2628 0%, #141A1C 70%)}
+.ground svg{position:absolute;inset:0;width:100%;height:100%}
+.hint{position:absolute;left:20px;bottom:16px;color:var(--muted);
+  display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.kbd{border:1px solid var(--line);border-radius:3px;padding:2px 6px;
+  font-family:'Azeret Mono',monospace;font-size:10.5px}
+
+/* pegs drawn on the ground */
+.pin{cursor:pointer}
+.pin .dot{fill:var(--sheet);transition:r .25s var(--ease),fill .25s var(--ease)}
+.pin .ring{fill:none;stroke:var(--cyan);stroke-width:1.5;opacity:0;
+  transition:opacity .25s var(--ease),r .35s var(--ease)}
+.pin .lab{font-family:'Azeret Mono',monospace;font-size:10px;fill:var(--muted);
+  letter-spacing:.08em}
+.pin:hover .dot,.pin.on .dot{fill:var(--cyan)}
+.pin.on .ring{opacity:1}
+.pin.on .lab{fill:var(--sheet)}
+
+/* the ground states: unknown -> measured */
+#hatch{opacity:1;transition:opacity .7s var(--ease)}
+#plot{opacity:0;transition:opacity .7s var(--ease)}
+#beds line{opacity:0;transition:opacity .5s var(--ease)}
+.measured #hatch{opacity:0}
+.measured #plot{opacity:1}
+.measured #beds line{opacity:1}
+#dimw,#dimh{transition:opacity .5s var(--ease)}
+
+/* ---------- panel ---------- */
+.panel{border-left:1px solid var(--line);padding:22px 24px 28px;overflow-y:auto;
+  background:var(--field-2)}
+.panel .pn{color:var(--cyan);margin-bottom:10px}
+.panel h3{font-size:24px;line-height:1.14;letter-spacing:-.018em;font-weight:700;
+  margin-bottom:12px}
+.panel p{color:var(--muted);margin-bottom:12px}
+.panel p.strong{color:var(--sheet)}
+.fieldset{margin-top:16px;border-top:1px solid var(--line)}
+.frow{padding:12px 0;border-bottom:1px solid var(--line)}
+.frow .k{display:block;color:var(--muted);margin-bottom:5px}
+.frow .a{font-size:14.5px}
+.act{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--cyan);
+  color:var(--cyan);padding:9px 14px;border-radius:3px;font-size:13.5px;font-weight:600;
+  transition:background .2s var(--ease),color .2s var(--ease)}
+.btn:hover{background:var(--cyan);color:var(--field)}
+.btn.solid{background:var(--cyan);color:var(--field)}
+.btn.solid:hover{background:transparent;color:var(--cyan)}
+.stagelist{margin-top:6px}
+.stagelist li{display:grid;grid-template-columns:30px 1fr auto;gap:10px;
+  padding:9px 0;border-bottom:1px solid var(--line);align-items:baseline;
+  list-style:none}
+.stagelist .n{font-family:'Azeret Mono',monospace;font-size:11px;color:var(--cyan)}
+.stagelist .s{font-family:'Azeret Mono',monospace;font-size:10px;color:var(--muted);
+  letter-spacing:.07em;text-transform:uppercase}
+
+/* ---------- linear fallback / mobile ---------- */
+.linear{display:none;overflow-y:auto;padding:24px 20px 60px}
+.linear section{padding:22px 0;border-bottom:1px solid var(--line)}
+.linear h3{font-size:21px;font-weight:700;margin-bottom:8px}
+.linear p{color:var(--muted);margin-bottom:10px}
+body.readmode{overflow:auto}
+body.readmode .body{display:none}
+body.readmode .linear{display:block}
+
+@media (max-width:1080px){
+  body{overflow:auto}
+  .app{height:auto;grid-template-rows:56px auto}
+  .body{grid-template-columns:1fr}
+  .index{border-right:0;border-bottom:1px solid var(--line);
+    display:flex;gap:4px;overflow-x:auto;padding:10px 12px}
+  .index h2{display:none}
+  .peg{width:auto;border-left:0;border-bottom:2px solid transparent;
+    grid-template-columns:auto;padding:8px 12px;white-space:nowrap}
+  .peg[aria-current="true"]{border-left-color:transparent;border-bottom-color:var(--cyan)}
+  .peg .n{display:none}
+  .ground{height:46vh;min-height:300px}
+  .panel{border-left:0;border-top:1px solid var(--line)}
+  .hint{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="bar">
+    <a class="wm" href="#">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <line x1="10" y1="46" x2="54" y2="46" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="16" y1="34" x2="48" y2="34" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="22" y1="22" x2="34" y2="22" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="42.5" cy="22" r="4.5" fill="#8FB05F"/>
+      </svg>
+      School Farm Network
+    </a>
+    <span class="mono sep">Site visit · Plot 01 · <span class="v" style="margin-left:4px">Verify school name</span></span>
+    <div class="right">
+      <button class="mono linkish" id="readtoggle" aria-pressed="false">Read as text</button>
+    </div>
+  </div>
+
+  <div class="body">
+    <!-- peg index -->
+    <nav class="index" aria-label="Points on the site">
+      <h2 class="mono">Pegs on the ground</h2>
+      <button class="peg" data-peg="1" aria-current="true"><span class="n">01</span><span class="t">The school</span></button>
+      <button class="peg" data-peg="2"><span class="n">02</span><span class="t">The unused ground</span></button>
+      <button class="peg" data-peg="3"><span class="n">03</span><span class="t">The measurement</span></button>
+      <button class="peg" data-peg="4"><span class="n">04</span><span class="t">Stage 01, Assess</span></button>
+      <button class="peg" data-peg="5"><span class="n">05</span><span class="t">What follows</span></button>
+    </nav>
+
+    <!-- the ground -->
+    <div class="ground" id="ground">
+      <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet" aria-label="Plan of the school site">
+        <!-- site boundary -->
+        <rect x="70" y="60" width="760" height="480" fill="none"
+              stroke="rgba(235,232,223,.30)" stroke-width="1.5"/>
+        <text x="70" y="48" class="mono" fill="rgba(235,232,223,.55)"
+              font-family="Azeret Mono" font-size="11">SCHOOL SITE</text>
+
+        <!-- buildings -->
+        <g fill="rgba(235,232,223,.14)" stroke="rgba(235,232,223,.32)" stroke-width="1">
+          <rect x="106" y="96" width="150" height="74"/>
+          <rect x="106" y="188" width="150" height="60"/>
+          <rect x="672" y="96" width="120" height="56"/>
+        </g>
+        <text x="106" y="88" font-family="Azeret Mono" font-size="10"
+              fill="rgba(235,232,223,.5)">CLASSROOMS</text>
+
+        <!-- the unused ground: hatched while unknown -->
+        <g id="hatch">
+          <rect x="330" y="250" width="400" height="228"
+                fill="rgba(224,133,79,.08)" stroke="var(--flag)"
+                stroke-width="1.5" stroke-dasharray="6 6"/>
+          <text x="530" y="368" text-anchor="middle" font-family="Azeret Mono"
+                font-size="13" fill="#E0854F">UNMEASURED</text>
+        </g>
+
+        <!-- the measured plot -->
+        <g id="plot">
+          <rect x="330" y="250" width="400" height="228"
+                fill="rgba(143,176,95,.10)" stroke="#8FB05F" stroke-width="1.8"/>
+          <g id="beds" stroke="#8FB05F" stroke-width="2" opacity=".8">
+            <line x1="348" y1="278" x2="712" y2="278"/>
+            <line x1="348" y1="316" x2="712" y2="316"/>
+            <line x1="348" y1="354" x2="712" y2="354"/>
+            <line x1="348" y1="392" x2="712" y2="392"/>
+            <line x1="348" y1="430" x2="712" y2="430"/>
+          </g>
+          <!-- dimensions, still unknown -->
+          <g id="dimw">
+            <line x1="330" y1="500" x2="730" y2="500" stroke="#E0854F" stroke-width="1"/>
+            <line x1="330" y1="495" x2="330" y2="505" stroke="#E0854F" stroke-width="1"/>
+            <line x1="730" y1="495" x2="730" y2="505" stroke="#E0854F" stroke-width="1"/>
+            <rect x="500" y="491" width="60" height="18" fill="#141A1C"/>
+            <text x="530" y="504" text-anchor="middle" font-family="Azeret Mono"
+                  font-size="11" fill="#E0854F">? m</text>
+          </g>
+          <g id="dimh">
+            <line x1="304" y1="250" x2="304" y2="478" stroke="#E0854F" stroke-width="1"/>
+            <line x1="299" y1="250" x2="309" y2="250" stroke="#E0854F" stroke-width="1"/>
+            <line x1="299" y1="478" x2="309" y2="478" stroke="#E0854F" stroke-width="1"/>
+            <rect x="288" y="355" width="32" height="18" fill="#141A1C"/>
+            <text x="304" y="368" text-anchor="middle" font-family="Azeret Mono"
+                  font-size="11" fill="#E0854F">? m</text>
+          </g>
+        </g>
+
+        <!-- water point -->
+        <circle cx="782" cy="300" r="6" fill="none" stroke="#4FA3B8" stroke-width="1.5"/>
+        <text x="792" y="304" font-family="Azeret Mono" font-size="10"
+              fill="rgba(79,163,184,.9)">WATER ?</text>
+
+        <!-- pegs -->
+        <g class="pin on" data-peg="1" tabindex="0" role="button" aria-label="Peg 1, the school">
+          <circle class="ring" cx="181" cy="133" r="15"/>
+          <circle class="dot" cx="181" cy="133" r="6"/>
+          <text class="lab" x="181" y="112" text-anchor="middle">01</text>
+        </g>
+        <g class="pin" data-peg="2" tabindex="0" role="button" aria-label="Peg 2, the unused ground">
+          <circle class="ring" cx="418" cy="430" r="15"/>
+          <circle class="dot" cx="418" cy="430" r="6"/>
+          <text class="lab" x="418" y="409" text-anchor="middle">02</text>
+        </g>
+        <g class="pin" data-peg="3" tabindex="0" role="button" aria-label="Peg 3, the measurement">
+          <circle class="ring" cx="330" cy="250" r="15"/>
+          <circle class="dot" cx="330" cy="250" r="6"/>
+          <text class="lab" x="330" y="229" text-anchor="middle">03</text>
+        </g>
+        <g class="pin" data-peg="4" tabindex="0" role="button" aria-label="Peg 4, stage one assess">
+          <circle class="ring" cx="730" cy="478" r="15"/>
+          <circle class="dot" cx="730" cy="478" r="6"/>
+          <text class="lab" x="730" y="457" text-anchor="middle">04</text>
+        </g>
+        <g class="pin" data-peg="5" tabindex="0" role="button" aria-label="Peg 5, what follows">
+          <circle class="ring" cx="732" cy="124" r="15"/>
+          <circle class="dot" cx="732" cy="124" r="6"/>
+          <text class="lab" x="732" y="103" text-anchor="middle">05</text>
+        </g>
+      </svg>
+
+      <div class="hint mono">
+        <span>Choose a peg</span>
+        <span><i class="kbd">←</i> <i class="kbd">→</i> to move between pegs</span>
+      </div>
+    </div>
+
+    <!-- panel -->
+    <aside class="panel" id="panel" aria-live="polite"></aside>
+  </div>
+
+  <!-- linear equivalent, for reading and for small screens -->
+  <div class="linear" id="linear"></div>
+</div>
+
+<script>
+(function(){
+  var DATA = [
+    {
+      n:'01', t:'The school',
+      h:'A school owns ground it has never used.',
+      p:['The School Farm Network helps schools turn available land into places to learn, grow food, build practical skills, and create wider opportunity.'],
+      verify:['Verify wording'],
+      measured:false
+    },
+    {
+      n:'02', t:'The unused ground',
+      h:'Nobody has put a tape across it.',
+      p:['A school day has periods with nothing scheduled on them. A school site has ground with nothing planted on it. The school already has both.',
+         'Until the ground is measured there is nothing to plan, nothing to cost, and nothing to argue for.'],
+      verify:['Verify: measured area of unused or underused land at a named school, with the date it was measured'],
+      measured:false
+    },
+    {
+      n:'03', t:'The measurement',
+      h:'Measuring is what turns ground into a plot.',
+      p:['Walk the site. Measure the ground that is free. Check the water source and mark the boundary. The hatched area becomes a defined plot with beds laid out in it.',
+         'The dimensions stay marked as unknown, because they have not been supplied.'],
+      verify:['Verify: plot dimensions, water source, and boundary'],
+      measured:true,
+      cta:true
+    },
+    {
+      n:'04', t:'Stage 01, Assess',
+      h:'Every stage answers the same five questions.',
+      fields:[
+        ['Who acts','__VERIFY__Verify: who carries out the assessment, and who signs it off'],
+        ['On the land','Walk the site. Measure the ground that is free. Check the water source and mark the boundary.'],
+        ['What is learned','__VERIFY__Verify: whether learners take part, and in which subject'],
+        ['What is recorded','Area, water source, boundary, and the date of the visit.'],
+        ['Next decision','Whether the plot goes forward to design, or waits a season.']
+      ],
+      note:'The land, record and decision rows are drafted from the method as described so far.',
+      measured:true
+    },
+    {
+      n:'05', t:'What follows',
+      h:'Seven more stages, then it repeats.',
+      stages:['Design','Prepare','Plant','Tend','Harvest','Record','Improve'],
+      verify:['Verify: these eight stage names against the method SFN actually runs, including whether stages repeat within one season'],
+      measured:true
+    }
+  ];
+
+  var panel=document.getElementById('panel'),
+      ground=document.getElementById('ground'),
+      linear=document.getElementById('linear'),
+      pegs=[].slice.call(document.querySelectorAll('.peg')),
+      pins=[].slice.call(document.querySelectorAll('.pin')),
+      cur=0;
+
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+  function verifyHtml(s){
+    return s.indexOf('__VERIFY__')===0
+      ? '<span class="v">'+esc(s.slice(10))+'</span>'
+      : esc(s);
+  }
+
+  function render(i){
+    var d=DATA[i];
+    var h='<div class="mono pn">Peg '+d.n+' · '+esc(d.t)+'</div>';
+    h+='<h3>'+esc(d.h)+'</h3>';
+    (d.p||[]).forEach(function(x,k){h+='<p'+(k===0?' class="strong"':'')+'>'+esc(x)+'</p>'});
+    if(d.fields){
+      h+='<div class="fieldset">';
+      d.fields.forEach(function(f){
+        h+='<div class="frow"><span class="k mono">'+esc(f[0])+'</span><div class="a">'+verifyHtml(f[1])+'</div></div>';
+      });
+      h+='</div>';
+      if(d.note) h+='<p style="margin-top:12px">'+esc(d.note)+'</p>';
+    }
+    if(d.stages){
+      h+='<ul class="stagelist">';
+      d.stages.forEach(function(s,k){
+        h+='<li><span class="n">0'+(k+2)+'</span><span>'+esc(s)+'</span><span class="s">Not yet run</span></li>';
+      });
+      h+='</ul>';
+    }
+    (d.verify||[]).forEach(function(v){h+='<p style="margin-top:14px"><span class="v">'+esc(v)+'</span></p>'});
+    if(d.cta) h+='<div class="act"><a class="btn solid" href="#" onclick="return false">Start a school farm</a><a class="btn" href="#" onclick="return false">Back the network</a></div><p style="margin-top:10px"><span class="v">Verify: both actions and what happens next</span></p>';
+    panel.innerHTML=h;
+
+    ground.classList.toggle('measured', !!d.measured);
+    pegs.forEach(function(p,k){ p.setAttribute('aria-current', k===i?'true':'false'); });
+    pins.forEach(function(p,k){ p.classList.toggle('on', k===i); });
+    cur=i;
+  }
+
+  pegs.forEach(function(p,k){ p.addEventListener('click',function(){render(k)}); });
+  pins.forEach(function(p,k){
+    p.addEventListener('click',function(){render(k)});
+    p.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();render(k);}
+    });
+  });
+  addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'){render((cur+1)%DATA.length)}
+    if(e.key==='ArrowLeft'){render((cur-1+DATA.length)%DATA.length)}
+  });
+
+  // linear equivalent, always in the DOM for reading and small screens
+  var lh='';
+  DATA.forEach(function(d){
+    lh+='<section><div class="mono" style="color:var(--cyan);margin-bottom:8px">Peg '+d.n+' · '+esc(d.t)+'</div><h3>'+esc(d.h)+'</h3>';
+    (d.p||[]).forEach(function(x){lh+='<p>'+esc(x)+'</p>'});
+    if(d.fields){d.fields.forEach(function(f){
+      lh+='<p><strong>'+esc(f[0])+':</strong> '+verifyHtml(f[1])+'</p>';})}
+    if(d.note) lh+='<p>'+esc(d.note)+'</p>';
+    if(d.stages) lh+='<p>'+d.stages.map(esc).join(', ')+'. None yet run.</p>';
+    (d.verify||[]).forEach(function(v){lh+='<p><span class="v">'+esc(v)+'</span></p>'});
+    lh+='</section>';
+  });
+  lh+='<section><p><span class="v">Pilot ends here</span></p><p>Sections 5 to 11 are held until a route is chosen.</p></section>';
+  linear.innerHTML=lh;
+
+  var rt=document.getElementById('readtoggle');
+  rt.addEventListener('click',function(){
+    var on=document.body.classList.toggle('readmode');
+    rt.setAttribute('aria-pressed',String(on));
+    rt.textContent=on?'Back to the site':'Read as text';
+  });
+
+  render(0);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>School Farm Network — five routes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4F2EC;--ink:#191B17;--muted:rgba(25,27,23,.68);
+  --rule:rgba(25,27,23,.16);--rule-2:rgba(25,27,23,.42);--flag:#A8481C}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:16.5px;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding-left:32px;padding-right:32px}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:11.5px;
+  letter-spacing:.11em;text-transform:uppercase}
+header{padding-block:76px 40px;border-bottom:1.5px solid var(--rule-2)}
+h1{font-family:'Fraunces',Georgia,serif;font-weight:600;
+  font-variation-settings:'opsz' 144;font-size:clamp(32px,4.6vw,54px);
+  line-height:1.03;letter-spacing:-.026em;max-width:20ch;margin-top:14px}
+header p{margin-top:18px;max-width:68ch;color:var(--muted)}
+header .note{margin-top:16px;max-width:68ch;color:var(--muted);font-size:15px}
+
+.route{display:grid;grid-template-columns:64px 1fr 210px;gap:30px;
+  padding-block:36px;border-bottom:1px solid var(--rule);align-items:start;
+  text-decoration:none;transition:background .25s ease,padding-left .25s ease}
+.route:hover{background:rgba(25,27,23,.045);padding-left:12px}
+.rl{font-family:'Fraunces',serif;font-weight:600;font-size:34px;line-height:1;
+  color:var(--muted)}
+h2{font-family:'Fraunces',Georgia,serif;font-weight:600;
+  font-variation-settings:'opsz' 60;font-size:27px;letter-spacing:-.018em}
+.dev{margin-top:9px;font-size:15.5px;color:var(--muted);max-width:62ch}
+.dev b{color:var(--ink);font-weight:600}
+.meta{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;border:1px solid var(--rule-2);padding:3px 8px;
+  color:var(--muted)}
+.risk{margin-top:12px;font-size:14.5px;color:var(--muted);max-width:62ch}
+.risk b{color:var(--flag);font-weight:600}
+.go{text-align:right;font-size:14.5px;font-weight:600;padding-top:8px}
+.sw{display:flex;gap:0;margin-top:14px;width:150px;border:1px solid var(--rule-2)}
+.sw i{height:20px;flex:1}
+footer{padding-block:44px 90px;color:var(--muted);font-size:15px}
+footer a{font-weight:600}
+@media(max-width:820px){
+  .route{grid-template-columns:1fr;gap:10px}
+  .rl{font-size:26px}
+  .go{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <span class="mono">School Farm Network · pilot routes</span>
+  <h1>Five routes. One pilot scope. Same truths.</h1>
+  <p>Each route commits to a different proprietary device, and each has its own
+  typography and palette. They are not variations of one theme. Every route covers the
+  same five pilot sections, carries the same copy, and marks the same open facts, so
+  what differs between them is the idea and nothing else.</p>
+  <p class="note">Pilot sections in every route: navigation, the hero, the missed
+  opportunity, the signature transformation, and the first view of how one farm works.
+  Sections 5 to 11 are not built in any of them. Route A also has a written
+  <a href="system.html">system, media manifest, verification list and gauntlet</a>.</p>
+</header>
+
+<main class="wrap">
+
+  <a class="route" href="a-ruled.html">
+    <span class="rl">A</span>
+    <div>
+      <h2>A Living Timetable</h2>
+      <p class="dev"><b>Device:</b> ruled timetable rows carrying clock times. As you
+      scroll, the rows lengthen into crop beds and the times are replaced in place by
+      growing stages. The hero marks one plot inside a school day.</p>
+      <div class="meta">
+        <span class="tag">Fraunces · IBM Plex</span>
+        <span class="tag">Blackboard + paper</span>
+        <span class="tag">Motion: timetable to field</span>
+      </div>
+      <div class="sw" aria-hidden="true">
+        <i style="background:#17221D"></i><i style="background:#F2EBD8"></i>
+        <i style="background:#6C8B45"></i><i style="background:#D56B35"></i>
+        <i style="background:#315B70"></i>
+      </div>
+      <p class="risk"><b>Weakest point:</b> the network is only implied, because the
+      zoom-out is section 8 and outside pilot scope.</p>
+    </div>
+    <span class="go">Open →</span>
+  </a>
+
+  <a class="route" href="b-rollcall.html">
+    <span class="rl">B</span>
+    <div>
+      <h2>Roll Call</h2>
+      <p class="dev"><b>Device:</b> the attendance register. A mark against a name means
+      a school is planted. One row is marked and the rest are openly blank. On the turn,
+      the mark lifts off the ruled page and lands as a located point, with every
+      unverified school drawn hollow.</p>
+      <div class="meta">
+        <span class="tag">Literata · Karla · Courier Prime</span>
+        <span class="tag">Register paper + red ruling</span>
+        <span class="tag">Motion: mark to map</span>
+      </div>
+      <div class="sw" aria-hidden="true">
+        <i style="background:#1B2430"></i><i style="background:#F4F1E6"></i>
+        <i style="background:#B23A2E"></i><i style="background:#3F6B33"></i>
+        <i style="background:#EBE6D6"></i>
+      </div>
+      <p class="risk"><b>Strongest on:</b> showing a network rather than one garden.
+      <b>Risk:</b> an almost empty register has to read as ambition, not as thinness.</p>
+    </div>
+    <span class="go">Open →</span>
+  </a>
+
+  <a class="route" href="c-working.html">
+    <span class="rl">C</span>
+    <div>
+      <h2>Show Your Working</h2>
+      <p class="dev"><b>Device:</b> the squared exercise book. The farm is set out as a
+      worked problem, and every quantity that has not been measured is an empty box
+      rather than a plausible number. The answer box reads "not yet measured". On the
+      turn, the working writes itself line by line in the order the work happens.</p>
+      <div class="meta">
+        <span class="tag">Instrument Serif · Instrument Sans · Space Mono</span>
+        <span class="tag">Graph paper + marking pen</span>
+        <span class="tag">Motion: the working writes itself</span>
+      </div>
+      <div class="sw" aria-hidden="true">
+        <i style="background:#33383A"></i><i style="background:#FBFAF6"></i>
+        <i style="background:#B8322A"></i><i style="background:#4E6B2E"></i>
+        <i style="background:#DCE4E2"></i>
+      </div>
+      <p class="risk"><b>Strongest on:</b> credibility. Honesty is structural, so it
+      cannot be quietly dropped later. <b>Risk:</b> a page of empty boxes is a hard
+      first impression for a funder.</p>
+    </div>
+    <span class="go">Open →</span>
+  </a>
+
+  <a class="route" href="d-oneline.html">
+    <span class="rl">D</span>
+    <div>
+      <h2>One Line</h2>
+      <p class="dev"><b>Device:</b> a single unbroken line. It begins as a ruled line on
+      a school page, thickens into a planting row, carries a harvest, and ends as the rim
+      of a plate. School and farm are literally the same stroke. The line then becomes
+      the spine the record hangs from.</p>
+      <div class="meta">
+        <span class="tag">Syne · Manrope</span>
+        <span class="tag">Bone + ink + one orange</span>
+        <span class="tag">Motion: the line travels and changes</span>
+      </div>
+      <div class="sw" aria-hidden="true">
+        <i style="background:#12140F"></i><i style="background:#F5F2EA"></i>
+        <i style="background:#C75B2A"></i><i style="background:#5C7A38"></i>
+        <i style="background:#93B368"></i>
+      </div>
+      <p class="risk"><b>Strongest on:</b> boldness, and uniting school and farm in one
+      idea. <b>Risk:</b> it promises a plate at the end, which is the least verified
+      claim we have.</p>
+    </div>
+    <span class="go">Open →</span>
+  </a>
+
+  <a class="route" href="e-measured.html">
+    <span class="rl">E</span>
+    <div>
+      <h2>Measured</h2>
+      <p class="dev"><b>Device:</b> the survey drawing. Every element carries a
+      dimension, and anything not yet measured is dimensioned as unknown. The navigation
+      is a drawing title block. On the turn, the scale bar zooms out from one metre to
+      the plot, the school grounds, and the network, recalibrating as it goes.</p>
+      <div class="meta">
+        <span class="tag">Chivo · DM Sans · DM Mono</span>
+        <span class="tag">Drafting sheet + survey cyan</span>
+        <span class="tag">Motion: scale zoom to network</span>
+      </div>
+      <div class="sw" aria-hidden="true">
+        <i style="background:#22262B"></i><i style="background:#FAF8F2"></i>
+        <i style="background:#1F6F80"></i><i style="background:#B4552A"></i>
+        <i style="background:#55712F"></i>
+      </div>
+      <p class="risk"><b>Strongest on:</b> making the evidence discipline the visual
+      language rather than a section. <b>Risk:</b> the most technical, and the furthest
+      from warmth.</p>
+    </div>
+    <span class="go">Open →</span>
+  </a>
+
+</main>
+
+<footer class="wrap">
+  <p>Nothing here is committed or pushed. The live site is unchanged. Once a route is
+  chosen, the remaining deliverables get rebuilt against it: reference translation
+  table, tokens, media manifest, verification list, and the ten-category gauntlet at
+  1440 × 1000 and 390 × 844.</p>
+</footer>
+
+</body>
+</html>

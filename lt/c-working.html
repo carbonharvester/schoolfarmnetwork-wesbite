@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C — Show Your Working</title>
+<meta name="description" content="Route C pilot. The exercise book is the device: a school farm set out as a worked problem, with the unknowns left visibly blank.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ROUTE C — SHOW YOUR WORKING
+   Device: the squared exercise book. A school farm is set out as a
+   worked problem. What is not yet measured stays an empty box, so
+   honesty is structural rather than editorial.
+   ============================================================ */
+:root{
+  --paper:#FBFAF6;
+  --sq:rgba(94,124,118,.16);       /* the printed squares */
+  --sq-2:rgba(94,124,118,.30);
+  --pencil:#33383A;
+  --pencil-2:rgba(51,56,58,.66);
+  --pen:#B8322A;                    /* the marking pen */
+  --crop:#4E6B2E;
+  --rule:rgba(51,56,58,.18);
+  --sqsz:26px;
+  --ease:cubic-bezier(.22,.7,.24,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  background:var(--paper);color:var(--pencil);
+  font-family:'Instrument Sans',system-ui,sans-serif;font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background-image:
+    repeating-linear-gradient(to right, var(--sq) 0 1px, transparent 1px var(--sqsz)),
+    repeating-linear-gradient(to bottom, var(--sq) 0 1px, transparent 1px var(--sqsz));
+}
+img{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--pen);outline-offset:3px}
+.wrap{max-width:1300px;margin:0 auto;padding-left:39px;padding-right:39px}
+
+.mono{font-family:'Space Mono',ui-monospace,monospace;font-size:13px;letter-spacing:.01em}
+.v{font-family:'Space Mono',monospace;font-size:11.5px;text-transform:uppercase;
+  color:var(--pen);border:1px solid currentColor;padding:2px 6px;display:inline-block;
+  line-height:1.35;background:rgba(184,50,42,.05)}
+
+/* ---------- nav: the head of an exercise book page ---------- */
+.nav{position:sticky;top:0;z-index:60;background:var(--paper);
+  border-bottom:1px solid var(--pencil)}
+.nav-in{max-width:1300px;margin:0 auto;padding:0 39px;height:65px;display:flex;
+  align-items:center;gap:26px}
+.wordmark{display:flex;align-items:center;gap:10px;text-decoration:none;
+  font-family:'Instrument Serif',Georgia,serif;font-size:23px;letter-spacing:-.005em}
+.wordmark svg{width:19px;height:19px;flex:none}
+.fields{display:flex;gap:22px;border-left:1px solid var(--rule);padding-left:22px}
+.fld{font-family:'Space Mono',monospace;font-size:11.5px;text-transform:uppercase;
+  color:var(--pencil-2)}
+.fld b{color:var(--pencil);font-weight:400;border-bottom:1px solid var(--pencil-2);
+  padding-bottom:1px}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:24px}
+.nav-right a:not(.btn){text-decoration:none;font-size:14.5px;color:var(--pencil-2)}
+.nav-right a:not(.btn):hover{color:var(--pencil)}
+.btn{display:inline-flex;align-items:center;gap:9px;background:var(--pencil);
+  color:var(--paper);text-decoration:none;padding:11px 18px;font-size:14.5px;
+  font-weight:500;white-space:nowrap;border:1px solid var(--pencil);
+  transition:background .2s var(--ease),color .2s var(--ease)}
+.btn:hover{background:transparent;color:var(--pencil)}
+.btn svg{width:14px;height:9px}
+.lbl-s{display:none}
+
+/* ---------- the question ---------- */
+.q-sec{padding-block:64px 78px}
+.qno{font-family:'Space Mono',monospace;font-size:13px;color:var(--pen);
+  display:block;margin-bottom:14px}
+h1{font-family:'Instrument Serif',Georgia,serif;font-weight:400;
+  font-size:clamp(38px,5.4vw,72px);line-height:1.06;letter-spacing:-.012em;
+  max-width:17ch}
+h1 em{font-style:italic}
+/* the question is underlined the way a question is underlined */
+.uline{display:inline-block;border-bottom:2px solid var(--pen);padding-bottom:3px}
+.q-sec .sup{margin-top:26px;max-width:50ch;color:var(--pencil-2);font-size:17.5px}
+.q-sec .act{margin-top:30px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+
+/* ---------- the working ---------- */
+.work{border-left:2px solid var(--pen);padding-left:26px;margin-top:52px;max-width:800px}
+.wl{display:grid;grid-template-columns:26px 1fr auto;gap:16px;align-items:baseline;
+  padding-block:11px;font-family:'Space Mono',monospace;font-size:15px;
+  border-bottom:1px dashed var(--rule)}
+.wl .op{color:var(--pen)}
+.wl .lb{color:var(--pencil)}
+.wl .val{color:var(--pencil-2);text-align:right;white-space:nowrap}
+.wl .val.known{color:var(--crop)}
+/* an unknown is an empty box, not a plausible number */
+.box{display:inline-block;min-width:96px;height:26px;border:1.5px solid var(--pen);
+  vertical-align:-7px;background:rgba(184,50,42,.04)}
+.answer{margin-top:20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.answer .eq{font-family:'Space Mono',monospace;font-size:15px;color:var(--pen)}
+.answer .abox{border:2.5px solid var(--pen);min-width:210px;height:58px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;font-size:12.5px;text-transform:uppercase;
+  color:var(--pen);text-align:center;padding:0 14px;line-height:1.3;
+  background:rgba(184,50,42,.05)}
+
+/* ---------- sections ---------- */
+.sec{padding-block:92px;border-top:1px solid var(--rule)}
+.kick{font-family:'Space Mono',monospace;font-size:12px;text-transform:uppercase;
+  color:var(--pen);display:block;margin-bottom:15px}
+h2{font-family:'Instrument Serif',Georgia,serif;font-weight:400;
+  font-size:clamp(29px,3.9vw,50px);line-height:1.07;letter-spacing:-.01em;max-width:19ch}
+.lede{margin-top:16px;max-width:52ch;color:var(--pencil-2);font-size:17.5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;margin-top:46px}
+
+/* ---------- the turn: the working writes itself ---------- */
+.turn-track{height:360vh}
+.turn-stage{position:sticky;top:0;height:100vh;display:flex;align-items:center;
+  overflow:hidden}
+.steps{margin-top:34px;max-width:880px}
+.step{
+  --sp:0;
+  display:grid;grid-template-columns:34px 1fr auto;gap:18px;align-items:baseline;
+  padding-block:14px;border-bottom:1px solid var(--rule);
+  opacity:calc(.16 + var(--sp) * .84);
+  transform:translateX(calc((1 - var(--sp)) * -10px));
+  transition:opacity .2s linear, transform .2s linear}
+.step .n{font-family:'Space Mono',monospace;font-size:13px;color:var(--pen)}
+.step .t{font-family:'Instrument Serif',serif;font-size:clamp(19px,2.1vw,26px)}
+.step .m{font-family:'Space Mono',monospace;font-size:12.5px;color:var(--pencil-2);
+  text-align:right}
+/* the rule under each step fills like a pencil stroke */
+.step::after{content:"";position:absolute}
+.stepbar{height:2px;background:var(--crop);width:calc(var(--sp) * 100%);
+  transition:width .2s linear}
+.step-wrap{position:relative}
+
+/* ---------- record ---------- */
+.qs{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:34px;
+  border-top:2px solid var(--pencil)}
+.qq{padding:22px 20px 22px 0;border-right:1px dashed var(--rule)}
+.qq:last-child{border-right:0;padding-right:0}
+.qq .k{font-family:'Space Mono',monospace;font-size:11.5px;text-transform:uppercase;
+  color:var(--pencil-2);display:block;margin-bottom:12px}
+.qq .a{font-size:15px;line-height:1.52}
+.stubs{margin-top:34px;border-top:1px solid var(--rule)}
+.stub{display:grid;grid-template-columns:44px 1fr auto;gap:18px;align-items:center;
+  padding-block:15px;border-bottom:1px solid var(--rule);text-decoration:none;
+  transition:padding-left .2s var(--ease)}
+.stub:hover{padding-left:10px}
+.stub .n{font-family:'Space Mono',monospace;font-size:13px;color:var(--pen)}
+.stub .nm{font-family:'Instrument Serif',serif;font-size:21px}
+.stub .s{font-family:'Space Mono',monospace;font-size:11.5px;text-transform:uppercase;
+  color:var(--pencil-2)}
+
+figure{margin:0}
+figcaption{margin-top:9px;font-family:'Space Mono',monospace;font-size:11.5px;
+  color:var(--pencil-2);line-height:1.65}
+.shot{border:1.5px dashed var(--pen);padding:16px;min-height:180px;display:flex;
+  flex-direction:column;justify-content:flex-end;background:rgba(184,50,42,.03)}
+.shot .k{font-family:'Space Mono',monospace;font-size:11.5px;text-transform:uppercase;
+  color:var(--pen)}
+.shot .d{font-size:14px;line-height:1.45;margin-top:7px;color:var(--pencil-2)}
+
+.end{padding-block:46px 90px;border-top:2px solid var(--pencil);margin-top:76px;
+  display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.reveal{opacity:0;transform:translateY(16px);
+  transition:opacity .75s var(--ease),transform .75s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.no-js .reveal{opacity:1;transform:none}
+.no-js .step,.reduced .step{--sp:1}
+
+@media(max-width:1000px){
+  .two{grid-template-columns:1fr;gap:36px}
+  .qs{grid-template-columns:repeat(2,1fr)}
+  .qq{border-bottom:1px dashed var(--rule)}
+}
+@media(max-width:720px){
+  :root{--sqsz:22px}
+  .wrap{padding-left:18px;padding-right:18px}
+  .nav-in{padding-left:18px;padding-right:18px}
+  body{font-size:16px}
+  .fields{display:none}
+  .wordmark{font-size:17px;white-space:nowrap;gap:8px}
+  .wordmark svg{width:17px;height:17px}
+  .nav-in{gap:12px;height:60px}
+  .btn{padding:10px 13px;font-size:13.5px}
+  .nav-right a:not(.btn){display:none}
+  .lbl-l{display:none}.lbl-s{display:inline}
+  .work{padding-left:16px}
+  .wl{grid-template-columns:20px 1fr;gap:10px;font-size:13.5px}
+  .wl .val{grid-column:2;text-align:left;margin-top:4px}
+  .answer .abox{min-width:0;width:100%}
+  .qs{grid-template-columns:1fr}
+  .qq{border-right:0;padding-right:0}
+  .step{grid-template-columns:26px 1fr;gap:12px}
+  .step .m{grid-column:2;text-align:left;margin-top:3px}
+  .turn-track{height:380vh}
+  .turn-stage{height:100svh}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important;animation:none!important}
+  .reveal{opacity:1;transform:none}
+  .step{--sp:1}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.className='js';</script>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="wordmark" href="#top">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <line x1="10" y1="46" x2="54" y2="46" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="16" y1="34" x2="48" y2="34" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="22" y1="22" x2="34" y2="22" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="42.5" cy="22" r="4.5" fill="#4E6B2E"/>
+      </svg>
+      School Farm Network
+    </a>
+    <div class="fields">
+      <span class="fld">Subject <b>Land</b></span>
+      <span class="fld">Question <b>01</b></span>
+    </div>
+    <div class="nav-right">
+      <a href="#unworked">The unworked problem</a>
+      <a href="#turn">The working</a>
+      <a href="#record">Stage 01</a>
+      <a class="btn" href="#turn">
+        <span class="lbl-l">See the working</span>
+        <span class="lbl-s">The working</span>
+        <svg viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="M0 4.5h12M8.5 1l3.5 3.5L8.5 8" stroke="currentColor" stroke-width="1.5"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO: the question -->
+<section class="q-sec wrap">
+  <span class="qno">Question 01</span>
+  <h1>A school owns ground it has never used. <em class="uline">What can it grow?</em></h1>
+  <p class="sup">The School Farm Network helps schools turn available land into places
+  to learn, grow food, build practical skills, and create wider opportunity.
+  <span class="v">Verify wording</span></p>
+  <div class="act">
+    <a class="btn" href="#turn">
+      See the working
+      <svg viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="M0 4.5h12M8.5 1l3.5 3.5L8.5 8" stroke="currentColor" stroke-width="1.5"/></svg>
+    </a>
+    <span class="mono" style="color:var(--pencil-2)">Nothing below is filled in until it is measured.</span>
+  </div>
+
+  <div class="work reveal">
+    <div class="wl"><span class="op">1</span><span class="lb">Ground available</span><span class="val"><i class="box"></i></span></div>
+    <div class="wl"><span class="op">2</span><span class="lb">Water source</span><span class="val"><i class="box"></i></span></div>
+    <div class="wl"><span class="op">3</span><span class="lb">Growing days per year</span><span class="val"><i class="box"></i></span></div>
+    <div class="wl"><span class="op">4</span><span class="lb">Paid work created</span><span class="val"><i class="box"></i></span></div>
+    <div class="answer">
+      <span class="eq">therefore</span>
+      <span class="abox">Not yet measured</span>
+      <span class="v">Verify: every line above, per school</span>
+    </div>
+  </div>
+</section>
+
+<!-- MISSED OPPORTUNITY -->
+<section class="sec wrap" id="unworked">
+  <div class="two" style="margin-top:0">
+    <div>
+      <span class="kick">02 · The unworked problem</span>
+      <h2>The numbers were always available. Nobody sat down and did them.</h2>
+      <p class="lede">A school day has periods with nothing scheduled on them. A school
+      site has ground with nothing planted on it. The school already has both, and no
+      one has worked out what the second one is worth.</p>
+      <p style="margin-top:24px"><span class="v">Verify: measured area of unused or
+      underused land at a named school, with the date it was measured</span></p>
+    </div>
+    <figure>
+      <img src="../assets/img/hero-1600.jpg"
+           srcset="../assets/img/hero-1024.jpg 1024w, ../assets/img/hero-1600.jpg 1600w"
+           sizes="(max-width:1000px) 92vw, 42vw" width="1600" height="1067"
+           decoding="async"
+           alt="School buildings and open ground in the same frame, with people working on the land.">
+      <figcaption>Shot 01 · school exterior and available land in one frame<br>
+        <span class="v">Verify: location, date, credit, and consent for the people pictured</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- THE TURN: the working writes itself -->
+<section id="turn">
+  <div class="turn-track" id="track">
+    <div class="turn-stage">
+      <div class="wrap" style="width:100%">
+        <span class="kick">03 · The working</span>
+        <h2>Working, line by line, in the order it happens on the ground.</h2>
+
+        <div class="steps" id="steps">
+          <div class="step-wrap"><div class="step"><span class="n">01</span><span class="t">Assess</span><span class="m">measure, check water, mark boundary</span></div><div class="stepbar"></div></div>
+          <div class="step-wrap"><div class="step"><span class="n">02</span><span class="t">Design</span><span class="m">lay out the beds</span></div><div class="stepbar"></div></div>
+          <div class="step-wrap"><div class="step"><span class="n">03</span><span class="t">Prepare</span><span class="m">clear, break, feed the soil</span></div><div class="stepbar"></div></div>
+          <div class="step-wrap"><div class="step"><span class="n">04</span><span class="t">Plant</span><span class="m">to the plan, on the date</span></div><div class="stepbar"></div></div>
+          <div class="step-wrap"><div class="step"><span class="n">05</span><span class="t">Tend</span><span class="m">water, weed, watch</span></div><div class="stepbar"></div></div>
+          <div class="step-wrap"><div class="step"><span class="n">06</span><span class="t">Harvest</span><span class="m">lift, weigh, store</span></div><div class="stepbar"></div></div>
+          <div class="step-wrap"><div class="step"><span class="n">07</span><span class="t">Record</span><span class="m">what it cost, what it gave</span></div><div class="stepbar"></div></div>
+          <div class="step-wrap"><div class="step"><span class="n">08</span><span class="t">Improve</span><span class="m">change one thing, run it again</span></div><div class="stepbar"></div></div>
+        </div>
+
+        <p class="mono" style="margin-top:22px;color:var(--pencil-2)">
+          Working <b id="prog" style="color:var(--crop)">01</b> of 08
+        </p>
+        <p style="margin-top:14px;max-width:64ch"><span class="v">Verify: these eight
+        stage names against the method SFN actually runs, including whether stages
+        repeat within one season</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECORD -->
+<section class="sec wrap" id="record">
+  <span class="kick">04 · Stage 01, set out in full</span>
+  <h2>Every stage answers the same five questions.</h2>
+  <p class="lede">This is the working for one plot at one school. It is the unit the
+  whole network is built from.</p>
+
+  <div class="qs reveal">
+    <div class="qq"><span class="k">Who acts</span>
+      <p class="a"><span class="v">Verify: who carries out the assessment, and who signs it off</span></p></div>
+    <div class="qq"><span class="k">On the land</span>
+      <p class="a">Walk the site. Measure the ground that is free. Check the water source
+      and mark the boundary.</p></div>
+    <div class="qq"><span class="k">What is learned</span>
+      <p class="a"><span class="v">Verify: whether learners take part, and in which subject</span></p></div>
+    <div class="qq"><span class="k">What is recorded</span>
+      <p class="a">Area, water source, boundary, and the date of the visit.</p></div>
+    <div class="qq"><span class="k">Next decision</span>
+      <p class="a">Whether the plot goes forward to design, or waits a season.</p></div>
+  </div>
+
+  <p style="margin-top:22px;max-width:70ch;color:var(--pencil-2);font-size:14.5px">
+    <span class="v">Verify</span>
+    The land, record and decision columns are drafted from the method as described so
+    far. Confirm the wording, the real record fields, and who signs the decision.
+  </p>
+
+  <div class="stubs">
+    <a class="stub" href="#record"><span class="n">02</span><span class="nm">Design</span><span class="s">Working continues</span></a>
+    <a class="stub" href="#record"><span class="n">03</span><span class="nm">Prepare</span><span class="s">Working continues</span></a>
+    <a class="stub" href="#record"><span class="n">04</span><span class="nm">Plant</span><span class="s">Working continues</span></a>
+    <a class="stub" href="#record"><span class="n">05</span><span class="nm">Tend</span><span class="s">Working continues</span></a>
+    <a class="stub" href="#record"><span class="n">06</span><span class="nm">Harvest</span><span class="s">Working continues</span></a>
+    <a class="stub" href="#record"><span class="n">07</span><span class="nm">Record</span><span class="s">Working continues</span></a>
+    <a class="stub" href="#record"><span class="n">08</span><span class="nm">Improve</span><span class="s">Working continues</span></a>
+  </div>
+
+  <div style="margin-top:44px;max-width:430px">
+    <div class="shot">
+      <span class="k">Shot 02 · to commission</span>
+      <span class="d">Hands measuring or marking a plot. Landscape. Close, at working
+      distance, tape or line visible. No posing to camera.</span>
+    </div>
+  </div>
+
+  <div class="end">
+    <span class="v">Pilot ends here</span>
+    <p style="max-width:56ch;color:var(--pencil-2);font-size:15.5px">Sections 5 to 11 are
+    held until this route is chosen.</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+  var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced) document.documentElement.classList.add('reduced');
+  var track=document.getElementById('track'),
+      steps=[].slice.call(document.querySelectorAll('.step')),
+      bars=[].slice.call(document.querySelectorAll('.stepbar')),
+      prog=document.getElementById('prog');
+
+  function turn(){
+    if(!track||reduced) return;
+    var r=track.getBoundingClientRect(), total=r.height-innerHeight;
+    var p=total>0?(-r.top)/total:0; p=Math.max(0,Math.min(1,p));
+    var lead=0;
+    for(var i=0;i<steps.length;i++){
+      var start=i*0.10, sp=(p-start)/0.20;
+      sp=Math.max(0,Math.min(1,sp));
+      steps[i].style.setProperty('--sp',sp.toFixed(3));
+      if(bars[i]) bars[i].style.setProperty('--sp',sp.toFixed(3));
+      if(sp>0.5) lead=i;
+    }
+    if(prog) prog.textContent = String(lead+1).padStart(2,'0');
+  }
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+  },{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+
+  var t=false;
+  addEventListener('scroll',function(){
+    if(t)return;t=true;requestAnimationFrame(function(){turn();t=false});
+  },{passive:true});
+  addEventListener('resize',turn);
+  turn();
+})();
+</script>
+</body>
+</html>
