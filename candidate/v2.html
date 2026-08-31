@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>School Farm Network — V2 Cinematic</title>
+<meta name="description" content="School Farm Network turns underused land at African schools into professionally operated farms that produce food, create jobs, train the next generation of farmers and help fund school meals.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/RecklessNeue-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/RecklessNeue-MediumItalic.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ============================================================
+   SCHOOL FARM NETWORK
+   Zipline's confidence and mechanics, in Arva's language.
+   Display face ships as Reckless (Displaay, licensed at launch);
+   Cormorant Garamond stands in per Reckless's documented fallback.
+   ============================================================ */
+:root{
+  /* Arva's real tokens */
+  --bone:#f1efdf;
+  --forest:#07503f;
+  --charcoal:#212529;
+  --lime:#e8fe85;
+  --sky:#b2cee7;
+  --peach:#fceace;
+  --sage:#e6ecd5;
+  --drift:#b0b8a6;              /* unresolved line state */
+  --cream:#f7f4ec;              /* text on forest */
+  --rule:rgba(33,37,41,.16);
+  --rule-f:rgba(247,244,236,.24);
+  --muted:rgba(33,37,41,.66);
+  --muted-f:rgba(247,244,236,.75);
+  --r-media:24px;
+  --ease:cubic-bezier(.22,.7,.24,1);
+}
+/* Reckless Neue, self-hosted. Trial files for design; licence at launch
+   (Displaay, ~€55/style) — recorded in research/typography.md. */
+@font-face{font-family:'Reckless';src:url('fonts/RecklessNeue-Book.woff2') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Reckless';src:url('fonts/RecklessNeue-Medium.woff2') format('woff2');
+  font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'Reckless';src:url('fonts/RecklessNeue-SemiBold.woff2') format('woff2');
+  font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Reckless';src:url('fonts/RecklessNeue-Bold.woff2') format('woff2');
+  font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Reckless';src:url('fonts/RecklessNeue-MediumItalic.woff2') format('woff2');
+  font-weight:500;font-style:italic;font-display:swap}
+@font-face{font-family:'Reckless';src:url('fonts/RecklessNeue-SemiBoldItalic.woff2') format('woff2');
+  font-weight:600;font-style:italic;font-display:swap}
+.serif{font-family:'Reckless','Cormorant Garamond',Georgia,serif}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--bone);color:var(--charcoal);
+  font-family:'Inter',system-ui,sans-serif;font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+::selection{background:var(--forest);color:var(--cream)}
+:focus-visible{outline:2px solid var(--forest);outline-offset:3px}
+.on-forest :focus-visible{outline-color:var(--lime)}
+.wrap{max-width:1280px;margin:0 auto;padding-left:40px;padding-right:40px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted)}
+
+/* ---------- ticker: the verified milestone, Arva's pattern ---------- */
+.ticker{background:var(--lime);color:var(--charcoal);overflow:hidden;
+  border-bottom:1px solid rgba(33,37,41,.12)}
+.ticker a{display:flex;width:max-content;text-decoration:none;
+  animation:tick 26s linear infinite;padding:7px 0}
+.ticker a:hover{animation-play-state:paused}
+.ticker span{white-space:nowrap;font-size:13px;font-weight:600;padding:0 28px;
+  display:flex;gap:10px;align-items:center}
+.ticker u{text-decoration:underline;text-underline-offset:3px;font-weight:500}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* ---------- nav: transparent over the film, bone once scrolled ---------- */
+.nav{position:sticky;top:0;z-index:60;background:transparent;
+  border-bottom:1px solid transparent;
+  transition:background .35s var(--ease),border-color .35s var(--ease)}
+.nav .wm,.nav .nav-r a:not(.pill){color:var(--cream)}
+.nav .nav-r a:not(.pill){opacity:.9}
+.nav .pill{background:var(--cream);color:var(--forest);border-color:var(--cream)}
+.nav .pill:hover{background:transparent;color:var(--cream)}
+.nav.stuck{background:var(--bone);border-bottom-color:var(--rule)}
+.nav.stuck .wm{color:var(--forest)}
+.nav.stuck .nav-r a:not(.pill){color:var(--charcoal)}
+.nav.stuck .pill{background:var(--forest);color:var(--cream);border-color:var(--forest)}
+.nav.stuck .pill:hover{background:transparent;color:var(--forest)}
+.nav-in{max-width:1280px;margin:0 auto;padding:16px 40px;display:flex;
+  align-items:center;gap:30px}
+.wm{display:flex;align-items:center;gap:11px;text-decoration:none;
+  font-family:'Reckless','Cormorant Garamond',serif;font-weight:700;font-size:21px;
+  letter-spacing:-.005em;white-space:nowrap;color:var(--forest)}
+.wm svg{width:21px;height:21px;flex:none}
+.nav-r{margin-left:auto;display:flex;align-items:center;gap:28px}
+.nav-r a:not(.pill){text-decoration:none;font-size:15px;font-weight:500;
+  color:var(--charcoal);opacity:.8;transition:opacity .2s}
+.nav-r a:not(.pill):hover{opacity:1}
+.pill{display:inline-flex;align-items:center;gap:9px;background:var(--forest);
+  color:var(--cream);text-decoration:none;padding:12px 22px;border-radius:999px;
+  font-size:15px;font-weight:600;border:1px solid var(--forest);white-space:nowrap;
+  transition:background .22s var(--ease),color .22s var(--ease)}
+.pill:hover{background:transparent;color:var(--forest)}
+.pill.outline{background:transparent;color:var(--charcoal);
+  border-color:rgba(33,37,41,.45)}
+.pill.outline:hover{background:var(--forest);color:var(--cream);
+  border-color:var(--forest)}
+.on-forest .pill.outline{color:var(--cream);border-color:rgba(247,244,236,.55)}
+.on-forest .pill.outline:hover{background:var(--cream);color:var(--forest);
+  border-color:var(--cream)}
+.pill svg{width:15px;height:9px;flex:none}
+
+/* ---------- cinematic hero: Arva's inset full-bleed film ---------- */
+.cinema{position:relative;margin:-73px 14px 0;border-radius:var(--r-media);
+  overflow:hidden;min-height:92svh;display:flex;align-items:flex-end}
+.cinema video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cinema::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(7,40,32,.42) 0%,rgba(7,40,32,.06) 38%,rgba(7,40,32,.66) 100%)}
+.cinema .inner{position:relative;z-index:2;width:100%;max-width:1280px;
+  margin:0 auto;padding:0 40px 56px;color:var(--cream)}
+.cinema h1{color:var(--cream)}
+.cinema .sub{margin-top:22px;max-width:56ch;font-size:18.5px;line-height:1.6;
+  color:rgba(247,244,236,.92)}
+.cinema .acts{margin-top:28px;display:flex;gap:14px;flex-wrap:wrap}
+.cinema .pill{background:var(--cream);color:var(--forest);border-color:var(--cream)}
+.cinema .pill:hover{background:transparent;color:var(--cream)}
+.cinema .pill.outline{background:transparent;color:var(--cream);
+  border-color:rgba(247,244,236,.6)}
+.cinema .pill.outline:hover{background:var(--cream);color:var(--forest)}
+.cinema .state{position:absolute;right:40px;bottom:56px;text-align:right;
+  font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(247,244,236,.85);line-height:2}
+.hero{padding-top:clamp(40px,6vw,84px);padding-bottom:clamp(56px,7vw,100px)}
+h1{font-family:'Reckless','Cormorant Garamond',Georgia,serif;font-weight:600;
+  color:var(--forest);text-wrap:balance;
+  font-size:clamp(46px,6.9vw,98px);line-height:1;letter-spacing:-.015em}
+h1 .beat2{font-style:italic;font-weight:500}
+.filmslot{margin-block:clamp(22px,3vw,40px)}
+.film{width:min(var(--fw,220px),100%);margin:0;
+  transition:width .1s linear}
+.film video,.film img{width:100%;height:auto;aspect-ratio:16/8.4;object-fit:cover;
+  border-radius:var(--r-media)}
+.film figcaption{margin-top:12px;font-size:13px;color:var(--muted);
+  letter-spacing:.02em}
+.no-js .film,.reduced .film{width:100%}
+.hero .sub{margin-top:clamp(22px,3vw,34px);max-width:58ch;font-size:18.5px;
+  line-height:1.62;color:var(--charcoal)}
+.hero .acts{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+
+/* ---------- problem beat ---------- */
+.forest{background:var(--forest);color:var(--cream)}
+.problem{padding-block:clamp(76px,9vw,128px)}
+.problem h2{font-family:'Reckless','Cormorant Garamond',serif;font-weight:600;
+  font-size:clamp(42px,7vw,96px);line-height:1.02;letter-spacing:-.013em;
+  max-width:15ch}
+.problem .body{margin-top:26px;max-width:62ch;font-size:18px;line-height:1.65;
+  color:var(--muted-f)}
+.problem .body b{color:var(--cream);font-weight:600}
+
+/* ---------- the system: resolving beats ---------- */
+.system{padding-block:clamp(76px,9vw,128px)}
+.beats{margin-top:clamp(30px,4vw,48px)}
+.beat{display:grid;grid-template-columns:minmax(0,7.2fr) minmax(0,4.8fr);
+  gap:18px 56px;align-items:baseline;padding:10px 0}
+.beat h3{font-family:'Reckless','Cormorant Garamond',serif;font-weight:600;
+  font-size:clamp(44px,6.6vw,92px);line-height:1;letter-spacing:-.014em;
+  color:var(--drift);transition:color .5s var(--ease)}
+.beat.on h3{color:var(--forest)}
+.beat p{font-size:16.5px;line-height:1.6;color:var(--muted);max-width:44ch}
+.syswrap{margin-top:clamp(34px,4vw,52px);padding-top:26px;
+  border-top:1px solid var(--rule);max-width:74ch}
+.syswrap p{font-size:17.5px;line-height:1.7}
+.comp{font-size:14px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--forest);white-space:nowrap}
+
+/* ---------- stat band ---------- */
+.stats{padding-block:clamp(64px,8vw,104px);border-top:1px solid var(--rule)}
+.chip{display:inline-block;background:var(--lime);color:var(--charcoal);
+  border-radius:999px;padding:7px 16px;font-size:12.5px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase}
+.statgrid{margin-top:clamp(34px,4vw,52px);display:grid;
+  grid-template-columns:repeat(3,1fr)}
+.stat{padding:8px 36px;border-left:1px solid var(--rule)}
+.stat:first-child{padding-left:0;border-left:0}
+.stat .lab{font-family:'Reckless','Cormorant Garamond',serif;font-weight:500;
+  font-size:21px;line-height:1.3;max-width:22ch}
+/* stat numerals are thin grotesque, per the reference's own stat band */
+.stat .num{font-family:'Inter',sans-serif;font-weight:200;
+  font-variant-numeric:lining-nums;
+  font-size:clamp(76px,8.6vw,120px);line-height:1.05;color:var(--forest);
+  margin-top:16px;letter-spacing:-.03em}
+.stat .num small{font-size:.34em;font-weight:400;letter-spacing:0}
+.stat .num .approx{font-size:.5em;font-weight:300;vertical-align:.34em;
+  margin-right:.06em}
+.stat .src{margin-top:8px;font-size:13px;color:var(--muted);max-width:26ch}
+
+/* ---------- the record ---------- */
+.record{padding-block:clamp(64px,8vw,110px)}
+.rec-card{background:#fbfaf3;border-radius:var(--r-media);
+  padding:clamp(28px,4vw,56px);display:grid;
+  grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:48px;margin-top:clamp(30px,4vw,44px)}
+.rec-head h2,.system h2,.record h2,.quilt h2{
+  font-family:'Reckless','Cormorant Garamond',serif;font-weight:600;
+  font-size:clamp(34px,4.6vw,58px);line-height:1.06;letter-spacing:-.012em;
+  color:var(--charcoal);max-width:20ch}
+.rec-rows{border-top:1px solid var(--rule)}
+.rrow{display:grid;grid-template-columns:172px 1fr;gap:20px;padding:20px 0;
+  border-bottom:1px solid var(--rule)}
+.rrow .st{font-size:12px;font-weight:600;letter-spacing:.11em;
+  text-transform:uppercase;padding-top:5px}
+.rrow .st.v{color:var(--forest)}
+.rrow .st.p{color:var(--muted)}
+.rrow .b{font-size:16.5px;line-height:1.6}
+.rrow .b strong{font-weight:600}
+.rrow .src{display:block;margin-top:7px;font-size:13px;color:var(--muted)}
+.rec-figs figure{margin:0 0 22px}
+.rec-figs img{border-radius:14px;width:100%;height:200px;object-fit:cover}
+.rec-figs figcaption{margin-top:9px;font-size:12.5px;color:var(--muted)}
+
+/* ---------- audience quilt ---------- */
+.quilt{padding-block:clamp(64px,8vw,110px);border-top:1px solid var(--rule)}
+.cards{margin-top:clamp(30px,4vw,46px);display:grid;
+  grid-template-columns:repeat(3,1fr);gap:22px}
+.card{border-radius:var(--r-media);padding:32px 30px 28px;min-height:290px;
+  display:flex;flex-direction:column;
+  transition:transform .3s var(--ease)}
+.card:hover{transform:translateY(-6px)}
+.card.sky{background:var(--sky)}
+.card.peach{background:var(--peach)}
+.card.sage{background:var(--sage)}
+.card h3{font-family:'Reckless','Cormorant Garamond',serif;font-weight:600;
+  font-size:30px;line-height:1.1;letter-spacing:-.01em}
+.card p{margin-top:14px;font-size:15.5px;line-height:1.6;color:rgba(33,37,41,.78);
+  flex:1}
+.card a{margin-top:18px;display:inline-flex;gap:9px;align-items:center;
+  text-decoration:none;font-weight:600;font-size:15px;color:var(--charcoal)}
+.card a svg{width:15px;height:9px;transition:transform .25s var(--ease)}
+.card a:hover svg{transform:translateX(4px)}
+
+/* ---------- close / footer ---------- */
+.close{padding-block:clamp(84px,10vw,140px) 0}
+.close h2{font-family:'Reckless','Cormorant Garamond',serif;font-weight:600;
+  font-size:clamp(52px,8vw,112px);line-height:1;letter-spacing:-.014em;
+  color:var(--cream)}
+.close .sub{margin-top:20px;max-width:56ch;font-size:17.5px;color:var(--muted-f)}
+.close .acts{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap}
+.mapzone{margin-top:clamp(48px,6vw,80px);display:grid;
+  grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:56px;align-items:end}
+.mapzone svg{width:100%;height:auto;max-width:520px}
+.fcols{display:grid;grid-template-columns:1fr 1fr;gap:36px}
+.fcols h4{font-size:11.5px;font-weight:600;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted-f);margin-bottom:14px}
+.fcols ul{list-style:none}
+.fcols li{margin-bottom:9px}
+.fcols a{text-decoration:none;color:var(--cream);opacity:.85;font-size:15.5px}
+.fcols a:hover{opacity:1}
+.credit{margin-top:clamp(44px,5vw,64px);padding:22px 0 34px;
+  border-top:1px solid var(--rule-f);display:flex;justify-content:space-between;
+  gap:18px;flex-wrap:wrap;font-size:11.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted-f)}
+
+.up{opacity:0;transform:translateY(16px);
+  transition:opacity .75s var(--ease),transform .75s var(--ease)}
+.up.in{opacity:1;transform:none}
+.no-js .up{opacity:1;transform:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .wrap,.nav-in{padding-left:24px;padding-right:24px}
+  .beat{grid-template-columns:1fr;gap:8px}
+  .beat p{max-width:56ch}
+  .statgrid{grid-template-columns:1fr}
+  .stat{padding:22px 0;border-left:0;border-top:1px solid var(--rule)}
+  .stat:first-child{border-top:0;padding-top:0}
+  .rec-card{grid-template-columns:1fr;gap:30px}
+  .cards{grid-template-columns:1fr}
+  .card{min-height:0}
+  .mapzone{grid-template-columns:1fr;gap:44px;align-items:start}
+}
+@media (max-width:900px){
+  .cinema{margin:-60px 8px 0;min-height:86svh}
+  .cinema .inner{padding:0 22px 40px}
+  .cinema .state{display:none}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .nav-in{padding-block:13px;gap:14px}
+  .nav-r a:not(.pill){display:none}
+  .wm{font-size:17px;gap:8px}
+  .wm svg{width:18px;height:18px}
+  .pill{padding:11px 17px;font-size:14px}
+  .hero .acts .pill.outline{display:none}
+  .rrow{grid-template-columns:1fr;gap:8px}
+  .fcols{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important;animation:none!important}
+  .up{opacity:1;transform:none}
+  .beat h3{color:var(--forest)}
+  .film{width:100%}
+}
+@media (max-width:640px){.nav-in{padding-left:16px;padding-right:16px;gap:10px}.wm{font-size:15.5px}}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.remove('no-js');</script>
+
+<!-- 0 · ticker: the verified milestone -->
+<div class="ticker" aria-label="News">
+  <a href="#record">
+    <span>First harvest weighed at Seeds2Education, Kenya · May 2026 <u>Read the record</u></span>
+    <span>First harvest weighed at Seeds2Education, Kenya · May 2026 <u>Read the record</u></span>
+    <span>First harvest weighed at Seeds2Education, Kenya · May 2026 <u>Read the record</u></span>
+    <span>First harvest weighed at Seeds2Education, Kenya · May 2026 <u>Read the record</u></span>
+    <span>First harvest weighed at Seeds2Education, Kenya · May 2026 <u>Read the record</u></span>
+    <span>First harvest weighed at Seeds2Education, Kenya · May 2026 <u>Read the record</u></span>
+  </a>
+</div>
+
+<!-- 1 · nav -->
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="wm" href="#top">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <line x1="10" y1="46" x2="54" y2="46" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="16" y1="34" x2="48" y2="34" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="22" y1="22" x2="34" y2="22" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="42.5" cy="22" r="4.5" fill="#e8fe85" stroke="#07503f" stroke-width="2"/>
+      </svg>
+      <span class="wm-t">School Farm Network</span>
+    </a>
+    <nav class="nav-r" aria-label="Primary">
+      <a href="#system">How it works</a>
+      <a href="#record">The record</a>
+      <a href="#partners">Partners</a>
+      <a class="pill" href="mailto:matthew@schoolfarmnetwork.com">Partner with us
+        <svg viewBox="0 0 15 9" fill="none" aria-hidden="true"><path d="M0 4.5h13M9.5 1l3.5 3.5L9.5 8" stroke="currentColor" stroke-width="1.4"/></svg>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- 2 · hero: cinematic -->
+<section class="cinema">
+  <video autoplay muted loop playsinline poster="../assets/img/film-poster-1600.jpg"
+         aria-label="Film of the Seeds2Education pilot: the harvest crew working beside the school, then the farm from the air">
+    <source src="../assets/hero-film.mp4" type="video/mp4">
+  </video>
+  <div class="inner">
+    <h1>The land is already there.<br><span class="beat2">The system isn&rsquo;t.</span></h1>
+    <p class="sub">School Farm Network turns underused land at African schools into
+    professionally operated farms that produce food, create jobs, train the next
+    generation of farmers and help fund school meals.</p>
+    <div class="acts">
+      <a class="pill" href="mailto:matthew@schoolfarmnetwork.com">Partner with us
+        <svg viewBox="0 0 15 9" fill="none" aria-hidden="true"><path d="M0 4.5h13M9.5 1l3.5 3.5L9.5 8" stroke="currentColor" stroke-width="1.4"/></svg>
+      </a>
+      <a class="pill outline" href="#system">See how it works</a>
+    </div>
+  </div>
+  <div class="state">Seeds2Education<br>Kenya · Our original pilot</div>
+</section>
+
+<!-- 3 · problem beat -->
+<section class="forest on-forest">
+  <div class="problem wrap">
+    <h2 class="up">Hungry students sit beside empty fields.</h2>
+    <p class="body up">Land at African schools stays unplanted for a reason. Growing
+    food at scale takes <b>operators, agronomy, buyers, working capital and records</b>,
+    and no one has brought those to the school gate. Programmes hand over seeds and
+    leave. <b>We stay and run the farm.</b></p>
+  </div>
+</section>
+
+<!-- 4 · the system -->
+<section class="system wrap" id="system">
+  <span class="eyebrow">How it works</span>
+  <h2 style="margin-top:14px">One system, run on every farm.</h2>
+
+  <div class="beats" id="beats">
+    <div class="beat"><h3 class="serif">We assess.</h3>
+      <p>Land, water, tenure, access and commercial viability, checked before anything
+      is built. Farms that shouldn&rsquo;t exist, don&rsquo;t.</p></div>
+    <div class="beat"><h3 class="serif">We build.</h3>
+      <p>Irrigation, storage and fencing, installed by our team. This is where the
+      capital goes.</p></div>
+    <div class="beat"><h3 class="serif">We farm.</h3>
+      <p>A paid local crew plants, tends and harvests to a plan, with roles prioritised
+      for women and for people aged 18 to 35.</p></div>
+    <div class="beat"><h3 class="serif">We account.</h3>
+      <p>Every cycle is weighed, costed and recorded. What the farm produced, what it
+      paid, what the school received.</p></div>
+  </div>
+
+  <div class="syswrap">
+    <p>The system is the part nobody else builds:
+    <span class="comp">operators</span> · <span class="comp">infrastructure</span> ·
+    <span class="comp">agronomy</span> · <span class="comp">offtake</span> ·
+    <span class="comp">data</span> · <span class="comp">training</span> ·
+    <span class="comp">financing</span>, on the ground and in one set of records.</p>
+  </div>
+</section>
+
+<!-- 5 · stat band -->
+<section class="stats">
+  <div class="wrap">
+    <span class="chip">The record so far</span>
+    <div class="statgrid up">
+      <div class="stat">
+        <div class="lab serif">First harvest, weighed</div>
+        <div class="num"><span class="approx">&approx;</span>4<small>&nbsp;tonnes</small></div>
+        <p class="src">Onions, Seeds2Education, May 2026. Source: harvest and weighing
+        records. One site, one cycle.</p>
+      </div>
+      <div class="stat">
+        <div class="lab serif">Schools in the current pilot</div>
+        <div class="num">2</div>
+        <p class="src">A two-school, two-cycle pilot, running now.</p>
+      </div>
+      <div class="stat">
+        <div class="lab serif">System every farm runs on</div>
+        <div class="num">1</div>
+        <p class="src">The same records, the same standards, at every site.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · the record -->
+<section class="record wrap" id="record">
+  <div class="rec-head">
+    <span class="eyebrow">The record</span>
+    <h2 style="margin-top:14px">We publish what is verified, and say what is not yet.</h2>
+  </div>
+
+  <div class="rec-card up">
+    <div class="rec-rows">
+      <div class="rrow">
+        <span class="st v">Verified · May 2026</span>
+        <div class="b"><strong>First harvest.</strong> Approximately 4 tonnes of onions,
+        lifted and weighed at Seeds2Education, our original pilot.
+        <span class="src">Source: harvest and weighing records. A pilot result, not
+        portfolio performance.</span></div>
+      </div>
+      <div class="rrow">
+        <span class="st p">Under way</span>
+        <div class="b"><strong>Sale and meals.</strong> The harvest is being sold to
+        market. Proceeds will be paid to Food for Education in exchange for student
+        meals. That payment has not been made yet, and this page will say so until it
+        has.</div>
+      </div>
+      <div class="rrow">
+        <span class="st p">Ongoing</span>
+        <div class="b"><strong>Paid work.</strong> The farm runs on a paid local crew,
+        with roles prioritised for women and for people aged 18 to 35.</div>
+      </div>
+      <div class="rrow">
+        <span class="st p">Not yet measured</span>
+        <div class="b"><strong>Cost per meal.</strong> We will publish it when we have
+        measured it across a full cycle at more than one site. Until then we do not
+        have a number worth quoting.</div>
+      </div>
+    </div>
+
+    <div class="rec-figs">
+      <figure>
+        <img src="../assets/img/irrigation-2000.jpg"
+             srcset="../assets/img/irrigation-1000.jpg 1000w, ../assets/img/irrigation-2000.jpg 2000w"
+             sizes="(max-width:980px) 92vw, 30vw" width="2000" height="1333"
+             loading="lazy" decoding="async"
+             alt="Irrigation line running along a prepared bed at the pilot farm.">
+        <figcaption>Irrigation going in. Building is where the capital goes.</figcaption>
+      </figure>
+      <figure>
+        <img src="../assets/img/pilot-site-900.jpg" width="900" height="600"
+             loading="lazy" decoding="async"
+             alt="The pilot farm under cultivation, crops in rows.">
+        <figcaption>The same ground under cultivation.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · audience quilt -->
+<section class="quilt wrap" id="partners">
+  <span class="eyebrow">Working together</span>
+  <h2 style="margin-top:14px">Three ways in.</h2>
+
+  <div class="cards up">
+    <div class="card sky">
+      <h3 class="serif">I run a school</h3>
+      <p>You contribute the land and receive an agreed benefit, primarily meals. You
+      carry no operating cost and no commercial risk. Land, water and access are
+      checked first.</p>
+      <a href="mailto:matthew@schoolfarmnetwork.com?subject=Our%20school">Register interest
+        <svg viewBox="0 0 15 9" fill="none" aria-hidden="true"><path d="M0 4.5h13M9.5 1l3.5 3.5L9.5 8" stroke="currentColor" stroke-width="1.5"/></svg></a>
+    </div>
+    <div class="card peach">
+      <h3 class="serif">I fund infrastructure</h3>
+      <p>Catalytic capital builds irrigation, storage and operations, and buys the time
+      to prove the model repeats. You invest in a system, not a season.</p>
+      <a href="mailto:matthew@schoolfarmnetwork.com?subject=Funding">Invest in the build
+        <svg viewBox="0 0 15 9" fill="none" aria-hidden="true"><path d="M0 4.5h13M9.5 1l3.5 3.5L9.5 8" stroke="currentColor" stroke-width="1.5"/></svg></a>
+    </div>
+    <div class="card sage">
+      <h3 class="serif">I buy produce</h3>
+      <p>Committed offtake at a fair price shapes what we plant. Demand is worth more
+      to these farms than donations.</p>
+      <a href="mailto:matthew@schoolfarmnetwork.com?subject=Offtake">Discuss offtake
+        <svg viewBox="0 0 15 9" fill="none" aria-hidden="true"><path d="M0 4.5h13M9.5 1l3.5 3.5L9.5 8" stroke="currentColor" stroke-width="1.5"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · close -->
+<footer class="forest on-forest">
+  <div class="close wrap">
+    <h2 class="up">Feed every generation.</h2>
+    <p class="sub up">The land is at the school gate in every county of every country
+    on the continent. We are building the system that farms it.</p>
+    <div class="acts up">
+      <a class="pill outline" href="mailto:matthew@schoolfarmnetwork.com">Partner with us
+        <svg viewBox="0 0 15 9" fill="none" aria-hidden="true"><path d="M0 4.5h13M9.5 1l3.5 3.5L9.5 8" stroke="currentColor" stroke-width="1.4"/></svg>
+      </a>
+    </div>
+
+    <div class="mapzone">
+      <svg viewBox="0 0 440 470" role="img"
+           aria-label="Outline map of Africa with one operating site marked in Kenya">
+        <!-- simplified Africa: NW Morocco, N coast to Nile delta, Red Sea, the Horn,
+             E coast to the Cape, Gulf of Guinea, W bulge back to Morocco -->
+        <path d="M96 74
+                 L128 58 L170 50 L214 54 L252 48 L282 58
+                 L292 82 L310 96
+                 L318 122 L338 150 L364 168
+                 L392 178 L376 200 L352 210
+                 L332 238 L318 274 L306 310
+                 L294 346 L276 378 L252 404
+                 L232 428 L214 442 L198 430
+                 L188 402 L196 372 L184 344
+                 L166 322 L146 314 L130 296
+                 L110 288 L92 270 L74 262
+                 L58 238 L44 220 L52 198
+                 L72 190 L94 182 L112 168
+                 L118 144 L108 120 L92 100 Z"
+              fill="none" stroke="rgba(247,244,236,.55)" stroke-width="1.6"
+              stroke-linejoin="round"/>
+        <!-- Madagascar -->
+        <path d="M330 340 L342 322 L352 336 L346 368 L334 386 L326 366 Z"
+              fill="none" stroke="rgba(247,244,236,.4)" stroke-width="1.4"
+              stroke-linejoin="round"/>
+        <!-- Kenya: east coast, just south of the Horn -->
+        <circle cx="322" cy="252" r="7" fill="#e8fe85"/>
+        <circle cx="322" cy="252" r="14" fill="none" stroke="#e8fe85"
+                stroke-width="1.4" opacity=".5"/>
+        <text x="296" y="250" text-anchor="end" font-family="Inter"
+              font-size="11.5" font-weight="600" letter-spacing="1.6"
+              fill="#f7f4ec">SEEDS2EDUCATION</text>
+        <text x="296" y="266" text-anchor="end" font-family="Inter"
+              font-size="10" letter-spacing="1.6"
+              fill="rgba(247,244,236,.72)">KENYA · OPERATING</text>
+      </svg>
+      <div class="fcols">
+        <div>
+          <h4>The work</h4>
+          <ul>
+            <li><a href="#system">How it works</a></li>
+            <li><a href="#record">The record</a></li>
+            <li><a href="#partners">Partners</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:matthew@schoolfarmnetwork.com">matthew@schoolfarmnetwork.com</a></li>
+            <li><a href="#top">schoolfarmnetwork.com</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="credit">
+      <span>Photography from Seeds2Education, Kenya, our original pilot</span>
+      <span>School Farm Network</span>
+    </div>
+  </div>
+</footer>
+
+</main>
+
+<script>
+(function(){
+  var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced) document.documentElement.classList.add('reduced');
+
+  // sticky hairline
+  var nav=document.getElementById('nav');
+  addEventListener('scroll',function(){nav.classList.toggle('stuck',scrollY>innerHeight*0.62)},
+    {passive:true});
+
+  function grow(){}
+
+  // beats resolve as they enter
+  var beats=[].slice.call(document.querySelectorAll('.beat'));
+  var bio=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('on'); });
+  },{threshold:.6});
+  beats.forEach(function(b){bio.observe(b)});
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');
+      io.unobserve(e.target)}});
+  },{threshold:.12});
+  document.querySelectorAll('.up').forEach(function(el){io.observe(el)});
+
+  var t=false;
+  addEventListener('scroll',function(){
+    if(t)return;t=true;requestAnimationFrame(function(){grow();t=false});
+  },{passive:true});
+  addEventListener('resize',grow);
+  grow();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>School Farm Network — Show your working</title>
+<meta name="description" content="A school owns ground it has never used. What can it grow? School Farm Network sets the answer out as working, with the unknowns left visibly blank.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   HOMEPAGE 3 — SHOW YOUR WORKING
+   Architecture: a paced sequence. One screen holds one point and the
+   visitor advances on purpose. There is no scrolling narrative, and
+   a read-as-one-page mode exists for anyone who wants to scan.
+   ============================================================ */
+:root{
+  --paper:#FBFAF6; --sq:rgba(94,124,118,.16);
+  --pencil:#33383A; --pencil2:rgba(51,56,58,.66);
+  --pen:#B8322A; --crop:#4E6B2E; --rule:rgba(51,56,58,.18);
+  --sqsz:26px; --ease:cubic-bezier(.22,.8,.26,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--paper);color:var(--pencil);
+  font-family:'Instrument Sans',system-ui,sans-serif;font-size:17px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;overflow:hidden;
+  background-image:
+    repeating-linear-gradient(to right, var(--sq) 0 1px, transparent 1px var(--sqsz)),
+    repeating-linear-gradient(to bottom, var(--sq) 0 1px, transparent 1px var(--sqsz))}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--pen);outline-offset:3px}
+.mono{font-family:'Space Mono',ui-monospace,monospace;font-size:12.5px}
+.v{font-family:'Space Mono',monospace;font-size:11px;text-transform:uppercase;
+  color:var(--pen);border:1px solid currentColor;padding:2px 6px;display:inline-block;
+  line-height:1.4;background:rgba(184,50,42,.05)}
+
+.deck{position:relative;height:100%}
+
+/* header */
+.hd{position:absolute;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;
+  gap:20px;padding:18px 34px;background:linear-gradient(var(--paper) 60%,transparent)}
+.wm{display:flex;align-items:center;gap:10px;text-decoration:none;
+  font-family:'Instrument Serif',Georgia,serif;font-size:22px;white-space:nowrap}
+.wm svg{width:18px;height:18px;flex:none}
+.fields{display:flex;gap:20px;border-left:1px solid var(--rule);padding-left:20px}
+.fld{font-family:'Space Mono',monospace;font-size:11px;text-transform:uppercase;
+  color:var(--pencil2)}
+.fld b{color:var(--pencil);font-weight:400;border-bottom:1px solid var(--pencil2)}
+.hd .right{margin-left:auto;display:flex;gap:10px;align-items:center}
+.ghost{border:1px solid var(--rule);padding:7px 12px;font-family:'Space Mono',monospace;
+  font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--pencil2);
+  transition:color .2s var(--ease),border-color .2s var(--ease)}
+.ghost:hover{color:var(--pencil);border-color:var(--pencil2)}
+
+/* steps */
+.step{position:absolute;inset:0;display:flex;align-items:center;
+  padding:96px 34px 112px;opacity:0;visibility:hidden;overflow-y:auto;
+  transition:opacity .45s var(--ease),visibility .45s}
+.step.on{opacity:1;visibility:visible}
+.inner{max-width:1180px;margin:0 auto;width:100%}
+.qno{font-family:'Space Mono',monospace;font-size:12.5px;color:var(--pen);
+  display:block;margin-bottom:16px}
+h1{font-family:'Instrument Serif',Georgia,serif;font-weight:400;
+  font-size:clamp(34px,5.2vw,68px);line-height:1.06;letter-spacing:-.012em;max-width:17ch}
+h1 em{font-style:italic}
+.uline{display:inline-block;border-bottom:2px solid var(--pen);padding-bottom:3px}
+.sub{margin-top:22px;max-width:50ch;color:var(--pencil2);font-size:17.5px}
+.foot{margin-top:24px;max-width:64ch}
+h2{font-family:'Instrument Serif',Georgia,serif;font-weight:400;
+  font-size:clamp(28px,4vw,50px);line-height:1.07;letter-spacing:-.01em;max-width:18ch}
+
+/* the working */
+.work{border-left:2px solid var(--pen);padding-left:24px;margin-top:34px;max-width:760px}
+.wl{display:grid;grid-template-columns:24px 1fr auto;gap:14px;align-items:baseline;
+  padding:10px 0;font-family:'Space Mono',monospace;font-size:14.5px;
+  border-bottom:1px dashed var(--rule)}
+.wl .op{color:var(--pen)}
+.box{display:inline-block;min-width:92px;height:24px;border:1.5px solid var(--pen);
+  vertical-align:-6px;background:rgba(184,50,42,.04)}
+.answer{margin-top:18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.answer .eq{font-family:'Space Mono',monospace;font-size:14.5px;color:var(--pen)}
+.abox{border:2.5px solid var(--pen);min-width:200px;height:54px;display:flex;
+  align-items:center;justify-content:center;font-family:'Space Mono',monospace;
+  font-size:12px;text-transform:uppercase;color:var(--pen);text-align:center;
+  padding:0 14px;background:rgba(184,50,42,.05)}
+
+/* stage list */
+.steps8{margin-top:28px;max-width:900px}
+.s8{display:grid;grid-template-columns:34px 1fr auto;gap:16px;align-items:baseline;
+  padding:12px 0;border-bottom:1px solid var(--rule)}
+.s8 .n{font-family:'Space Mono',monospace;font-size:12.5px;color:var(--pen)}
+.s8 .t{font-family:'Instrument Serif',serif;font-size:22px}
+.s8 .m{font-family:'Space Mono',monospace;font-size:12px;color:var(--pencil2);
+  text-align:right}
+
+/* five questions */
+.qs{margin-top:26px;max-width:1000px;border-top:2px solid var(--pencil)}
+.ql{display:grid;grid-template-columns:200px 1fr;gap:22px;padding:14px 0;
+  border-bottom:1px solid var(--rule);align-items:baseline}
+.ql .k{font-family:'Space Mono',monospace;font-size:11.5px;text-transform:uppercase;
+  color:var(--pencil2)}
+.ql .a{font-size:16px}
+
+/* crop */
+.crop{display:grid;grid-template-columns:repeat(4,1fr);margin-top:28px;
+  border-top:2px solid var(--pencil);max-width:1100px}
+.cstep{padding:20px 18px 20px 0;border-right:1px dashed var(--rule)}
+.cstep:last-child{border-right:0;padding-right:0}
+.cstep .n{font-family:'Space Mono',monospace;font-size:11px;color:var(--pen);
+  display:block;margin-bottom:8px;text-transform:uppercase}
+.cstep h4{font-family:'Instrument Serif',serif;font-size:20px;margin-bottom:6px}
+.cstep p{font-size:14.5px;line-height:1.5;color:var(--pencil2)}
+
+/* teach + evidence + paths share a row form */
+.rows{margin-top:26px;border-top:2px solid var(--pencil);max-width:1100px}
+.row{display:grid;gap:20px;padding:16px 0;border-bottom:1px solid var(--rule);
+  align-items:start}
+.row.t3{grid-template-columns:200px 1fr 1fr}
+.row.e3{grid-template-columns:170px 1fr auto}
+.row.p4{grid-template-columns:40px 1fr 1.2fr auto;align-items:center}
+.row .a1{font-family:'Space Mono',monospace;font-size:11.5px;text-transform:uppercase;
+  color:var(--crop);padding-top:3px}
+.row .r{color:var(--pencil2);font-size:15px}
+.chip{font-family:'Space Mono',monospace;font-size:10.5px;text-transform:uppercase;
+  padding:3px 8px;border:1px solid currentColor;justify-self:start;white-space:nowrap}
+.chip.v1{background:var(--pen);color:#FDF7F5;border-color:var(--pen)}
+.chip.p1{color:var(--pencil)}
+.chip.c1{color:var(--pencil2)}
+.chip.n1{color:var(--pencil2);border-style:dashed}
+.row .b strong{font-family:'Instrument Serif',serif;font-size:1.25em;display:block;
+  margin-bottom:3px}
+.row .src{display:block;margin-top:6px;font-size:13px;color:var(--pencil2)}
+.row .when{font-family:'Space Mono',monospace;font-size:11.5px;color:var(--pen);
+  white-space:nowrap}
+.row .t{font-family:'Instrument Serif',serif;font-size:21px}
+.row .go{font-family:'Space Mono',monospace;font-size:11px;text-transform:uppercase;
+  color:var(--pencil2);white-space:nowrap}
+a.row{text-decoration:none;transition:padding-left .2s var(--ease)}
+a.row:hover{padding-left:10px}
+
+/* map + people */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:26px;
+  align-items:start}
+.map{border:1px solid var(--rule);padding:16px;background:rgba(255,255,255,.5)}
+.map svg{width:100%;height:auto}
+.people{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+.pslot{border:1.5px dashed var(--pen);background:rgba(184,50,42,.03);padding:16px;
+  min-height:200px;display:flex;flex-direction:column;justify-content:flex-end}
+.pslot .k{font-family:'Space Mono',monospace;font-size:11px;text-transform:uppercase;
+  color:var(--pen)}
+.pslot .d{font-size:14px;line-height:1.45;margin-top:7px;color:var(--pencil2)}
+figure{margin:0}
+figcaption{margin-top:8px;font-family:'Space Mono',monospace;font-size:11px;
+  color:var(--pencil2);line-height:1.6}
+
+/* controls */
+.ctrl{position:absolute;left:0;right:0;bottom:0;z-index:30;display:flex;
+  align-items:center;gap:16px;padding:16px 34px;
+  background:linear-gradient(transparent,var(--paper) 45%)}
+.dots{display:flex;gap:6px;flex-wrap:wrap}
+.dot{width:8px;height:8px;border:1.5px solid var(--pencil2);opacity:.5;
+  transition:opacity .2s var(--ease),background .2s var(--ease)}
+.dot[aria-current="true"]{opacity:1;background:var(--pen);border-color:var(--pen)}
+.nav{margin-left:auto;display:flex;gap:9px}
+.nb{border:1.5px solid var(--pencil);padding:10px 18px;font-weight:600;font-size:14.5px;
+  transition:background .2s var(--ease),color .2s var(--ease)}
+.nb:disabled{opacity:.3;cursor:default}
+.nb.primary{background:var(--pencil);color:var(--paper)}
+.nb.primary:hover:not(:disabled){background:var(--pen);border-color:var(--pen)}
+.bar{position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--rule)}
+.bar i{display:block;height:100%;background:var(--pen);transition:width .4s var(--ease)}
+
+/* reader mode */
+.reader{display:none;overflow-y:auto;height:100%;padding:96px 34px 80px}
+body.reading{overflow:auto}
+body.reading .step,body.reading .ctrl{display:none}
+body.reading .reader{display:block}
+.reader .rin{max-width:780px;margin:0 auto}
+.reader section{padding:26px 0;border-bottom:1px solid var(--rule)}
+.reader h3{font-family:'Instrument Serif',serif;font-size:27px;margin-bottom:10px}
+.reader p{margin-bottom:9px;color:var(--pencil2)}
+.reader dt{font-family:'Space Mono',monospace;font-size:11px;text-transform:uppercase;
+  color:var(--pencil2);margin-top:10px}
+.reader dd{margin-left:0}
+
+@media(max-width:1000px){
+  .two{grid-template-columns:1fr;gap:26px}
+  .crop{grid-template-columns:repeat(2,1fr)}
+  .people{grid-template-columns:1fr 1fr}
+  .row.t3,.row.e3{grid-template-columns:1fr;gap:8px}
+}
+@media(max-width:760px){
+  :root{--sqsz:22px}
+  body{font-size:16px}
+  .hd{padding:14px 18px;gap:12px}
+  .fields{display:none}
+  .step{padding:84px 18px 128px}
+  .ctrl{padding:12px 18px;flex-wrap:wrap;gap:10px}
+  .nav{margin-left:0;width:100%}
+  .nb{flex:1;text-align:center}
+  .reader{padding:84px 18px 60px}
+  .work{padding-left:16px}
+  .wl{grid-template-columns:20px 1fr;gap:10px;font-size:13.5px}
+  .wl .val{grid-column:2;margin-top:4px}
+  .ql,.crop,.people{grid-template-columns:1fr}
+  .cstep{border-right:0;border-bottom:1px dashed var(--rule);padding-right:0}
+  .row.p4{grid-template-columns:32px 1fr}
+  .row.p4 .d,.row.p4 .go{grid-column:2}
+  .wm{font-size:17px}
+  .abox{min-width:0;width:100%}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <div class="hd">
+    <a class="wm" href="#">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <line x1="10" y1="46" x2="54" y2="46" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="16" y1="34" x2="48" y2="34" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="22" y1="22" x2="34" y2="22" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="42.5" cy="22" r="4.5" fill="#4E6B2E"/>
+      </svg>
+      School Farm Network
+    </a>
+    <div class="fields">
+      <span class="fld">Subject <b>Land</b></span>
+      <span class="fld">Question <b id="qn">01</b> of 10</span>
+    </div>
+    <div class="right">
+      <button class="ghost" id="readbtn" aria-pressed="false">Read as one page</button>
+    </div>
+  </div>
+
+  <!-- 1 -->
+  <section class="step on" aria-label="Step 1 of 10">
+    <div class="inner">
+      <span class="qno">Question 01</span>
+      <h1>A school owns ground it has never used. <em class="uline">What can it grow?</em></h1>
+      <p class="sub">School Farm Network turns underused land at African schools into
+      professionally managed farms that produce food, create jobs and give young people a
+      pathway into agriculture. <span class="v">Verify wording</span></p>
+      <div class="work">
+        <div class="wl"><span class="op">1</span><span>Ground available</span><span class="val"><i class="box"></i></span></div>
+        <div class="wl"><span class="op">2</span><span>Water source</span><span class="val"><i class="box"></i></span></div>
+        <div class="wl"><span class="op">3</span><span>Growing days per year</span><span class="val"><i class="box"></i></span></div>
+        <div class="wl"><span class="op">4</span><span>Paid work created</span><span class="val"><i class="box"></i></span></div>
+        <div class="answer">
+          <span class="eq">therefore</span>
+          <span class="abox">Not yet measured</span>
+          <span class="v">Verify: every line above, per school</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="step" aria-label="Step 2 of 10">
+    <div class="inner">
+      <span class="qno">Question 02</span>
+      <h2>The numbers were always available. Nobody sat down and did them.</h2>
+      <p class="sub">A school day has periods with nothing scheduled on them. A school
+      site has ground with nothing planted on it. The school already has both, and no one
+      has worked out what the second one is worth.</p>
+      <div class="two">
+        <figure>
+          <img src="../assets/img/hero-1600.jpg"
+               srcset="../assets/img/hero-1024.jpg 1024w, ../assets/img/hero-1600.jpg 1600w"
+               sizes="(max-width:1000px) 92vw, 44vw" width="1600" height="1067"
+               decoding="async"
+               alt="School buildings and open ground in the same frame, with people working on the land.">
+          <figcaption>Seeds2Education, Kenya · the original pilot<br>
+            <span class="v">Verify: location, date, credit, and consent for the people pictured</span></figcaption>
+        </figure>
+        <p class="foot" style="margin-top:0"><span class="v">Verify: measured area of
+        unused or underused land at a named school, with the date it was measured</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="step" aria-label="Step 3 of 10">
+    <div class="inner">
+      <span class="qno">Question 03</span>
+      <h2>Working, in the order it happens on the ground.</h2>
+      <div class="steps8">
+        <div class="s8"><span class="n">01</span><span class="t">Assess</span><span class="m">measure, check water, mark boundary</span></div>
+        <div class="s8"><span class="n">02</span><span class="t">Design</span><span class="m">lay out the beds</span></div>
+        <div class="s8"><span class="n">03</span><span class="t">Prepare</span><span class="m">clear, break, feed the soil</span></div>
+        <div class="s8"><span class="n">04</span><span class="t">Plant</span><span class="m">to the plan, on the date</span></div>
+        <div class="s8"><span class="n">05</span><span class="t">Tend</span><span class="m">water, weed, watch</span></div>
+        <div class="s8"><span class="n">06</span><span class="t">Harvest</span><span class="m">lift, weigh, store</span></div>
+        <div class="s8"><span class="n">07</span><span class="t">Record</span><span class="m">what it cost, what it gave</span></div>
+        <div class="s8"><span class="n">08</span><span class="t">Improve</span><span class="m">change one thing, run it again</span></div>
+      </div>
+      <p class="foot"><span class="v">Verify: these eight stage names against the method
+      SFN actually runs, including whether stages repeat within one season</span></p>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="step" aria-label="Step 4 of 10">
+    <div class="inner">
+      <span class="qno">Question 04</span>
+      <h2>Every stage answers the same five questions.</h2>
+      <div class="qs">
+        <div class="ql"><span class="k">Who acts</span><span class="a"><span class="v">Verify: who assesses, and who signs it off</span></span></div>
+        <div class="ql"><span class="k">On the land</span><span class="a">Walk the site. Measure the ground that is free. Check the water source and mark the boundary.</span></div>
+        <div class="ql"><span class="k">What is learned</span><span class="a"><span class="v">Verify: whether learners take part, and in which subject</span></span></div>
+        <div class="ql"><span class="k">What is recorded</span><span class="a">Area, water source, boundary, and the date of the visit.</span></div>
+        <div class="ql"><span class="k">Next decision</span><span class="a">Whether the plot goes forward to design, or waits a season.</span></div>
+      </div>
+      <p class="foot mono" style="color:var(--pencil2)">Shown for stage 01, Assess. The
+      other seven keep the same five columns.</p>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="step" aria-label="Step 5 of 10">
+    <div class="inner">
+      <span class="qno">Question 05</span>
+      <h2>Follow one crop from the plot to where it goes.</h2>
+      <div class="crop">
+        <div class="cstep"><span class="n">01 · Planted</span><h4>Onions</h4>
+          <p>At Seeds2Education, the original pilot project in Kenya.
+          <span class="v">Verify: variety, planting date, growing period</span></p></div>
+        <div class="cstep"><span class="n">02 · Harvested</span><h4>First harvest</h4>
+          <p>Approximately 4 tonnes, harvested and weighed in May 2026. Source: pilot
+          harvest and weighing records.</p></div>
+        <div class="cstep"><span class="n">03 · In progress</span><h4>Being sold</h4>
+          <p>The harvest is being sold to market. Nothing has been exchanged yet.</p></div>
+        <div class="cstep"><span class="n">04 · Planned</span><h4>Meals</h4>
+          <p>Proceeds will be paid to Food for Education in exchange for student meals.
+          <span class="v">Verify</span></p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="step" aria-label="Step 6 of 10">
+    <div class="inner">
+      <span class="qno">Question 06</span>
+      <h2>The lesson is the work, not a poster about the work.</h2>
+      <div class="rows">
+        <div class="row t3"><span class="a1">Measure the plot</span>
+          <span>Area, spacing and quantity, worked out on the ground rather than on a worksheet.</span>
+          <span class="r"><span class="v">Verify: subject and year</span></span></div>
+        <div class="row t3"><span class="a1">Test soil and water</span>
+          <span>What the soil is short of, what the crop needs, and what the water will carry.</span>
+          <span class="r"><span class="v">Verify: subject and year</span></span></div>
+        <div class="row t3"><span class="a1">Plan a cycle</span>
+          <span>Working backwards from a harvest date to a planting date.</span>
+          <span class="r"><span class="v">Verify: subject and year</span></span></div>
+        <div class="row t3"><span class="a1">Keep the books</span>
+          <span>What the cycle cost, what it earned, and whether it was worth running.</span>
+          <span class="r"><span class="v">Verify: subject and year</span></span></div>
+        <div class="row t3"><span class="a1">Do the paid work</span>
+          <span>Real operational experience, with roles prioritised for women and for people aged 18 to 35.</span>
+          <span class="r">A route into agriculture as a job, not a lesson about one.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="step" aria-label="Step 7 of 10">
+    <div class="inner">
+      <span class="qno">Question 07</span>
+      <h2>We publish what is verified, and name what is not.</h2>
+      <div class="rows">
+        <div class="row e3"><span class="chip v1">Verified</span>
+          <div class="b"><strong>First harvest</strong>Approximately 4 tonnes of onions,
+            harvested and weighed at Seeds2Education, the original pilot project.
+            <span class="src">Source: pilot harvest and weighing records, May 2026. One site, one cycle. A pilot result, not portfolio performance.</span></div>
+          <span class="when">May 2026</span></div>
+        <div class="row e3"><span class="chip p1">In progress</span>
+          <div class="b"><strong>Sale and meal conversion</strong>The harvest is being sold
+            to market. Proceeds will be paid to Food for Education in exchange for student meals.
+            <span class="src">Not yet done. Updated when the sale completes and the payment is made.</span></div>
+          <span class="when">Open</span></div>
+        <div class="row e3"><span class="chip c1">In collection</span>
+          <div class="b"><strong>Pilot measures</strong>Cost per acre, yield per cycle, paid
+            work created, school benefit delivered, and operational lessons, across a
+            two-school, two-cycle pilot.</div>
+          <span class="when">2 schools</span></div>
+        <div class="row e3"><span class="chip n1">Not yet measured</span>
+          <div class="b"><strong>Cost per meal, and learning outcomes</strong>Neither has
+            been measured. Both are stated here as absent rather than estimated.</div>
+          <span class="when">Absent</span></div>
+        <div class="row e3"><span class="chip n1">Not achieved</span>
+          <div class="b"><strong>Long term ambition</strong>A model repeatable across
+            thousands of schools and tens of thousands of acres.</div>
+          <span class="when">Ambition</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="step" aria-label="Step 8 of 10">
+    <div class="inner">
+      <span class="qno">Question 08</span>
+      <h2>One plot is the unit. The network is the point.</h2>
+      <div class="two">
+        <div class="map">
+          <svg viewBox="0 0 600 320" role="img" aria-label="Network map, one verified site">
+            <rect x="1" y="1" width="598" height="318" fill="none" stroke="rgba(51,56,58,.2)"/>
+            <circle cx="238" cy="166" r="9" fill="#4E6B2E"/>
+            <text x="256" y="171" font-family="Space Mono" font-size="12" fill="#33383A">Seeds2Education</text>
+            <g fill="none" stroke="rgba(51,56,58,.34)" stroke-width="1.4" stroke-dasharray="4 4">
+              <circle cx="120" cy="92" r="6"/><circle cx="380" cy="84" r="6"/>
+              <circle cx="452" cy="204" r="6"/><circle cx="164" cy="254" r="6"/>
+              <circle cx="330" cy="272" r="6"/><circle cx="502" cy="116" r="6"/>
+            </g>
+            <text x="16" y="306" font-family="Space Mono" font-size="11"
+                  fill="rgba(51,56,58,.6)">1 VERIFIED · 0 OTHERS CONFIRMED</text>
+          </svg>
+        </div>
+        <div>
+          <p class="sub" style="margin-top:0">Everything unverified is drawn hollow, and
+          stays hollow until it is real. A map with one filled point is the honest
+          starting position.</p>
+          <p class="foot"><span class="v">Verify: counties, number of schools, and
+          acreage, before any map is published</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="step" aria-label="Step 9 of 10">
+    <div class="inner">
+      <span class="qno">Question 09</span>
+      <h2>The people who keep it growing.</h2>
+      <p class="sub">No stock photography and no anonymous beneficiaries. These slots stay
+      empty until real people have given their names, roles and consent.</p>
+      <div class="people">
+        <div class="pslot"><span class="k">Portrait 01 · to commission</span>
+          <span class="d">Farm manager at the pilot site, photographed working. Name, role and written consent required.</span></div>
+        <div class="pslot"><span class="k">Portrait 02 · to commission</span>
+          <span class="d">A member of the paid crew, photographed at work. Name, role and written consent required.</span></div>
+        <div class="pslot"><span class="k">Portrait 03 · to commission</span>
+          <span class="d">A teacher who uses the plot in lessons. Name, subject and written consent required.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="step" aria-label="Step 10 of 10">
+    <div class="inner">
+      <span class="qno">Question 10</span>
+      <h2>Which of these are you?</h2>
+      <div class="rows">
+        <a class="row p4" href="#"><span class="n mono" style="color:var(--pen)">01</span>
+          <span class="t">I represent a school</span>
+          <span class="d r">Land rights, water, governance, access, security and commercial viability are checked before anything is built.</span>
+          <span class="go">Register a school →</span></a>
+        <a class="row p4" href="#"><span class="n mono" style="color:var(--pen)">02</span>
+          <span class="t">I can deliver or share knowledge</span>
+          <span class="d r">Agronomy, implementation, offtake and quality standards.</span>
+          <span class="go">Talk to us →</span></a>
+        <a class="row p4" href="#"><span class="n mono" style="color:var(--pen)">03</span>
+          <span class="t">I can fund or resource the work</span>
+          <span class="d r">Catalytic funding establishes infrastructure, tests repeatability and verifies outcomes independently.</span>
+          <span class="go">Explore funding →</span></a>
+        <a class="row p4" href="#"><span class="n mono" style="color:var(--pen)">04</span>
+          <span class="t">I want to follow the network</span>
+          <span class="d r">Updates when a site is added, a cycle closes, or a figure is verified.</span>
+          <span class="go">Follow →</span></a>
+      </div>
+      <p class="foot"><span class="v">Verify: the two calls to action and what happens
+      after each</span> &nbsp; schoolfarmnetwork.com</p>
+    </div>
+  </section>
+
+  <div class="ctrl">
+    <div class="dots" id="dots" role="tablist" aria-label="Questions"></div>
+    <div class="nav">
+      <button class="nb" id="prev" disabled>← Back</button>
+      <button class="nb primary" id="next">Next →</button>
+    </div>
+    <div class="bar"><i id="barfill" style="width:10%"></i></div>
+  </div>
+
+  <div class="reader" id="reader"><div class="rin" id="rin"></div></div>
+</div>
+
+<script>
+(function(){
+  document.documentElement.className='js';
+  var steps=[].slice.call(document.querySelectorAll('.step')),
+      dots=document.getElementById('dots'), prev=document.getElementById('prev'),
+      next=document.getElementById('next'), bar=document.getElementById('barfill'),
+      qn=document.getElementById('qn'), i=0, N=steps.length;
+
+  steps.forEach(function(s,k){
+    var b=document.createElement('button');
+    b.className='dot'; b.setAttribute('role','tab');
+    b.setAttribute('aria-label','Question '+(k+1));
+    b.addEventListener('click',function(){go(k)});
+    dots.appendChild(b);
+  });
+  var dotEls=[].slice.call(dots.children);
+
+  function go(k){
+    i=Math.max(0,Math.min(N-1,k));
+    steps.forEach(function(s,n){s.classList.toggle('on',n===i)});
+    dotEls.forEach(function(d,n){d.setAttribute('aria-current',String(n===i))});
+    prev.disabled=i===0;
+    next.textContent=i===N-1?'Start again':'Next →';
+    bar.style.width=(((i+1)/N)*100).toFixed(1)+'%';
+    if(qn) qn.textContent=String(i+1).padStart(2,'0');
+    var el=steps[i]; el.scrollTop=0;
+  }
+  next.addEventListener('click',function(){go(i===N-1?0:i+1)});
+  prev.addEventListener('click',function(){go(i-1)});
+  addEventListener('keydown',function(e){
+    if(document.body.classList.contains('reading')) return;
+    if(e.key==='ArrowRight'){e.preventDefault();go(i+1)}
+    if(e.key==='ArrowLeft'){e.preventDefault();go(i-1)}
+  });
+  var x0=null, deck=document.getElementById('deck');
+  deck.addEventListener('touchstart',function(e){x0=e.changedTouches[0].clientX},{passive:true});
+  deck.addEventListener('touchend',function(e){
+    if(x0===null)return; var dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>60) go(dx<0?i+1:i-1); x0=null;
+  },{passive:true});
+
+  // reader mode built from the same DOM so the two cannot drift
+  var rh='';
+  steps.forEach(function(s){
+    var h=s.querySelector('h1,h2'), sub=s.querySelector('.sub');
+    rh+='<section><h3>'+(h?h.textContent:'')+'</h3>';
+    if(sub) rh+='<p>'+sub.textContent+'</p>';
+    s.querySelectorAll('.ql').forEach(function(q){
+      rh+='<dl><dt>'+q.querySelector('.k').textContent+'</dt><dd>'+q.querySelector('.a').innerHTML+'</dd></dl>';
+    });
+    s.querySelectorAll('.s8').forEach(function(q){
+      rh+='<p><strong>'+q.querySelector('.n').textContent+' '+q.querySelector('.t').textContent+'</strong> · '+q.querySelector('.m').textContent+'</p>';
+    });
+    s.querySelectorAll('.cstep').forEach(function(c){
+      rh+='<p><strong>'+c.querySelector('h4').textContent+'</strong> '+c.querySelector('p').textContent+'</p>';
+    });
+    s.querySelectorAll('.row').forEach(function(r){
+      rh+='<p>'+r.textContent.replace(/\s+/g,' ').trim()+'</p>';
+    });
+    s.querySelectorAll('.pslot').forEach(function(p){
+      rh+='<p>'+p.textContent.replace(/\s+/g,' ').trim()+'</p>';
+    });
+    var f=s.querySelector('.foot'); if(f) rh+='<p>'+f.innerHTML+'</p>';
+    rh+='</section>';
+  });
+  document.getElementById('rin').innerHTML=rh;
+
+  var rb=document.getElementById('readbtn');
+  rb.addEventListener('click',function(){
+    var on=document.body.classList.toggle('reading');
+    rb.setAttribute('aria-pressed',String(on));
+    rb.textContent=on?'Back to the questions':'Read as one page';
+  });
+
+  go(0);
+})();
+</script>
+</body>
+</html>

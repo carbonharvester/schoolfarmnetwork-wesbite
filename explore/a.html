@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>School Farm Network — A · Airtree system</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/RecklessNeue-Medium.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ============================================================
+   EXPLORATION A — the Airtree system (airtree.vc)
+   Parchment cream, ink, one electric lemon. Oversized display
+   serif; three-tier radius 37/18/8; hairlines, no elevation;
+   monochrome everything except the single yellow action.
+   ============================================================ */
+:root{
+  --cream:#f7f6e3; --ink:#262d29; --lemon:#ffff48;
+  --muted:rgba(38,45,41,.66); --rule:rgba(38,45,41,.16);
+  --r-card:37px; --r-btn:18px; --r-sm:8px;
+  --ease:cubic-bezier(.22,.7,.24,1);
+}
+@font-face{font-family:'Reckless';src:url('fonts/RecklessNeue-Medium.woff2') format('woff2');
+  font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'Reckless';src:url('fonts/RecklessNeue-MediumItalic.woff2') format('woff2');
+  font-weight:500;font-style:italic;font-display:swap}
+@font-face{font-family:'Reckless';src:url('fonts/RecklessNeue-Book.woff2') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);
+  font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+::selection{background:var(--ink);color:var(--cream)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.wrap{max-width:1240px;margin:0 auto;padding-left:36px;padding-right:36px}
+.serif{font-family:'Reckless',Georgia,serif}
+.eyebrow{font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted)}
+
+/* announcement: quiet hairline row, no marquee */
+.ann{border-bottom:1px solid var(--rule);font-size:13px;color:var(--muted)}
+.ann .wrap{display:flex;gap:10px;align-items:center;padding-block:9px}
+.ann i{width:8px;height:8px;border-radius:50%;background:var(--lemon);
+  border:1px solid var(--ink);flex:none}
+.ann a{color:var(--ink);font-weight:500;text-decoration:underline;
+  text-underline-offset:3px}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:60;background:var(--cream);
+  border-bottom:1px solid transparent;transition:border-color .3s var(--ease)}
+.nav.stuck{border-bottom-color:var(--rule)}
+.nav .wrap{display:flex;align-items:center;gap:28px;padding-block:16px}
+.wm{display:flex;align-items:center;gap:10px;text-decoration:none;
+  font-family:'Reckless',serif;font-weight:500;font-size:20px;white-space:nowrap}
+.wm svg{width:20px;height:20px;flex:none}
+.nav-r{margin-left:auto;display:flex;align-items:center;gap:26px}
+.nav-r a:not(.btn){text-decoration:none;font-size:14px;color:var(--muted)}
+.nav-r a:not(.btn):hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:9px;background:var(--lemon);
+  color:var(--ink);text-decoration:none;padding:12px 22px;border-radius:var(--r-btn);
+  font-size:14.5px;font-weight:600;border:1px solid var(--ink);white-space:nowrap;
+  transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.btn:hover{transform:translate(-1px,-2px);box-shadow:3px 4px 0 var(--ink)}
+.btn.ghost{background:transparent;border-color:var(--rule);font-weight:500}
+.btn.ghost:hover{border-color:var(--ink);box-shadow:none;transform:none}
+.btn svg{width:15px;height:9px;flex:none}
+
+/* hero: the 131px statement */
+.hero{padding-block:clamp(64px,9vw,128px) clamp(44px,6vw,80px)}
+h1{font-family:'Reckless',Georgia,serif;font-weight:500;
+  font-size:clamp(48px,8.9vw,131px);line-height:1.04;letter-spacing:-.014em;
+  text-wrap:balance;max-width:12ch}
+h1 em{font-style:italic}
+.hero .sub{margin-top:clamp(24px,3vw,38px);max-width:56ch;font-size:19px;
+  line-height:1.6;color:var(--muted)}
+.hero .acts{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap}
+
+/* film card, 37px radius */
+.filmcard{margin-top:clamp(48px,6vw,84px);border-radius:var(--r-card);
+  overflow:hidden;border:1px solid var(--rule)}
+.filmcard video{width:100%;height:auto;aspect-ratio:16/8;object-fit:cover}
+.filmcap{margin-top:14px;font-size:13px;color:var(--muted)}
+
+/* sections */
+section{padding-block:clamp(64px,8vw,112px)}
+.rule-top{border-top:1px solid var(--rule)}
+h2{font-family:'Reckless',serif;font-weight:500;
+  font-size:clamp(30px,4vw,52px);line-height:1.08;letter-spacing:-.012em;
+  max-width:22ch;text-wrap:balance}
+.lede{margin-top:16px;max-width:56ch;font-size:17px;color:var(--muted)}
+
+/* problem: an editorial pull statement, not a band */
+.pull{max-width:930px}
+.pull p.big{font-family:'Reckless',serif;font-weight:500;
+  font-size:clamp(26px,3.3vw,42px);line-height:1.22;letter-spacing:-.008em}
+.pull p.big em{font-style:italic}
+.pull .body{margin-top:22px;max-width:62ch;font-size:17px;line-height:1.65;
+  color:var(--muted)}
+.pull .body b{color:var(--ink);font-weight:600}
+
+/* system: four hairline cards, 37px */
+.grid4{margin-top:clamp(34px,4vw,52px);display:grid;
+  grid-template-columns:repeat(4,1fr);gap:18px}
+.card{border:1px solid var(--rule);border-radius:var(--r-card);
+  padding:28px 26px;background:transparent;
+  transition:border-color .25s var(--ease)}
+.card:hover{border-color:var(--ink)}
+.card .n{font-size:12px;font-weight:600;letter-spacing:.12em;color:var(--muted)}
+.card h3{font-family:'Reckless',serif;font-weight:500;font-size:27px;margin-top:44px}
+.card p{margin-top:10px;font-size:14.5px;line-height:1.55;color:var(--muted)}
+.syswrap{margin-top:26px;font-size:16px;max-width:72ch;color:var(--muted)}
+.syswrap b{color:var(--ink);font-weight:600}
+
+/* stats: hairline columns, thin numerals */
+.statgrid{margin-top:clamp(30px,4vw,48px);display:grid;grid-template-columns:repeat(3,1fr)}
+.stat{padding:6px 34px;border-left:1px solid var(--rule)}
+.stat:first-child{padding-left:0;border-left:0}
+.stat .lab{font-family:'Reckless',serif;font-weight:500;font-size:19px;line-height:1.3}
+.stat .num{font-family:'Inter';font-weight:200;font-size:clamp(66px,7.6vw,104px);
+  line-height:1.08;letter-spacing:-.03em;margin-top:12px}
+.stat .num small{font-size:.34em;font-weight:400}
+.stat .num .approx{font-size:.5em;font-weight:300;vertical-align:.32em}
+.stat .src{margin-top:8px;font-size:12.5px;color:var(--muted);max-width:26ch}
+
+/* record: one big 37px card */
+.reccard{margin-top:clamp(30px,4vw,48px);border:1px solid var(--rule);
+  border-radius:var(--r-card);padding:clamp(26px,3.6vw,48px);
+  display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:44px}
+.rrow{display:grid;grid-template-columns:160px 1fr;gap:18px;padding:18px 0;
+  border-bottom:1px solid var(--rule)}
+.rrow:last-child{border-bottom:0}
+.rrow .st{font-size:11.5px;font-weight:600;letter-spacing:.11em;
+  text-transform:uppercase;padding-top:4px;color:var(--muted)}
+.rrow .st.v{color:var(--ink)}
+.rrow .b{font-size:15.5px;line-height:1.6}
+.rrow .b strong{font-weight:600}
+.rrow .src{display:block;margin-top:6px;font-size:12.5px;color:var(--muted)}
+.recfigs figure{margin:0 0 18px}
+.recfigs img{border-radius:calc(var(--r-card) - 16px);width:100%;height:190px;
+  object-fit:cover}
+.recfigs figcaption{margin-top:8px;font-size:12px;color:var(--muted)}
+
+/* audiences: three outlined cards + one lemon close */
+.aud{margin-top:clamp(30px,4vw,48px);display:grid;grid-template-columns:repeat(3,1fr);
+  gap:18px}
+.aud .card h3{margin-top:0}
+.aud .card a{margin-top:18px;display:inline-flex;gap:8px;align-items:center;
+  font-size:14.5px;font-weight:600;text-decoration:underline;
+  text-underline-offset:4px}
+
+/* close + footer: stay on cream, ink map */
+.close{padding-block:clamp(70px,9vw,120px)}
+.close h2{font-size:clamp(40px,6.4vw,88px);max-width:14ch;line-height:1.02}
+.close .acts{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap}
+.mapzone{margin-top:clamp(44px,6vw,72px);display:grid;
+  grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:52px;align-items:end;
+  border-top:1px solid var(--rule);padding-top:clamp(36px,5vw,56px)}
+.mapzone svg{width:100%;height:auto;max-width:460px}
+.fcols{display:grid;grid-template-columns:1fr 1fr;gap:34px}
+.fcols h4{font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:13px}
+.fcols ul{list-style:none}
+.fcols li{margin-bottom:8px}
+.fcols a{text-decoration:none;color:var(--ink);opacity:.8;font-size:15px}
+.fcols a:hover{opacity:1}
+.credit{margin-top:clamp(40px,5vw,60px);padding-block:20px 36px;
+  border-top:1px solid var(--rule);display:flex;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted)}
+
+.up{opacity:0;transform:translateY(14px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.up.in{opacity:1;transform:none}
+
+@media(max-width:1000px){
+  .grid4{grid-template-columns:repeat(2,1fr)}
+  .statgrid{grid-template-columns:1fr}
+  .stat{padding:20px 0;border-left:0;border-top:1px solid var(--rule)}
+  .stat:first-child{border-top:0;padding-top:0}
+  .reccard{grid-template-columns:1fr;gap:26px}
+  .aud{grid-template-columns:1fr}
+  .mapzone{grid-template-columns:1fr;gap:40px;align-items:start}
+}
+@media(max-width:640px){
+  .wrap{padding-left:20px;padding-right:20px}
+  .nav .wrap{padding-block:12px;gap:12px}
+  .nav-r a:not(.btn){display:none}
+  .wm{font-size:16px}
+  .btn{padding:11px 16px;font-size:13.5px}
+  .grid4{grid-template-columns:1fr}
+  .card h3{margin-top:20px}
+  .rrow{grid-template-columns:1fr;gap:8px}
+  .fcols{grid-template-columns:1fr}
+  .ann .wrap{flex-wrap:wrap}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  .up{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="ann">
+  <div class="wrap">
+    <i aria-hidden="true"></i>
+    <span>First harvest weighed at Seeds2Education, Kenya · May 2026</span>
+    <a href="#record">Read the record</a>
+  </div>
+</div>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="wm" href="#top">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <line x1="10" y1="46" x2="54" y2="46" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="16" y1="34" x2="48" y2="34" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <line x1="22" y1="22" x2="34" y2="22" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="42.5" cy="22" r="4.5" fill="#ffff48" stroke="#262d29" stroke-width="2"/>
+      </svg>
+      School Farm Network
+    </a>
+    <nav class="nav-r" aria-label="Primary">
+      <a href="#system">How it works</a>
+      <a href="#record">The record</a>
+      <a href="#partners">Partners</a>
+      <a class="btn" href="mailto:matthew@schoolfarmnetwork.com">Partner with us
+        <svg viewBox="0 0 15 9" fill="none" aria-hidden="true"><path d="M0 4.5h13M9.5 1l3.5 3.5L9.5 8" stroke="currentColor" stroke-width="1.4"/></svg>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero wrap">
+  <h1>The land is already there. <em>The system isn&rsquo;t.</em></h1>
+  <p class="sub">School Farm Network turns underused land at African schools into
+  professionally operated farms that produce food, create jobs, train the next
+  generation of farmers and help fund school meals.</p>
+  <div class="acts">
+    <a class="btn" href="mailto:matthew@schoolfarmnetwork.com">Partner with us
+      <svg viewBox="0 0 15 9" fill="none" aria-hidden="true"><path d="M0 4.5h13M9.5 1l3.5 3.5L9.5 8" stroke="currentColor" stroke-width="1.4"/></svg>
+    </a>
+    <a class="btn ghost" href="#system">See how it works</a>
+  </div>
+
+  <figure class="filmcard">
+    <video autoplay muted loop playsinline poster="../assets/img/film-poster-1600.jpg"
+           aria-label="Film of the Seeds2Education pilot: the harvest crew beside the school, then the farm from the air">
+      <source src="../assets/hero-film.mp4" type="video/mp4">
+    </video>
+  </figure>
+  <p class="filmcap">Seeds2Education, Kenya. Our original pilot.</p>
+</section>
+
+<section class="rule-top">
+  <div class="wrap pull up">
+    <span class="eyebrow">The problem</span>
+    <p class="big" style="margin-top:16px">Hungry students sit beside empty fields,
+    <em>and both stay as they are for the same reason.</em></p>
+    <p class="body">Growing food at scale takes <b>operators, agronomy, buyers, working
+    capital and records</b>, and no one has brought those to the school gate.
+    Programmes hand over seeds and leave. <b>We stay and run the farm.</b></p>
+  </div>
+</section>
+
+<section class="rule-top" id="system">
+  <div class="wrap">
+    <span class="eyebrow">How it works</span>
+    <h2 style="margin-top:14px">One system, run on every farm.</h2>
+    <div class="grid4 up">
+      <div class="card"><span class="n">01</span><h3 class="serif">We assess.</h3>
+        <p>Land, water, tenure, access and commercial viability, checked before anything
+        is built. Farms that shouldn&rsquo;t exist, don&rsquo;t.</p></div>
+      <div class="card"><span class="n">02</span><h3 class="serif">We build.</h3>
+        <p>Irrigation, storage and fencing, installed by our team. This is where the
+        capital goes.</p></div>
+      <div class="card"><span class="n">03</span><h3 class="serif">We farm.</h3>
+        <p>A paid local crew plants, tends and harvests to a plan, with roles
+        prioritised for women and for people aged 18 to 35.</p></div>
+      <div class="card"><span class="n">04</span><h3 class="serif">We account.</h3>
+        <p>Every cycle is weighed, costed and recorded. What the farm produced, what it
+        paid, what the school received.</p></div>
+    </div>
+    <p class="syswrap">The system is the part nobody else builds: <b>operators,
+    infrastructure, agronomy, offtake, data, training and financing</b>, on the ground
+    and in one set of records.</p>
+  </div>
+</section>
+
+<section class="rule-top">
+  <div class="wrap">
+    <span class="eyebrow">The record so far</span>
+    <div class="statgrid up">
+      <div class="stat">
+        <div class="lab serif">First harvest, weighed</div>
+        <div class="num"><span class="approx">&approx;</span>4<small>&nbsp;tonnes</small></div>
+        <p class="src">Onions, Seeds2Education, May 2026. Source: harvest and weighing
+        records. One site, one cycle.</p>
+      </div>
+      <div class="stat">
+        <div class="lab serif">Schools in the current pilot</div>
+        <div class="num">2</div>
+        <p class="src">A two-school, two-cycle pilot, running now.</p>
+      </div>
+      <div class="stat">
+        <div class="lab serif">System every farm runs on</div>
+        <div class="num">1</div>
+        <p class="src">The same records, the same standards, at every site.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="rule-top" id="record">
+  <div class="wrap">
+    <span class="eyebrow">The record</span>
+    <h2 style="margin-top:14px">We publish what is verified, and say what is not yet.</h2>
+    <div class="reccard up">
+      <div>
+        <div class="rrow"><span class="st v">Verified · May 2026</span>
+          <div class="b"><strong>First harvest.</strong> Approximately 4 tonnes of
+          onions, lifted and weighed at Seeds2Education, our original pilot.
+          <span class="src">Source: harvest and weighing records. A pilot result, not
+          portfolio performance.</span></div></div>
+        <div class="rrow"><span class="st">Under way</span>
+          <div class="b"><strong>Sale and meals.</strong> The harvest is being sold to
+          market. Proceeds will be paid to Food for Education in exchange for student
+          meals. That payment has not been made yet, and this page will say so until it
+          has.</div></div>
+        <div class="rrow"><span class="st">Ongoing</span>
+          <div class="b"><strong>Paid work.</strong> The farm runs on a paid local crew,
+          with roles prioritised for women and for people aged 18 to 35.</div></div>
+        <div class="rrow"><span class="st">Not yet measured</span>
+          <div class="b"><strong>Cost per meal.</strong> We will publish it when we have
+          measured it across a full cycle at more than one site. Until then we do not
+          have a number worth quoting.</div></div>
+      </div>
+      <div class="recfigs">
+        <figure><img src="../assets/img/irrigation-2000.jpg"
+          srcset="../assets/img/irrigation-1000.jpg 1000w, ../assets/img/irrigation-2000.jpg 2000w"
+          sizes="(max-width:1000px) 92vw, 28vw" width="2000" height="1333"
+          loading="lazy" decoding="async"
+          alt="Irrigation line running along a prepared bed at the pilot farm.">
+          <figcaption>Irrigation going in. Building is where the capital goes.</figcaption></figure>
+        <figure><img src="../assets/img/pilot-site-900.jpg" width="900" height="600"
+          loading="lazy" decoding="async"
+          alt="The pilot farm under cultivation, crops in rows.">
+          <figcaption>The same ground under cultivation.</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="rule-top" id="partners">
+  <div class="wrap">
+    <span class="eyebrow">Working together</span>
+    <h2 style="margin-top:14px">Three ways in.</h2>
+    <div class="aud up">
+      <div class="card"><h3 class="serif">I run a school</h3>
+        <p>You contribute the land and receive an agreed benefit, primarily meals. You
+        carry no operating cost and no commercial risk.</p>
+        <a href="mailto:matthew@schoolfarmnetwork.com?subject=Our%20school">Register interest</a></div>
+      <div class="card"><h3 class="serif">I fund infrastructure</h3>
+        <p>Catalytic capital builds irrigation, storage and operations, and buys the
+        time to prove the model repeats. You invest in a system, not a season.</p>
+        <a href="mailto:matthew@schoolfarmnetwork.com?subject=Funding">Invest in the build</a></div>
+      <div class="card"><h3 class="serif">I buy produce</h3>
+        <p>Committed offtake at a fair price shapes what we plant. Demand is worth more
+        to these farms than donations.</p>
+        <a href="mailto:matthew@schoolfarmnetwork.com?subject=Offtake">Discuss offtake</a></div>
+    </div>
+  </div>
+</section>
+
+<footer class="rule-top">
+  <div class="close wrap">
+    <h2 class="serif up">Feed every generation.</h2>
+    <p class="lede up">The land is at the school gate in every county of every country
+    on the continent. We are building the system that farms it.</p>
+    <div class="acts up">
+      <a class="btn" href="mailto:matthew@schoolfarmnetwork.com">Partner with us
+        <svg viewBox="0 0 15 9" fill="none" aria-hidden="true"><path d="M0 4.5h13M9.5 1l3.5 3.5L9.5 8" stroke="currentColor" stroke-width="1.4"/></svg>
+      </a>
+    </div>
+    <div class="mapzone">
+      <svg viewBox="0 0 440 470" role="img"
+           aria-label="Outline map of Africa with one operating site marked in Kenya">
+        <path d="M96 74 L128 58 L170 50 L214 54 L252 48 L282 58 L292 82 L310 96
+                 L318 122 L338 150 L364 168 L392 178 L376 200 L352 210 L332 238
+                 L318 274 L306 310 L294 346 L276 378 L252 404 L232 428 L214 442
+                 L198 430 L188 402 L196 372 L184 344 L166 322 L146 314 L130 296
+                 L110 288 L92 270 L74 262 L58 238 L44 220 L52 198 L72 190 L94 182
+                 L112 168 L118 144 L108 120 L92 100 Z"
+              fill="none" stroke="rgba(38,45,41,.45)" stroke-width="1.6"
+              stroke-linejoin="round"/>
+        <path d="M330 340 L342 322 L352 336 L346 368 L334 386 L326 366 Z"
+              fill="none" stroke="rgba(38,45,41,.32)" stroke-width="1.4"/>
+        <circle cx="322" cy="252" r="7" fill="#ffff48" stroke="#262d29" stroke-width="1.6"/>
+        <text x="296" y="250" text-anchor="end" font-family="Inter" font-size="11.5"
+              font-weight="600" letter-spacing="1.6" fill="#262d29">SEEDS2EDUCATION</text>
+        <text x="296" y="266" text-anchor="end" font-family="Inter" font-size="10"
+              letter-spacing="1.6" fill="rgba(38,45,41,.62)">KENYA · OPERATING</text>
+      </svg>
+      <div class="fcols">
+        <div><h4>The work</h4><ul>
+          <li><a href="#system">How it works</a></li>
+          <li><a href="#record">The record</a></li>
+          <li><a href="#partners">Partners</a></li>
+        </ul></div>
+        <div><h4>Contact</h4><ul>
+          <li><a href="mailto:matthew@schoolfarmnetwork.com">matthew@schoolfarmnetwork.com</a></li>
+          <li><a href="#top">schoolfarmnetwork.com</a></li>
+        </ul></div>
+      </div>
+    </div>
+    <div class="credit">
+      <span>Photography from Seeds2Education, Kenya, our original pilot</span>
+      <span>School Farm Network</span>
+    </div>
+  </div>
+</footer>
+
+</main>
+
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  addEventListener('scroll',function(){nav.classList.toggle('stuck',scrollY>4)},{passive:true});
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+  },{threshold:.12});
+  document.querySelectorAll('.up').forEach(function(el){io.observe(el)});
+})();
+</script>
+</body>
+</html>

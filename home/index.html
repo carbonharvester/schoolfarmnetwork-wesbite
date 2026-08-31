@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>School Farm Network — five finished homepages</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4F2EC;--ink:#191B17;--muted:rgba(25,27,23,.68);
+  --rule:rgba(25,27,23,.16);--rule2:rgba(25,27,23,.42);--flag:#A8481C}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:16.5px;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding-left:32px;padding-right:32px}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:11.5px;
+  letter-spacing:.11em;text-transform:uppercase}
+header{padding-block:74px 38px;border-bottom:1.5px solid var(--rule2)}
+h1{font-family:'Fraunces',Georgia,serif;font-weight:600;
+  font-variation-settings:'opsz' 144;font-size:clamp(32px,4.6vw,54px);line-height:1.03;
+  letter-spacing:-.026em;max-width:20ch;margin-top:14px}
+header p{margin-top:18px;max-width:70ch;color:var(--muted)}
+.route{display:grid;grid-template-columns:60px 1fr 190px;gap:28px;padding-block:34px;
+  border-bottom:1px solid var(--rule);align-items:start;text-decoration:none;
+  transition:background .25s ease,padding-left .25s ease}
+.route:hover{background:rgba(25,27,23,.045);padding-left:12px}
+.rl{font-family:'Fraunces',serif;font-weight:600;font-size:32px;line-height:1;
+  color:var(--muted)}
+h2{font-family:'Fraunces',Georgia,serif;font-weight:600;
+  font-variation-settings:'opsz' 60;font-size:26px;letter-spacing:-.018em}
+.arch{margin-top:7px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  letter-spacing:.08em;text-transform:uppercase;color:#8A6A2F}
+.dev{margin-top:11px;font-size:15.5px;color:var(--muted);max-width:64ch}
+.dev b{color:var(--ink);font-weight:600}
+.meta{margin-top:13px;display:flex;flex-wrap:wrap;gap:7px}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.07em;
+  text-transform:uppercase;border:1px solid var(--rule2);padding:3px 8px;color:var(--muted)}
+.sw{display:flex;margin-top:13px;width:150px;border:1px solid var(--rule2)}
+.sw i{height:19px;flex:1}
+.go{text-align:right;font-size:14.5px;font-weight:600;padding-top:7px;white-space:nowrap}
+.note{padding-block:34px 80px;color:var(--muted);font-size:15px;max-width:76ch}
+.note b{color:var(--ink)}
+.note ul{margin-top:10px;padding-left:20px}
+.note li{margin-bottom:6px}
+@media(max-width:820px){
+  .route{grid-template-columns:1fr;gap:8px}
+  .rl{font-size:24px}
+  .go{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <span class="mono">School Farm Network · finished homepages</span>
+  <h1>Five finished homepages. Pick one to take forward.</h1>
+  <p>Each is a complete homepage, not a pilot: navigation, hero, the missed opportunity,
+  the signature transformation, all eight stages, the crop story, what the farm teaches,
+  the evidence ledger, the network, people, choose an action, and a footer. They share
+  the same facts and the same tenses, held in
+  <a href="CONTENT.md">CONTENT.md</a> so they cannot drift apart. What differs is the
+  idea, the design system, and the way the page is actually navigated.</p>
+</header>
+
+<main class="wrap">
+
+  <a class="route" href="1-timetable.html">
+    <span class="rl">01</span>
+    <div>
+      <h2>A Living Timetable</h2>
+      <div class="arch">Architecture · vertical scroll with a sticky timetable rail</div>
+      <p class="dev"><b>Device:</b> ruled timetable rows carrying clock times. On scroll
+      the rows lengthen into crop beds and the times are replaced in place by growing
+      stages. The rail is a school day, so chapter navigation is diegetic. The eight
+      stages open as accordions.</p>
+      <div class="meta"><span class="tag">Fraunces · IBM Plex</span>
+        <span class="tag">Blackboard + paper</span><span class="tag">Reading is the interaction</span></div>
+      <div class="sw" aria-hidden="true"><i style="background:#17221D"></i><i style="background:#F2EBD8"></i><i style="background:#6C8B45"></i><i style="background:#D56B35"></i><i style="background:#315B70"></i></div>
+    </div>
+    <span class="go">Open →</span>
+  </a>
+
+  <a class="route" href="2-rollcall.html">
+    <span class="rl">02</span>
+    <div>
+      <h2>Roll Call</h2>
+      <div class="arch">Architecture · a record book you leaf through</div>
+      <p class="dev"><b>Device:</b> the attendance register. One school is marked, the
+      rest are openly blank. Below it the site is not a scroll but eight pages of the
+      same book, swapped in place by tab, each deep linkable. Stage entries open inline.</p>
+      <div class="meta"><span class="tag">Literata · Karla · Courier Prime</span>
+        <span class="tag">Register paper + red ruling</span><span class="tag">Choosing is the interaction</span></div>
+      <div class="sw" aria-hidden="true"><i style="background:#1B2430"></i><i style="background:#F4F1E6"></i><i style="background:#B23A2E"></i><i style="background:#3F6B33"></i><i style="background:#EBE6D6"></i></div>
+    </div>
+    <span class="go">Open →</span>
+  </a>
+
+  <a class="route" href="3-working.html">
+    <span class="rl">03</span>
+    <div>
+      <h2>Show Your Working</h2>
+      <div class="arch">Architecture · a paced sequence, one point per screen</div>
+      <p class="dev"><b>Device:</b> the squared exercise book. The farm is set out as a
+      worked problem and anything unmeasured is an empty box, never a plausible number.
+      Ten questions advanced on purpose by button, arrow key or swipe, with a
+      read-as-one-page mode for anyone who wants to scan.</p>
+      <div class="meta"><span class="tag">Instrument Serif · Space Mono</span>
+        <span class="tag">Graph paper + marking pen</span><span class="tag">Advancing is the interaction</span></div>
+      <div class="sw" aria-hidden="true"><i style="background:#33383A"></i><i style="background:#FBFAF6"></i><i style="background:#B8322A"></i><i style="background:#4E6B2E"></i><i style="background:#DCE4E2"></i></div>
+    </div>
+    <span class="go">Open →</span>
+  </a>
+
+  <a class="route" href="4-site.html">
+    <span class="rl">04</span>
+    <div>
+      <h2>Site Visit</h2>
+      <div class="arch">Architecture · spatial and non-linear</div>
+      <p class="dev"><b>Device:</b> the school ground is the page. Ten survey pegs sit on
+      a plan, from the classrooms to the kitchen to the gate, and every part of the site
+      is attached to one. The visitor sets the order. Choosing the measurement peg
+      resolves the hatched unknown ground into a plot with beds. A text view exists for
+      reading and for small screens.</p>
+      <div class="meta"><span class="tag">Familjen Grotesk · Azeret Mono</span>
+        <span class="tag">Dark plan console + cyan</span><span class="tag">Exploring is the interaction</span></div>
+      <div class="sw" aria-hidden="true"><i style="background:#141A1C"></i><i style="background:#EBE8DF"></i><i style="background:#4FA3B8"></i><i style="background:#8FB05F"></i><i style="background:#E0854F"></i></div>
+    </div>
+    <span class="go">Open →</span>
+  </a>
+
+  <a class="route" href="5-oneline.html">
+    <span class="rl">05</span>
+    <div>
+      <h2>One Line</h2>
+      <div class="arch">Architecture · a horizontal filmstrip</div>
+      <p class="dev"><b>Device:</b> a single unbroken stroke. The page reads sideways and
+      the line runs along a constant baseline through all ten panels, thickening into a
+      planting row where the ground is turned. Native horizontal scroll with snap, arrow
+      keys and dots; it stacks vertically on small screens.</p>
+      <div class="meta"><span class="tag">Syne · Manrope</span>
+        <span class="tag">Bone, ink, one orange</span><span class="tag">Travelling is the interaction</span></div>
+      <div class="sw" aria-hidden="true"><i style="background:#12140F"></i><i style="background:#F5F2EA"></i><i style="background:#C75B2A"></i><i style="background:#5C7A38"></i><i style="background:#93B368"></i></div>
+    </div>
+    <span class="go">Open →</span>
+  </a>
+
+</main>
+
+<div class="note wrap">
+  <p><b>Facts.</b> Everything verified is stated as fact with its source: approximately
+  4 tonnes of onions harvested and weighed at Seeds2Education in May 2026, a two-school
+  two-cycle pilot, roles prioritised for women and for people aged 18 to 35. The sale and
+  the payment to Food for Education are written in future tense on every page, because
+  neither has happened. Cost per meal and learning outcomes are shown as absent rather
+  than estimated. Every remaining unknown carries an orange verification mark, and the
+  full list is in <a href="CONTENT.md">CONTENT.md</a>.</p>
+  <p style="margin-top:14px"><b>Still to do on whichever you pick:</b></p>
+  <ul>
+    <li>Commission the shot list. There are three real photographs and everything else is
+    a labelled placeholder.</li>
+    <li>Answer the fifteen verification items, above all the named school and the
+    curriculum links.</li>
+    <li>Run the ten-category gauntlet at 1440 and 390 on the chosen route.</li>
+    <li>Build the inner pages, the contact form and the platform login.</li>
+  </ul>
+  <p style="margin-top:14px">Nothing here is live. The public site is still the holding
+  page.</p>
+</div>
+
+</body>
+</html>

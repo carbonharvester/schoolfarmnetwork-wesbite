@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>School Farm Network — One line from the page to the plate</title>
+<meta name="description" content="A ruled line on a school page becomes a planting row, a harvest, and a meal. School Farm Network turns underused school land into professionally managed farms.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   HOMEPAGE 5 — ONE LINE
+   Architecture: a horizontal filmstrip. The page reads sideways and
+   a single stroke runs unbroken through every panel, changing as it
+   goes. Native scrolling with snap, arrow keys, and a vertical
+   stack on small screens.
+   ============================================================ */
+:root{
+  --bone:#F5F2EA; --ink:#12140F; --orange:#C75B2A; --crop:#5C7A38;
+  --croplt:#93B368; --muted:rgba(18,20,15,.66); --mutedd:rgba(245,242,234,.72);
+  --rule:rgba(18,20,15,.18); --ruled:rgba(245,242,234,.22);
+  --ease:cubic-bezier(.22,.7,.24,1); --lineY:56%;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bone);color:var(--ink);
+  font-family:'Manrope',system-ui,sans-serif;font-size:16.5px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+.lab{font-weight:600;font-size:11px;letter-spacing:.17em;text-transform:uppercase}
+.v{font-weight:600;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--orange);border:1.5px solid currentColor;padding:3px 7px;
+  display:inline-block;line-height:1.4;border-radius:2px}
+.on-dark .v{color:#E8875A}
+
+/* chrome */
+.hd{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;
+  gap:22px;padding:18px 34px;pointer-events:none}
+.hd > *{pointer-events:auto}
+.wm{display:flex;align-items:center;gap:10px;text-decoration:none;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:16px;letter-spacing:-.01em;
+  text-transform:uppercase;white-space:nowrap;
+  transition:color .4s var(--ease)}
+.wm svg{width:18px;height:18px;flex:none}
+.wm-short{display:none}
+.hd .right{margin-left:auto;display:flex;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:9px;background:var(--ink);
+  color:var(--bone);text-decoration:none;padding:11px 17px;border-radius:2px;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:12.5px;letter-spacing:.04em;
+  text-transform:uppercase;white-space:nowrap;border:1.5px solid var(--ink);
+  transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+.btn:hover{background:var(--orange);border-color:var(--orange);color:#fff}
+.btn.ghost{background:transparent;color:inherit;border-color:currentColor}
+.btn.ghost:hover{background:var(--orange);border-color:var(--orange);color:#fff}
+
+/* the track */
+.track{display:flex;height:100%;overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;scroll-behavior:smooth}
+.track::-webkit-scrollbar{height:6px}
+.track::-webkit-scrollbar-thumb{background:rgba(18,20,15,.3)}
+.panel{flex:0 0 auto;width:100vw;height:100%;scroll-snap-align:start;position:relative;
+  display:flex;align-items:center;padding:104px 60px 96px;overflow-y:auto}
+.panel.wide{width:min(1240px,100vw)}
+.panel.dark{background:var(--ink);color:var(--bone)}
+.panel.cream{background:#EFE9DA}
+.inner{width:100%;max-width:1080px;margin:0 auto}
+
+/* the unbroken line */
+/* the line runs along a constant baseline, clear of the text, so it reads as
+   one unbroken stroke across every panel */
+.line{position:absolute;left:0;right:0;bottom:64px;height:2px;
+  background:var(--ink);z-index:0;pointer-events:none}
+.panel.dark .line{background:var(--croplt)}
+.line.thick{height:26px;background:rgba(92,122,56,.22);bottom:52px;
+  border-top:2px solid var(--crop);border-bottom:2px solid var(--crop)}
+.panel.dark .line.thick{background:rgba(147,179,104,.2);border-color:var(--croplt)}
+.line.seeds::after{content:"";position:absolute;inset:0;
+  background-image:repeating-linear-gradient(90deg,var(--crop) 0 2px,transparent 2px 40px)}
+.panel.dark .line.seeds::after{background-image:repeating-linear-gradient(90deg,var(--croplt) 0 2px,transparent 2px 40px)}
+.inner{position:relative;z-index:1}
+
+h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(38px,5.6vw,84px);
+  line-height:.96;letter-spacing:-.032em;text-transform:uppercase;max-width:13ch}
+h1 .o{color:var(--orange)}
+h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(28px,3.7vw,52px);
+  line-height:1.0;letter-spacing:-.028em;text-transform:uppercase;max-width:16ch}
+.kick{font-family:'Syne',sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--orange);display:block;margin-bottom:16px}
+.sub{margin-top:22px;max-width:46ch;font-size:17.5px;color:var(--muted)}
+.panel.dark .sub{color:var(--mutedd)}
+.act{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+
+/* content blocks */
+.rows{margin-top:26px;border-top:2px solid currentColor;max-width:960px}
+.row{display:grid;gap:20px;padding:14px 0;border-bottom:1px solid var(--rule);
+  align-items:start}
+.panel.dark .row{border-bottom-color:var(--ruled)}
+.row.s3{grid-template-columns:52px 1fr auto;align-items:baseline}
+.row.t3{grid-template-columns:190px 1fr 1fr}
+.row.e3{grid-template-columns:160px 1fr auto}
+.row.p4{grid-template-columns:40px 1fr 1.1fr auto;align-items:center}
+.row .n{font-family:'Syne',sans-serif;font-weight:700;font-size:12.5px;
+  letter-spacing:.08em;color:var(--orange)}
+.row .t{font-family:'Syne',sans-serif;font-weight:800;font-size:21px;
+  text-transform:uppercase;letter-spacing:-.015em}
+.row .m,.row .r{font-size:14.5px;color:var(--muted)}
+.panel.dark .row .m,.panel.dark .row .r{color:var(--mutedd)}
+.row .a1{font-weight:600;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--crop);padding-top:4px}
+.panel.dark .row .a1{color:var(--croplt)}
+.chip{font-weight:700;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 8px;border:1.5px solid currentColor;border-radius:2px;justify-self:start;
+  white-space:nowrap}
+.chip.v1{background:var(--orange);color:#fff;border-color:var(--orange)}
+.chip.p1{color:inherit}
+.chip.c1{opacity:.7}
+.chip.n1{opacity:.55;border-style:dashed}
+.row .b strong{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2em;
+  text-transform:uppercase;display:block;margin-bottom:3px;letter-spacing:-.01em}
+.row .src{display:block;margin-top:6px;font-size:13px;opacity:.7}
+.row .when{font-family:'Syne',sans-serif;font-weight:700;font-size:12px;
+  color:var(--orange);white-space:nowrap}
+.row .go{font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  opacity:.7;white-space:nowrap}
+a.row{text-decoration:none;transition:padding-left .2s var(--ease)}
+a.row:hover{padding-left:10px}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:24px;align-items:center}
+.people{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.pslot{border:2px dashed var(--orange);background:rgba(199,91,42,.05);padding:16px;
+  min-height:180px;display:flex;flex-direction:column;justify-content:flex-end;
+  border-radius:2px}
+.pslot .k{font-weight:700;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--orange)}
+.pslot .d{font-size:13.5px;margin-top:7px;color:var(--muted)}
+figure{margin:0}
+figcaption{margin-top:9px;font-weight:600;font-size:10.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--muted);line-height:1.7}
+.panel.dark figcaption{color:var(--mutedd)}
+
+/* progress */
+.prog{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;align-items:center;
+  gap:14px;padding:14px 34px;pointer-events:none}
+.prog > *{pointer-events:auto}
+.dots{display:flex;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;opacity:.4;
+  transition:opacity .2s var(--ease),background .2s var(--ease)}
+.dot[aria-current="true"]{opacity:1;background:currentColor}
+.nav{margin-left:auto;display:flex;gap:8px}
+.nb{border:1.5px solid currentColor;border-radius:2px;padding:9px 14px;font-weight:700;
+  font-size:12.5px;font-family:'Syne',sans-serif;letter-spacing:.04em;
+  text-transform:uppercase}
+.nb:disabled{opacity:.3;cursor:default}
+.hint{font-weight:600;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  opacity:.6}
+
+@media (max-width:900px){
+  body{overflow:auto}
+  html,body{height:auto}
+  .track{display:block;height:auto;overflow:visible;scroll-snap-type:none}
+  .panel{width:100%!important;height:auto;min-height:auto;padding:70px 20px 60px;
+    display:block;overflow:visible}
+  .line{display:none}
+  .hd{position:sticky;background:var(--bone);padding:14px 20px;gap:10px}
+  .wm-long{display:none}
+  .wm-short{display:inline}
+  .wm{font-size:14px;gap:8px}
+  .wm svg{width:16px;height:16px}
+  .btn.ghost{display:none}
+  .btn{padding:9px 12px;font-size:11px}
+  .prog{display:none}
+  .two,.people{grid-template-columns:1fr;gap:22px}
+  .row.s3,.row.t3,.row.e3,.row.p4{grid-template-columns:1fr;gap:8px}
+  h1{font-size:38px;max-width:12ch}
+  h2{font-size:29px}
+}
+@media (prefers-reduced-motion:reduce){
+  .track{scroll-behavior:auto}
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.className='js';</script>
+
+<div class="hd" id="hd">
+  <a class="wm" href="#">
+    <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+      <line x1="10" y1="46" x2="54" y2="46" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+      <line x1="16" y1="34" x2="48" y2="34" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+      <line x1="22" y1="22" x2="34" y2="22" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="42.5" cy="22" r="4.5" fill="#5C7A38"/>
+    </svg>
+    <span class="wm-long">School Farm Network</span><span class="wm-short">SFN</span>
+  </a>
+  <div class="right">
+    <a class="btn ghost" href="#" data-go="6">The evidence</a>
+    <a class="btn" href="#" data-go="9">Partner with us</a>
+  </div>
+</div>
+
+<main class="track" id="track" tabindex="0" aria-label="School Farm Network, read from left to right">
+
+  <!-- 1 -->
+  <section class="panel" aria-label="Panel 1">
+    <span class="line" aria-hidden="true"></span>
+    <div class="inner">
+      <h1>One line runs from the page to the <span class="o">plate</span></h1>
+      <p class="sub">School Farm Network turns underused land at African schools into
+      professionally managed farms that produce food, create jobs and give young people a
+      pathway into agriculture. <span class="v">Verify wording</span></p>
+      <div class="act">
+        <a class="btn" href="#" data-go="2">Follow the line</a>
+        <a class="btn ghost" href="#" data-go="6">See the evidence</a>
+      </div>
+      <p class="lab" style="margin-top:26px;color:var(--muted)">A ruled line. Nothing on it yet.</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="panel cream" aria-label="Panel 2">
+    <span class="line" aria-hidden="true"></span>
+    <div class="inner">
+      <span class="kick">02 · The line that stayed flat</span>
+      <h2>Ruled, and then left alone.</h2>
+      <div class="two">
+        <p class="sub" style="margin-top:0">A school day has periods with nothing
+        scheduled on them. A school site has ground with nothing planted on it. Both were
+        ruled and then left, and a line on its own feeds nobody.</p>
+        <figure>
+          <img src="../assets/img/hero-1600.jpg"
+               srcset="../assets/img/hero-1024.jpg 1024w, ../assets/img/hero-1600.jpg 1600w"
+               sizes="(max-width:900px) 92vw, 40vw" width="1600" height="1067"
+               decoding="async"
+               alt="School buildings and open ground in the same frame, with people working on the land.">
+          <figcaption>Seeds2Education, Kenya · the original pilot<br>
+            <span class="v">Verify: location, date, credit, consent</span></figcaption>
+        </figure>
+      </div>
+      <p style="margin-top:20px"><span class="v">Verify: measured area of unused or
+      underused land at a named school, with the date it was measured</span></p>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="panel dark on-dark" aria-label="Panel 3">
+    <span class="line thick seeds" aria-hidden="true"></span>
+    <div class="inner">
+      <span class="kick">03 · The turn</span>
+      <h2>The same stroke, planted.</h2>
+      <p class="sub">Measure the ground that is free, check the water and mark the
+      boundary. The line stops being a rule on a page and becomes a row in the soil.</p>
+      <p style="margin-top:20px"><span class="v">Verify: plot dimensions, water source,
+      and boundary</span></p>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="panel wide" aria-label="Panel 4">
+    <span class="line" aria-hidden="true"></span>
+    <div class="inner">
+      <span class="kick">04 · How one farm works</span>
+      <h2>Eight stages, one record.</h2>
+      <div class="rows">
+        <div class="row s3"><span class="n">01</span><span class="t">Assess</span><span class="m">measure, check water, mark boundary</span></div>
+        <div class="row s3"><span class="n">02</span><span class="t">Design</span><span class="m">lay out the beds</span></div>
+        <div class="row s3"><span class="n">03</span><span class="t">Prepare</span><span class="m">clear, break, feed the soil</span></div>
+        <div class="row s3"><span class="n">04</span><span class="t">Plant</span><span class="m">to the plan, on the date</span></div>
+        <div class="row s3"><span class="n">05</span><span class="t">Tend</span><span class="m">water, weed, watch</span></div>
+        <div class="row s3"><span class="n">06</span><span class="t">Harvest</span><span class="m">lift, weigh, store</span></div>
+        <div class="row s3"><span class="n">07</span><span class="t">Record</span><span class="m">what it cost, what it gave</span></div>
+        <div class="row s3"><span class="n">08</span><span class="t">Improve</span><span class="m">change one thing, run it again</span></div>
+      </div>
+      <p style="margin-top:18px"><span class="v">Verify: these eight stage names against
+      the method SFN actually runs</span></p>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="panel wide cream" aria-label="Panel 5">
+    <span class="line thick" aria-hidden="true"></span>
+    <div class="inner">
+      <span class="kick">05 · At the table</span>
+      <h2>One crop, plot to plate.</h2>
+      <div class="rows">
+        <div class="row s3"><span class="n">01</span><span class="t">Planted</span>
+          <span class="m">Onions, at Seeds2Education. <span class="v">Verify: variety, planting date, growing period</span></span></div>
+        <div class="row s3"><span class="n">02</span><span class="t">Harvested</span>
+          <span class="m">Approximately 4 tonnes, harvested and weighed, May 2026. Source: pilot harvest and weighing records.</span></div>
+        <div class="row s3"><span class="n">03</span><span class="t">Being sold</span>
+          <span class="m">The harvest is being sold to market. Nothing has been exchanged yet, and this page will not say otherwise until it has.</span></div>
+        <div class="row s3"><span class="n">04</span><span class="t">Meals</span>
+          <span class="m">Proceeds will be paid to Food for Education in exchange for student meals. <span class="v">Verify</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="panel wide" aria-label="Panel 6">
+    <span class="line" aria-hidden="true"></span>
+    <div class="inner">
+      <span class="kick">06 · What it teaches</span>
+      <h2>The lesson is the work.</h2>
+      <div class="rows">
+        <div class="row t3"><span class="a1">Measure the plot</span>
+          <span>Area, spacing and quantity, worked out on the ground rather than on a worksheet.</span>
+          <span class="r"><span class="v">Verify: subject and year</span></span></div>
+        <div class="row t3"><span class="a1">Test soil and water</span>
+          <span>What the soil is short of, what the crop needs, and what the water will carry.</span>
+          <span class="r"><span class="v">Verify: subject and year</span></span></div>
+        <div class="row t3"><span class="a1">Plan a cycle</span>
+          <span>Working backwards from a harvest date to a planting date.</span>
+          <span class="r"><span class="v">Verify: subject and year</span></span></div>
+        <div class="row t3"><span class="a1">Keep the books</span>
+          <span>What the cycle cost, what it earned, and whether it was worth running.</span>
+          <span class="r"><span class="v">Verify: subject and year</span></span></div>
+        <div class="row t3"><span class="a1">Do the paid work</span>
+          <span>Real operational experience, with roles prioritised for women and for people aged 18 to 35.</span>
+          <span class="r">A route into agriculture as a job, not a lesson about one.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="panel wide dark on-dark" aria-label="Panel 7">
+    <span class="line" aria-hidden="true"></span>
+    <div class="inner">
+      <span class="kick">07 · Evidence</span>
+      <h2>We publish what is verified.</h2>
+      <div class="rows">
+        <div class="row e3"><span class="chip v1">Verified</span>
+          <div class="b"><strong>First harvest</strong>Approximately 4 tonnes of onions,
+            harvested and weighed at Seeds2Education, the original pilot project.
+            <span class="src">Source: pilot harvest and weighing records, May 2026. One site, one cycle. A pilot result, not portfolio performance.</span></div>
+          <span class="when">May 2026</span></div>
+        <div class="row e3"><span class="chip p1">In progress</span>
+          <div class="b"><strong>Sale and meal conversion</strong>The harvest is being sold
+            to market. Proceeds will be paid to Food for Education in exchange for student meals.
+            <span class="src">Not yet done.</span></div>
+          <span class="when">Open</span></div>
+        <div class="row e3"><span class="chip c1">In collection</span>
+          <div class="b"><strong>Pilot measures</strong>Cost per acre, yield per cycle,
+            paid work created and school benefit delivered, across a two-school, two-cycle pilot.</div>
+          <span class="when">2 schools</span></div>
+        <div class="row e3"><span class="chip n1">Not yet measured</span>
+          <div class="b"><strong>Cost per meal, learning outcomes</strong>Neither has been
+            measured. Both are stated here as absent rather than estimated.</div>
+          <span class="when">Absent</span></div>
+        <div class="row e3"><span class="chip n1">Not achieved</span>
+          <div class="b"><strong>Long term ambition</strong>A model repeatable across
+            thousands of schools and tens of thousands of acres.</div>
+          <span class="when">Ambition</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="panel" aria-label="Panel 8">
+    <span class="line" aria-hidden="true"></span>
+    <div class="inner">
+      <span class="kick">08 · Beyond the gate</span>
+      <h2>One plot is the unit. The network is the point.</h2>
+      <div class="two">
+        <p class="sub" style="margin-top:0">Everything unverified is drawn hollow, and
+        stays hollow until it is real. A map with one filled point is the honest starting
+        position, and the reason the next one matters.</p>
+        <svg viewBox="0 0 460 250" style="width:100%;height:auto" role="img" aria-label="Network map, one verified site">
+          <rect x="1" y="1" width="458" height="248" fill="none" stroke="rgba(18,20,15,.2)"/>
+          <circle cx="180" cy="128" r="8" fill="#5C7A38"/>
+          <text x="196" y="133" font-family="Manrope" font-size="12" font-weight="600" fill="#12140F">Seeds2Education</text>
+          <g fill="none" stroke="rgba(18,20,15,.32)" stroke-width="1.4" stroke-dasharray="4 4">
+            <circle cx="80" cy="66" r="6"/><circle cx="296" cy="60" r="6"/>
+            <circle cx="352" cy="164" r="6"/><circle cx="118" cy="200" r="6"/>
+            <circle cx="258" cy="208" r="6"/>
+          </g>
+          <text x="14" y="238" font-family="Manrope" font-size="10.5" font-weight="600"
+                fill="rgba(18,20,15,.6)">1 VERIFIED · 0 OTHERS CONFIRMED</text>
+        </svg>
+      </div>
+      <p style="margin-top:18px"><span class="v">Verify: counties, number of schools, and
+      acreage, before any map is published</span></p>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="panel cream" aria-label="Panel 9">
+    <span class="line" aria-hidden="true"></span>
+    <div class="inner">
+      <span class="kick">09 · People</span>
+      <h2>The people who keep it growing.</h2>
+      <p class="sub">No stock photography and no anonymous beneficiaries. These slots stay
+      empty until real people have given their names, roles and consent.</p>
+      <div class="people">
+        <div class="pslot"><span class="k">Portrait 01 · to commission</span>
+          <span class="d">Farm manager at the pilot site, photographed working.</span></div>
+        <div class="pslot"><span class="k">Portrait 02 · to commission</span>
+          <span class="d">A member of the paid crew, photographed at work.</span></div>
+        <div class="pslot"><span class="k">Portrait 03 · to commission</span>
+          <span class="d">A teacher who uses the plot in lessons.</span></div>
+      </div>
+      <p style="margin-top:16px"><span class="v">Verify: names, roles, and consent</span></p>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="panel wide dark on-dark" aria-label="Panel 10">
+    <span class="line thick seeds" aria-hidden="true"></span>
+    <div class="inner">
+      <span class="kick">10 · Choose an action</span>
+      <h2>The line ends at a plate. Which end are you on?</h2>
+      <div class="rows">
+        <a class="row p4" href="#"><span class="n">01</span><span class="t">A school</span>
+          <span class="r">Land rights, water, governance, access, security and commercial viability are checked before anything is built.</span>
+          <span class="go">Register →</span></a>
+        <a class="row p4" href="#"><span class="n">02</span><span class="t">A partner</span>
+          <span class="r">Agronomy, implementation, offtake and quality standards.</span>
+          <span class="go">Talk to us →</span></a>
+        <a class="row p4" href="#"><span class="n">03</span><span class="t">A funder</span>
+          <span class="r">Catalytic funding establishes infrastructure, tests repeatability and verifies outcomes independently.</span>
+          <span class="go">Explore →</span></a>
+        <a class="row p4" href="#"><span class="n">04</span><span class="t">A follower</span>
+          <span class="r">Updates when a site is added, a cycle closes, or a figure is verified.</span>
+          <span class="go">Follow →</span></a>
+      </div>
+      <p style="margin-top:20px"><span class="v">Verify: the two calls to action and what
+      happens after each</span></p>
+      <p class="lab" style="margin-top:22px;color:var(--mutedd)">schoolfarmnetwork.com ·
+      Photography from Seeds2Education, the original pilot</p>
+    </div>
+  </section>
+
+</main>
+
+<div class="prog" id="prog">
+  <div class="dots" id="dots" role="tablist" aria-label="Panels"></div>
+  <span class="hint">Scroll sideways, or use ← →</span>
+  <div class="nav">
+    <button class="nb" id="prev" disabled>←</button>
+    <button class="nb" id="next">→</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var track=document.getElementById('track'),
+      panels=[].slice.call(track.querySelectorAll('.panel')),
+      dots=document.getElementById('dots'), prev=document.getElementById('prev'),
+      next=document.getElementById('next'), hd=document.getElementById('hd'),
+      prog=document.getElementById('prog'), i=0;
+  var mobile=matchMedia('(max-width:900px)');
+
+  panels.forEach(function(p,k){
+    var b=document.createElement('button');
+    b.className='dot';b.setAttribute('role','tab');
+    b.setAttribute('aria-label','Panel '+(k+1));
+    b.addEventListener('click',function(){go(k)});
+    dots.appendChild(b);
+  });
+  var dotEls=[].slice.call(dots.children);
+
+  function go(k){
+    if(mobile.matches){ panels[k].scrollIntoView({behavior:'smooth',block:'start'}); return; }
+    i=Math.max(0,Math.min(panels.length-1,k));
+    track.scrollTo({left:panels[i].offsetLeft,behavior:'smooth'});
+  }
+  function sync(){
+    if(mobile.matches) return;
+    var best=0,bd=Infinity;
+    panels.forEach(function(p,k){
+      var d=Math.abs(p.offsetLeft-track.scrollLeft);
+      if(d<bd){bd=d;best=k}
+    });
+    i=best;
+    dotEls.forEach(function(d,k){d.setAttribute('aria-current',String(k===i))});
+    prev.disabled=i===0; next.disabled=i===panels.length-1;
+    // chrome adopts the panel's field
+    var dark=panels[i].classList.contains('dark');
+    var col=dark?'#F5F2EA':'#12140F';
+    hd.style.color=col; prog.style.color=col;
+    var wm=hd.querySelector('.wm'); if(wm) wm.style.color=col;
+  }
+  track.addEventListener('scroll',function(){
+    window.requestAnimationFrame(sync);
+  },{passive:true});
+  prev.addEventListener('click',function(){go(i-1)});
+  next.addEventListener('click',function(){go(i+1)});
+  document.querySelectorAll('[data-go]').forEach(function(a){
+    a.addEventListener('click',function(e){e.preventDefault();go(+a.dataset.go)});
+  });
+  addEventListener('keydown',function(e){
+    if(mobile.matches) return;
+    if(e.key==='ArrowRight'){e.preventDefault();go(i+1)}
+    if(e.key==='ArrowLeft'){e.preventDefault();go(i-1)}
+  });
+  // vertical wheel drives the horizontal track, without removing native scrolling
+  track.addEventListener('wheel',function(e){
+    if(mobile.matches) return;
+    if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
+      var t=e.target.closest('.panel');
+      if(t && t.scrollHeight>t.clientHeight){
+        var atTop=t.scrollTop<=0, atBottom=t.scrollTop+t.clientHeight>=t.scrollHeight-1;
+        if(!(atTop&&e.deltaY<0)&&!(atBottom&&e.deltaY>0)) return;
+      }
+      e.preventDefault();
+      track.scrollLeft+=e.deltaY;
+    }
+  },{passive:false});
+
+  sync();
+})();
+</script>
+</body>
+</html>

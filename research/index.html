@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SFN — five candidate design systems</title>
+<meta name="robots" content="noindex">
+<style>
+:root{--ink:#1A1917;--paper:#FAF9F6;--muted:rgba(26,25,23,.66);--rule:rgba(26,25,23,.14)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,sans-serif;
+  font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding-left:30px;padding-right:30px}
+.mono{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted)}
+header{padding-block:64px 36px;border-bottom:1.5px solid var(--ink)}
+h1{font-size:clamp(28px,4vw,44px);line-height:1.06;letter-spacing:-.022em;
+  font-weight:650;max-width:24ch;margin-top:12px}
+header p{margin-top:16px;max-width:70ch;color:var(--muted)}
+.sys{padding-block:52px;border-bottom:1px solid var(--rule)}
+.sys-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+.n{font-family:ui-monospace,monospace;font-size:13px;color:var(--muted)}
+h2{font-size:27px;font-weight:650;letter-spacing:-.018em}
+.tagline{font-style:italic;color:var(--muted)}
+.shot{margin-top:22px;border:1px solid var(--rule)}
+.shot img{width:100%;display:block}
+.cols{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;margin-top:26px}
+.cols h3{font-size:12px;font-weight:650;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:10px}
+.cols p{margin-bottom:12px;max-width:60ch}
+.cols p b{font-weight:650}
+.risk{color:var(--muted);font-size:15px}
+.pal{display:flex;height:40px;border:1px solid var(--rule);margin-bottom:12px}
+.pal i{flex:1}
+.tok{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.8;
+  color:var(--muted)}
+.tok b{color:var(--ink);font-weight:600}
+.links{margin-top:14px;display:flex;gap:20px;flex-wrap:wrap;font-size:14.5px}
+.links a{color:var(--ink);font-weight:550;text-decoration:underline;
+  text-underline-offset:3px}
+footer{padding-block:40px 80px;color:var(--muted);font-size:15px;max-width:74ch}
+@media(max-width:820px){.cols{grid-template-columns:1fr;gap:24px}}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <span class="mono">Step 4 of the method · reference research</span>
+  <h1>Five candidate design systems for School Farm Network</h1>
+  <p>From a sweep of 582 systems on styles.refero.design across eleven searches, filtered
+  to 33 by business and register, with the twelve strongest read in full token detail.
+  These five each argue a different position. Every screenshot, colour and typeface below
+  is the real system's own, not my interpretation. Choose one; it becomes the primary
+  reference the SFN build is derived from.</p>
+</header>
+
+<main class="wrap">
+
+  <!-- 1 AMBROOK -->
+  <section class="sys">
+    <div class="sys-head"><span class="n">01</span><h2>Ambrook</h2>
+      <span class="tagline">"harvest ledger on butcher paper"</span></div>
+    <div class="shot"><img src="img/ambrook.jpg" alt="Ambrook homepage: warm parchment canvas, serif headline, honey amber button, documentary farm photography"></div>
+    <div class="cols">
+      <div>
+        <h3>The position: the operating company for working land</h3>
+        <p>Financial software for American farms and ranches. The closest living business
+        analogue to SFN anywhere in the gallery: serious money, working land, credibility
+        through warmth rather than chrome. Documentary photography of unposed people in
+        full sun — exactly the photography SFN actually has.</p>
+        <p><b>Why for SFN:</b> the register says "we run farms and keep books", which is
+        SFN's entire pitch to a funder. Its rule that industry illustrations are
+        monochrome line art gives us a custom graphic layer with no stock anything.</p>
+        <p class="risk"><b>Risk:</b> the quietest of the five. Warmth, not boldness.</p>
+      </div>
+      <div>
+        <h3>Real tokens</h3>
+        <div class="pal">
+          <i style="background:#fcfaf1"></i><i style="background:#efe9e0"></i>
+          <i style="background:#434f40"></i><i style="background:#e8b672"></i>
+          <i style="background:#7a9779"></i><i style="background:#211b15"></i>
+        </div>
+        <p class="tok"><b>Canvas</b> parchment #fcfaf1, never pure white<br>
+        <b>Action</b> honey amber #e8b672, the sole CTA colour<br>
+        <b>Type</b> Lateral (custom humanist sans), headlines at weight 500 not 700,
+        11–68px; uppercase eyebrow labels at wide tracking<br>
+        <b>Shape</b> 3.75px buttons, 7.5px cards<br>
+        <b>Imagery</b> documentary, unposed, full sun; line-art illustration in ink</p>
+        <div class="links">
+          <a href="https://styles.refero.design/style/f3c955e4-0fea-462d-b05f-868552e9628c" target="_blank" rel="noopener">Full design system</a>
+          <a href="https://ambrook.com" target="_blank" rel="noopener">Live site</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 MUNRO -->
+  <section class="sys">
+    <div class="sys-head"><span class="n">02</span><h2>Munro Partners</h2>
+      <span class="tagline">"editorial broadsheet in a green landscape"</span></div>
+    <div class="shot"><img src="img/munro.jpg" alt="Munro Partners homepage: full-bleed mountain landscape, cream band, quiet grotesque type"></div>
+    <div class="cols">
+      <div>
+        <h3>The position: fluent in capital</h3>
+        <p>A growth-equity investor. Warm cream canvas, everything trimmed in a single
+        warm dark brown that reads as ink, hairline rules instead of cards, full-bleed
+        landscape photography, and a 68px display headline at weight 400 that whispers
+        against the imagery instead of shouting.</p>
+        <p><b>Why for SFN:</b> the audience is a funder writing a seven-figure cheque,
+        and this is the register those people already trust. It makes SFN read like an
+        investable operation, not an appeal. The whisper-weight headline over African
+        land photography would be genuinely distinctive.</p>
+        <p class="risk"><b>Risk:</b> could read financial rather than warm if the
+        photography doesn't carry the humanity.</p>
+      </div>
+      <div>
+        <h3>Real tokens</h3>
+        <div class="pal">
+          <i style="background:#fff9ee"></i><i style="background:#3f322a"></i>
+          <i style="background:#004e4e"></i><i style="background:#c5bdb3"></i>
+          <i style="background:#796e65"></i><i style="background:#bfebfe"></i>
+        </div>
+        <p class="tok"><b>Canvas</b> cream #fff9ee; ink is warm brown #3f322a, never black<br>
+        <b>Action</b> deep teal #004e4e, one per view, everything else forbidden<br>
+        <b>Type</b> Neue Haas Grotesk; display 68px at weight 400 — the whisper is the
+        signature; body 14px/1.43<br>
+        <b>Shape</b> 2px near-square buttons; 15px only on images; 1px hairlines, no cards<br>
+        <b>Imagery</b> full-bleed landscape</p>
+        <div class="links">
+          <a href="https://styles.refero.design/style/d2e327b2-1181-4203-82a6-2dc15a72078a" target="_blank" rel="noopener">Full design system</a>
+          <a href="https://munropartners.com.au" target="_blank" rel="noopener">Live site</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 HEART -->
+  <section class="sys">
+    <div class="sys-head"><span class="n">03</span><h2>Heart Aerospace</h2>
+      <span class="tagline">"industrial white gallery above the clouds"</span></div>
+    <div class="shot"><img src="img/heart.jpg" alt="Heart Aerospace homepage: monumental headline over full-bleed aviation photography"></div>
+    <div class="cols">
+      <div>
+        <h3>The position: frontier infrastructure</h3>
+        <p>Electric regional aircraft. Monumental typography over full-bleed photography
+        and almost nothing else: no cards, no shadows, no rounded corners, no filled
+        buttons. Type is the subject, photography is the environment, negative space is
+        the luxury.</p>
+        <p><b>Why for SFN:</b> this is the boldness you responded to in Zipline, but
+        light, disciplined and specified as a system rather than a vibe. It frames SFN
+        as infrastructure at continental scale — the "feed every generation" ambition —
+        and it is unmistakably not an NGO template.</p>
+        <p class="risk"><b>Risk:</b> the most demanding of photography, and restraint
+        this severe can read cold if the copy doesn't carry warmth.</p>
+      </div>
+      <div>
+        <h3>Real tokens</h3>
+        <div class="pal">
+          <i style="background:#ffffff"></i><i style="background:#716e85"></i>
+          <i style="background:#001489"></i><i style="background:#000000"></i>
+        </div>
+        <p class="tok"><b>Canvas</b> white, with a stratosphere #716e85 → white gradient
+        for atmospheric sections<br>
+        <b>Action</b> outlined ghost buttons in jetstream blue #001489 — filled buttons
+        never exist<br>
+        <b>Type</b> Neue Haas Grotesk Display at 156px weight 600, -0.02em — the
+        signature scale<br>
+        <b>Shape</b> radius 0 everywhere; partner logos always monochrome<br>
+        <b>Imagery</b> full-bleed, atmospheric</p>
+        <div class="links">
+          <a href="https://styles.refero.design/style/bf523387-03fc-4243-86ca-25af34daa0ce" target="_blank" rel="noopener">Full design system</a>
+          <a href="https://heartaerospace.com" target="_blank" rel="noopener">Live site</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 LIGHTSHIP -->
+  <section class="sys">
+    <div class="sys-head"><span class="n">04</span><h2>Lightship</h2>
+      <span class="tagline">"open meadow in morning light"</span></div>
+    <div class="shot"><img src="img/lightship.jpg" alt="Lightship homepage: cinematic landscape photography on warm cream, tight geometric sans"></div>
+    <div class="cols">
+      <div>
+        <h3>The position: the film of the land</h3>
+        <p>Electric campers. A photography-first editorial system where the UI is
+        deliberately invisible: one geometric sans with tight negative tracking, hairline
+        borders, pill navigation, warm cream canvas, and cinematic full-bleed imagery
+        doing all of the storytelling.</p>
+        <p><b>Why for SFN:</b> SFN's strongest asset is that the work photographs
+        beautifully — real people lifting real onions in full sun. This system is built
+        to let exactly that carry the site, with short declarative headlines over it.
+        The drone film slots straight in.</p>
+        <p class="risk"><b>Risk:</b> needs the full shot list commissioned before it
+        sings; with three photographs it would feel thin. You once said you didn't want
+        "a photography website" — this is the option that most is one.</p>
+      </div>
+      <div>
+        <h3>Real tokens</h3>
+        <div class="pal">
+          <i style="background:#faf6ef"></i><i style="background:#000000"></i>
+          <i style="background:#fa5c40"></i><i style="background:#d9d9d9"></i>
+        </div>
+        <p class="tok"><b>Canvas</b> warm cream #faf6ef<br>
+        <b>Accent</b> ember orange #fa5c40, as a rare surface strip, never a button fill<br>
+        <b>Type</b> F37 Bolton (sole face), 12–75px; -0.05em above 48px, -0.03em below —
+        the tracking is non-negotiable<br>
+        <b>Shape</b> 20px on framed photographs, 100px pills on interactive; heroes
+        full-bleed at radius 0<br>
+        <b>Imagery</b> cinematic landscape, 100px section gaps</p>
+        <div class="links">
+          <a href="https://styles.refero.design/style/fdcd4cbb-4db6-4138-9cfd-964795f1e1d6" target="_blank" rel="noopener">Full design system</a>
+          <a href="https://lightshiprv.com" target="_blank" rel="noopener">Live site</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 ARVA -->
+  <section class="sys">
+    <div class="sys-head"><span class="n">05</span><h2>Arva</h2>
+      <span class="tagline">"regenerative supply chains for a better world"</span></div>
+    <div class="shot"><img src="img/arva.jpg" alt="Arva homepage: cream canvas, forest green, editorial serif headline over field photography"></div>
+    <div class="cols">
+      <div>
+        <h3>The position: sector-native pastoral editorial</h3>
+        <p>Regenerative agriculture supply chains — the only candidate in SFN's actual
+        sector. Warm cream canvas, deep forest green anchor, an editorial serif
+        (Reckless) against a neutral sans, quilted pastel content cards like fields seen
+        from altitude, and one vivid lime marquee as the single high-energy accent.</p>
+        <p><b>Why for SFN:</b> it solves warmth and seriousness at once — a printed-
+        magazine feel over working agriculture. The quilted-fields card language is a
+        ready-made way to show plots, schools and cycles. You've responded to this
+        lineage before.</p>
+        <p class="risk"><b>Risk:</b> the busiest system of the five; needs discipline or
+        it tips decorative. Reckless must be licensed or substituted.</p>
+      </div>
+      <div>
+        <h3>Real tokens</h3>
+        <div class="pal">
+          <i style="background:#f1efdf"></i><i style="background:#07503f"></i>
+          <i style="background:#e8fe85"></i><i style="background:#b2cee7"></i>
+          <i style="background:#fceace"></i><i style="background:#e6ecd5"></i>
+        </div>
+        <p class="tok"><b>Canvas</b> bone #f1efdf, never pure white<br>
+        <b>Anchor</b> forest ink #07503f fills nav and dividers<br>
+        <b>Accent</b> vivid lime #e8fe85, marquee only — scarcity is the rule<br>
+        <b>Type</b> Reckless serif 24–57px display against Inter 12–90px; serif/sans
+        tension is the voice<br>
+        <b>Shape</b> 100px pill on every button; pastel cards rotate sky/peach/sage/bone
+        as a quilted series<br>
+        <b>Imagery</b> full-bleed above the fold</p>
+        <div class="links">
+          <a href="https://styles.refero.design/style/15846be3-8df8-42e4-a05c-d9395dcec369" target="_blank" rel="noopener">Full design system</a>
+          <a href="https://arva.ag" target="_blank" rel="noopener">Live site</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <p>Read in full and not shortlisted: INVERSA (dark console with electric lime — the
+  boldest read, but void-dark with neon runs against the daylight-and-earth direction you
+  set for Seeds2Education), Waabi (sculptural 150px type but a hot-pink accent), MANNA
+  (beautiful monograph, weak calls to action), Evergreen, Ecosia, sweetgreen, July Fund
+  (each too product- or consumer-coded for a funder audience). Next step once you choose:
+  name the gold standard, then build against it and run the judge loop.</p>
+</footer>
+
+</body>
+</html>
