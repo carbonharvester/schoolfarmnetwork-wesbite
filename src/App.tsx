@@ -7,8 +7,9 @@ function Mark(){return <img className="brand-symbol" src="/sfn-symbol.png" width
 const Arrow=({direction='diagonal'}:{direction?:'diagonal'|'down'|'up'})=> <span className={`action-icon arrow-${direction}`} aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M6 18 18 6M6 6h12v12"/></svg></span>;
 export default function App(){
  const scope=useRef<HTMLDivElement>(null), purposePosition=useRef<number|null>(null);
- const [ready,setReady]=useState(false),[motion,setMotion]=useState(false);
- useEffect(()=>{const mq=matchMedia('(prefers-reduced-motion: reduce)');const sync=()=>setMotion(!mq.matches);sync();setReady(true);mq.addEventListener('change',sync);return()=>mq.removeEventListener('change',sync)},[]);
+ const [ready,setReady]=useState(false);
+ const motion=true;
+ useEffect(()=>{setReady(true)},[]);
  useEffect(()=>{
   document.documentElement.dataset.motion=motion?'on':'off';
   if(!ready||!motion)return;
@@ -32,8 +33,7 @@ export default function App(){
       .fromTo('.purpose-rule',{scaleX:0},{scaleX:1,duration:.4},.55).to({},{duration:.15});
      const field=gsap.timeline({scrollTrigger:{trigger:'.field-stage',start:'top 84px',end:()=>'+='+innerHeight*.95,pin:true,scrub:.5,invalidateOnRefresh:true}});
      field.fromTo('.field-image',{clipPath:'inset(28% 29% 12% 29% round 180px)'},{clipPath:'inset(0% 0% 0% 0% round 0px)',duration:1,ease:'none'},0)
-      .to('.field-title',{y:-100,opacity:0,duration:.45},.12)
-      .fromTo('.field-caption',{y:25,opacity:0},{y:0,opacity:1,duration:.3},.7);
+      .to('.field-title',{y:-100,opacity:0,duration:.45},.12);
      return()=>{purposePosition.current=null};
     });
     mm.add('(max-width: 999px), (max-height: 699px)',()=>{
@@ -63,7 +63,7 @@ export default function App(){
     </section>
     <section className="purpose" id="purpose" aria-labelledby="purpose-heading"><h2 id="purpose-heading">School is a<br/>place to <em>grow.</em></h2><div className="purpose-rule"/><p>{content.purpose}</p><a href="#field" className="text-link">Explore the vision <Arrow direction="down"/></a></section>
    </div></div>
-   <section className="field" id="field" aria-labelledby="field-heading"><div className="field-stage"><h2 className="field-title" id="field-heading">School days.<br/><em>Full of possibility.</em></h2><figure className="field-image"><picture><source type="image/webp" srcSet={media.school.srcSet} sizes="100vw"/><img src={media.school.src} alt={media.school.alt} width="1344" height="752" loading="lazy"/></picture><figcaption className="field-caption"><span>A brighter school day</span></figcaption></figure></div></section>
+   <section className="field" id="field" aria-labelledby="field-heading"><div className="field-stage"><h2 className="field-title" id="field-heading">School days.<br/><em>Full of possibility.</em></h2><figure className="field-image"><picture><source type="image/webp" srcSet={media.school.srcSet} sizes="100vw"/><img src={media.school.src} alt={media.school.alt} width="1344" height="752" loading="lazy"/></picture></figure></div></section>
    <section className="priorities" aria-labelledby="priorities-heading"><div className="priorities-heading"><p>Our priorities</p><h2 id="priorities-heading">What we're<br/><em>working towards.</em></h2></div><div className="priority-stack">{content.priorities.map((item,i)=><article className={`priority-card priority-${i}`} key={item.title}><div className="priority-copy"><h3>{item.title.split(' ').slice(0,-1).join(' ')}<br/><em>{item.title.split(' ').at(-1)}</em></h3><p>{item.text}</p><Mark/></div><div className="priority-visual"><picture><source type="image/webp" srcSet={media.priorities[i].srcSet} sizes="(max-width:767px) 100vw, 45vw"/><img src={media.priorities[i].src} alt={media.priorities[i].alt} width={media.priorities[i].width} height={media.priorities[i].height} loading="lazy"/></picture></div></article>)}</div></section>
   </main>
   <footer className="contact" id="contact"><div className="contact-top"><h2>Let's grow<br/>something<br/><em>that lasts.</em></h2><div className="contact-copy"><p>{content.contact}</p><a className="pill pill-lime" href={mailto}>Start a conversation <Arrow/></a><div className="email-row"><a href={mailto}>{content.email}</a></div></div></div><div className="footer-wordmark" aria-hidden="true"><span>School Farm</span><span>Network<sup>●</sup></span></div><div className="footer-bottom"><p>© {new Date().getFullYear()} School Farm Network</p><a className="back-top" href="#top">Back to top <Arrow direction="up"/></a></div></footer>
