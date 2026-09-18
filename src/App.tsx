@@ -59,7 +59,7 @@ export default function App(){
    <div className="growth-story"><div className="growth-stage">
     <section className="hero" aria-labelledby="hero-heading"><h1 className="hero-title" id="hero-heading"><span>A future without</span><span>school <em>hunger.</em></span></h1>
      <div className="growth-object"><div className="object-tilt"><picture><source srcSet={media.hero.srcSet} sizes="100vw"/><img src={media.hero.src} width="1344" height="752" fetchPriority="high" alt={media.hero.alt}/></picture><div className="hero-shade"/></div></div>
-     <div className="hero-meta"><div className="hero-footnote"><span>Starting in Kenya.</span><span>Building for the long term.</span><a href="#purpose" onClick={goPurpose} className="explore">Explore the vision <Arrow direction="down"/></a></div><div className="hero-intro"><p>{content.intro}</p><a className="text-link" href="#contact">Start a conversation <Arrow/></a></div></div>
+     <div className="hero-meta"><div className="hero-footnote"><a href="#purpose" onClick={goPurpose} className="explore">Explore the vision <Arrow direction="down"/></a></div><div className="hero-intro"><p>{content.intro}</p><a className="text-link" href="#contact">Start a conversation <Arrow/></a></div></div>
     </section>
     <section className="purpose" id="purpose" aria-labelledby="purpose-heading"><h2 id="purpose-heading">School is a<br/>place to <em>grow.</em></h2><div className="purpose-rule"/><p>{content.purpose}</p><a href="#field" className="text-link">Explore the vision <Arrow direction="down"/></a></section>
    </div></div>
