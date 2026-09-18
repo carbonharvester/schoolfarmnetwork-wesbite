@@ -16,9 +16,9 @@ Public wording lives in `src/content.ts` and editorial line breaks in `src/App.t
 Motion is always active as requested, with no visitor toggle. All reading and email links work without JavaScript. The hero uses a generated editorial scene with an optional scroll-driven transition.
 
 ## Release
-This branch is a review version. Publish only `dist/`. Preview indexing is disabled through metadata, robots.txt and Netlify response headers. No canonical production URL is set. Use preview deployment only until this version is approved.
+Production: https://schoolfarmnetwork.com, hosted on the existing Netlify project `schoolfarmnetwork-website`. Publish only `dist/` from the main branch. The homepage has production canonical and social URLs and allows indexing. Unknown routes return a real 404.
 
-Before an approved production release: reconfirm the public contact address; verify media permissions; remove preview-only indexing exclusions; add the production canonical URL; inspect all old routes by direct URL. The clean deployment excludes old folders and pages and returns a real 404 for unknown paths. Do not merge or promote automatically.
+Run a clean build and `npm test` before release. Netlify also enforces the configured Lighthouse performance and accessibility thresholds.
 
 ## Selected photographic direction
 The selected direction is Joyful school life. Each image appears in one section only: a two-pupil burgundy-uniform hero without food, a blue-uniform coastal school scene, a rice-and-bean-stew nutrition scene, young adult agricultural opportunity, and tan-uniform classroom learning. All scenes are fictional AI-generated imagery depicting hopeful, modest Kenyan public-school settings, not actual SFN beneficiaries or results. Young adults alone undertake agricultural work. Simpler child compositions reduce overlapping faces and hands; food is shown separately in a close-up. The schools are deliberately visually distinct. Visible AI labels were removed at the user’s request; image provenance remains documented here.
