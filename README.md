@@ -20,7 +20,7 @@ This branch is a review version. Publish only `dist/`. Preview indexing is disab
 
 Before an approved production release: reconfirm the public contact address; verify media permissions; remove preview-only indexing exclusions; add the production canonical URL; inspect all old routes by direct URL. The clean deployment excludes old folders and pages and returns a real 404 for unknown paths. Do not merge or promote automatically.
 
-## Two complete visual directions
-Use ?direction=photo for Joyful school life or ?direction=illustrated for A world of possibility. A persistent comparison control links between them. Both retain the purpose, vision, priorities and contact sections, responsive layouts, optional GSAP scroll scenes and motion controls. Photography uses a full-bleed opening; illustration uses a split composition, bolder section colours and rounded panels. All scene images are AI-generated fictional illustrations of the vision, not records of actual SFN beneficiaries or results. No existing repository photography is displayed.
+## Selected photographic direction
+The selected direction is Joyful school life. Each image appears in one section only: the approved lunch hero, a school-day courtyard scene, a separate nutrition scene, young adult agricultural opportunity, and collaborative classroom learning. All scenes are fictional AI-generated imagery depicting hopeful, modest Kenyan public-school settings, not actual SFN beneficiaries or results. Young adults alone undertake agricultural work. The page retains a clear AI disclosure.
 
-Images were generated through Higgsfield. Photo job: b2e28ed6-e835-4b45-a04b-3c89c33248b9. Illustration job: c9d73aa3-2c7c-41f7-a6d5-0338eb9ee80f. Preserve the visible AI disclosure. Scene assets are configured in src/media.ts.
+The comparison control and illustrated option have been removed. Scroll scenes, responsive layouts and saved motion preferences remain. Images, descriptive alternative text and responsive sizes live in src/media.ts. No existing repository photos are displayed.
