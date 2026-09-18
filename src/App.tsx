@@ -36,6 +36,16 @@ export default function App(){
      gsap.fromTo('.field-image',{clipPath:'inset(28% 5% 6% 5% round 90px)'},{clipPath:'inset(0% 0% 0% 0% round 0px)',ease:'none',scrollTrigger:{trigger:'.field-stage',start:'top 60%',end:'top 5%',scrub:.4}});
      gsap.to('.field-title',{opacity:0,y:-30,scrollTrigger:{trigger:'.field-stage',start:'top 35%',end:'top 5%',scrub:.4}});
     });
+    mm.add('(max-width: 767px)',()=>{
+     gsap.utils.toArray<HTMLElement>('.purpose-body p, .priorities-heading, .first-farm h2, .first-farm-copy p, .contact-top h2, .contact-copy').forEach(el=>{
+      gsap.fromTo(el,{y:48,opacity:.25},{y:0,opacity:1,ease:'none',scrollTrigger:{trigger:el,start:'top 96%',end:'top 66%',scrub:.3,invalidateOnRefresh:true}});
+     });
+     gsap.utils.toArray<HTMLElement>('.priority-card').forEach(card=>{
+      gsap.fromTo(card,{y:65,scale:.94},{y:0,scale:1,ease:'none',scrollTrigger:{trigger:card,start:'top 98%',end:'top 58%',scrub:.35,invalidateOnRefresh:true}});
+      const photo=card.querySelector('.priority-visual picture');
+      gsap.fromTo(photo,{scale:1.16,yPercent:3},{scale:1,yPercent:0,ease:'none',scrollTrigger:{trigger:photo,start:'top bottom',end:'bottom 35%',scrub:.4,invalidateOnRefresh:true}});
+     });
+    });
     mm.add('(min-width: 768px)',()=>{
      gsap.utils.toArray<HTMLElement>('.priority-card').forEach((card,i,all)=>{if(i<all.length-1)gsap.to(card,{scale:.955,filter:'brightness(.82)',ease:'none',scrollTrigger:{trigger:all[i+1],start:'top 85%',end:'top 130px',scrub:true}})});
     });
@@ -56,7 +66,7 @@ export default function App(){
      <div className="growth-object"><div className="object-tilt"><picture><source srcSet={media.hero.srcSet} sizes="100vw"/><img src={media.hero.src} width="1344" height="752" fetchPriority="high" alt={media.hero.alt}/></picture><div className="hero-shade"/></div></div>
      <div className="hero-meta"><div className="hero-footnote"><a href="#purpose" onClick={goPurpose} className="explore">See how it works <Arrow direction="down"/></a></div><div className="hero-intro"><p>{content.intro}</p><a className="text-link" href="#contact">Start a conversation <Arrow/></a></div></div>
     </section>
-    <section className="purpose" id="purpose" aria-labelledby="purpose-heading"><h2 id="purpose-heading">How it <em>works.</em></h2><div className="purpose-body"><p>{content.purpose}</p><p>{content.meals}</p><p className="safeguarding">{content.safeguarding}</p></div></section>
+    <section className="purpose" id="purpose" aria-labelledby="purpose-heading"><h2 id="purpose-heading">How it <em>works.</em></h2><div className="purpose-body"><p>{content.purpose}</p><p>{content.meals}</p></div></section>
    </div></div>
 
    <section className="priorities" aria-labelledby="priorities-heading"><div className="priorities-heading"><h2 id="priorities-heading">What the<br/><em>school gets.</em></h2></div><div className="priority-stack">{content.priorities.map((item,i)=><article className={`priority-card priority-${i}`} key={item.title}><div className="priority-copy"><h3>{item.title.split(' ').slice(0,-1).join(' ')}<br/><em>{item.title.split(' ').at(-1)}</em></h3><p>{item.text}</p><Mark/></div><div className="priority-visual"><picture><source type="image/webp" srcSet={media.priorities[i].srcSet} sizes="(max-width:767px) 100vw, 45vw"/><img src={media.priorities[i].src} alt={media.priorities[i].alt} width={media.priorities[i].width} height={media.priorities[i].height} loading="lazy"/></picture></div></article>)}</div></section>
