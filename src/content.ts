@@ -8,7 +8,7 @@ export const content = {
   meals: "That contribution goes wherever the school's meals already come from: to the organisation that feeds the pupils, or to the school's own kitchen. Either way it's spent on food, and we ask that the food is bought from local farmers who can show where it came from.",
   firstFarm: 'At Oloosirkon Primary School near Nairobi we brought 1.25 acres of unused school land into onion production, harvested four tonnes, and gave paid work to 23 women from the community.',
   lessons: 'We also learned what goes wrong: flooding, theft, and relying on a few harvests a year sold at whatever price the market offers that week. Those lessons shape the next farms: more regular production, better site planning, stronger security, and a plan to agree prices with buyers before planting.',
-  farming: 'We farm without chemical shortcuts: soil cover, compost, minimal digging.',
+  network: "The farms work as a network, not as isolated plots. We plan to share workers, equipment, routes to market and income across participating schools. Larger farms can help support meals at schools with less land, so a child's access to meals isn't limited by the size of their school's plot. Together, the farms can spread costs, combine harvests for buyers and support more children than each could alone.",
   fieldHeading: 'School days. Full of possibility.',
   prioritiesHeading: "What we're working towards.",
   priorities: [
