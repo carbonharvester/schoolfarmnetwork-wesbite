@@ -3,7 +3,7 @@ import { content } from './content';
 import { media } from './media';
 import './style.css';
 
-function Mark(){return <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="10.4" cy="9.6" r="4.2" fill="currentColor"/><g stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M4.3 17.9C9.3 14.2 22.7 14.2 27.7 17.9"/><path d="M4.3 22.6C9.3 18.9 22.7 18.9 27.7 22.6"/><path d="M4.3 27.3C9.3 23.6 22.7 23.6 27.7 27.3"/></g></svg>}
+function Mark(){return <img className="brand-symbol" src="/sfn-symbol.png" width="64" height="64" alt="" aria-hidden="true"/>}
 const Arrow=()=> <span aria-hidden="true">↗</span>;
 export default function App(){
  const scope=useRef<HTMLDivElement>(null), purposePosition=useRef<number|null>(null);

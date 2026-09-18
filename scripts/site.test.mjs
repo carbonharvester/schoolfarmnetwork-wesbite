@@ -14,6 +14,6 @@ test('Homepage anchors resolve to real sections',()=>{
 });
 test('Only approved output files ship; no legacy documents or pages',async()=>{
  const files=await readdir(new URL('../dist',import.meta.url));
- for(const file of files) assert.ok(['index.html','404.html','robots.txt','favicon.svg','assets','social-preview.png'].includes(file),file);
+ for(const file of files) assert.ok(['index.html','404.html','robots.txt','favicon.svg','favicon.png','sfn-symbol.png','assets','social-preview.png'].includes(file),file);
  assert.ok(!/funding request|export plan|meal.contribution|cost per meal|forecast|staffing ratio/i.test(html));
 });
