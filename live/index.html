@@ -83,12 +83,35 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
 .lede p+p{margin-top:18px}
 
 /* stages */
-.stages{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:auto auto 1fr;border-top:1px solid var(--line)}
-.stage{display:grid;grid-template-rows:subgrid;grid-row:span 3;align-content:start;padding:30px 24px 34px 0;border-right:1px solid var(--line)}
+.stages{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:auto auto 1fr auto;border-top:1px solid var(--line)}
+.stage{display:grid;grid-template-rows:subgrid;grid-row:span 4;align-content:start;padding:30px 24px 34px 0;border-right:1px solid var(--line)}
 .stage:last-child{border-right:0;padding-right:0}
 .stage b{justify-self:start;display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--green);color:var(--lime);font:600 11px var(--mono)}
 .stage h3{margin:20px 0 10px;font-size:21px}
 .stage p{font-size:14.5px;line-height:1.6;color:var(--muted)}
+
+/* three-up cards */
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto 1fr;border-top:1px solid var(--line);margin-top:44px}
+.cards>article{display:grid;grid-template-rows:subgrid;grid-row:span 2;align-content:start;padding:30px 30px 34px 0;border-right:1px solid var(--line)}
+.cards>article:last-child{border-right:0;padding-right:0}
+.cards h3{font-size:21px;margin-bottom:12px}
+.cards p{font-size:15px;line-height:1.6;color:var(--muted)}
+
+/* stage record lists */
+.stage ul{list-style:none;margin:20px 0 0;padding:18px 0 0;border-top:1px solid var(--line);display:grid;gap:9px;align-self:start}
+.stage li{position:relative;padding-left:18px;font-size:13.5px;line-height:1.5;color:var(--faint)}
+.stage li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:1px;background:var(--clay)}
+
+/* outcome fact pairs */
+.outcome dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px;margin:26px 0 0;padding-top:22px;border-top:1px solid var(--line);align-self:start}
+.outcome dt{font:600 10px var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--faint)}
+.outcome dd{margin:6px 0 0;font-size:14.5px;line-height:1.45;color:var(--ink)}
+
+/* purpose */
+.purpose{background:var(--bone);border-top:1px solid var(--line);padding-block:92px}
+.purpose blockquote{margin:0;max-width:26ch;font:400 clamp(28px,3.4vw,44px)/1.16 var(--display);letter-spacing:-.02em;color:var(--green)}
+.purpose .by{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;margin-top:30px;font-size:14px;color:var(--faint)}
+.purpose .by b{font:600 15.5px var(--sans);color:var(--ink)}
 
 /* chain */
 .chain{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:64px;border-top:1px solid var(--line)}
@@ -99,7 +122,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
 
 /* outcomes */
 .outcomes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
-.outcome{position:relative;overflow:hidden;background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:34px 34px 32px}
+.outcome{display:grid;grid-template-rows:subgrid;grid-row:span 3;align-content:start;position:relative;overflow:hidden;background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:34px 34px 32px}
+.outcomes{grid-auto-rows:auto 1fr auto}
 .outcome i{position:absolute;inset:0 auto 0 0;width:4px}
 .outcome h3{font-size:25px;margin-bottom:12px}
 .outcome p{font-size:15.5px;line-height:1.62;color:var(--muted);max-width:46ch}
@@ -138,6 +162,9 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
   .chain{grid-template-columns:repeat(2,minmax(0,1fr))}
   .chain>div:nth-child(2n){border-right:0}
   .chain>div:nth-child(-n+2){padding-bottom:22px;border-bottom:1px solid var(--line)}
+  .cards{grid-template-columns:1fr;grid-template-rows:none}
+  .cards>article{grid-row:auto;grid-template-rows:none;border-right:0;border-bottom:1px solid var(--line);padding:26px 0}
+  .cards>article:last-child{border-bottom:0}
   .principles{grid-template-columns:1fr}
   .principles>article{border-right:0;border-bottom:1px solid var(--line-dark);padding:26px 0}
   .closing .wrap{grid-template-columns:1fr;gap:32px;align-items:start}
@@ -156,7 +183,9 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
   .stages,.chain,.outcomes{grid-template-columns:1fr}
   .chain>div{border-right:0;border-bottom:1px solid var(--line);padding:22px 0}
   .chain>div:last-child{border-bottom:0}
-  .outcome{padding:28px 22px}
+  .outcome{padding:28px 22px;grid-row:auto;grid-template-rows:none}
+  .outcomes{grid-auto-rows:auto}
+  .outcome dl{grid-template-columns:1fr;gap:16px}
   .band img{aspect-ratio:4/3}
   .film-controls{left:20px;right:20px;justify-content:space-between}
   .closing{padding-block:72px}
@@ -224,8 +253,21 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
     </div>
     <div class="lede">
       <p>Many African schools hold land that is unused or underproductive, while their students face unreliable access to meals and the community around them needs viable work.</p>
-      <p>Agricultural projects tend to fail for the same handful of reasons: no consistent operations, no committed buyer, no financial control and no evidence that any of it worked. These are not four separate problems. They are one systems problem, and it needs one operating model.</p>
     </div>
+    <div class="cards">
+      <article><h3>The land is already there</h3><p>It is the one productive asset a school already owns, and on most sites it is growing nothing that anyone eats or sells.</p></article>
+      <article><h3>Projects fail the same way</h3><p>No consistent operations, no committed buyer, no financial control, and no evidence afterwards that any of it worked.</p></article>
+      <article><h3>It is one problem, not four</h3><p>Meals, paid work, learning and better land come from the same field, or they do not come at all.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section paper" style="padding-top:0">
+  <div class="wrap">
+    <figure class="band" style="margin:0">
+      <img src="school-land-900.jpg" alt="Crops growing on school land with classroom buildings behind" loading="lazy">
+      <figcaption>School land under cultivation, Kenya</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -239,11 +281,11 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
       <p>We operate the farms ourselves rather than handing a plan to someone else and hoping. Each stage has to be completed before the next one starts.</p>
     </div>
     <div class="stages">
-      <article class="stage"><b>01</b><h3>Assess</h3><p>Verify land, water, governance, access, security and commercial viability before anything is built.</p></article>
-      <article class="stage"><b>02</b><h3>Build</h3><p>Establish irrigation, storage, fencing, soil preparation and the infrastructure the farm will run on.</p></article>
-      <article class="stage"><b>03</b><h3>Grow</h3><p>Plan and manage crop cycles against real buyer demand and what the land and season will actually carry.</p></article>
-      <article class="stage"><b>04</b><h3>Deliver value</h3><p>Sell the produce and deliver the agreed benefit back to the school.</p></article>
-      <article class="stage"><b>05</b><h3>Measure and repeat</h3><p>Record costs, work, yields, school benefit and lessons, so that the next farm starts better than the last one did.</p></article>
+      <article class="stage"><b>01</b><h3>Assess</h3><p>Verify land, water, governance, access, security and commercial viability before anything is built.</p><ul><li>Land, water and access verified</li><li>Governance and security agreed</li><li>Commercial viability tested first</li></ul></article>
+      <article class="stage"><b>02</b><h3>Build</h3><p>Establish irrigation, storage, fencing, soil preparation and the infrastructure the farm will run on.</p><ul><li>Irrigation and water storage</li><li>Fencing, drainage and soil preparation</li><li>The infrastructure the farm runs on</li></ul></article>
+      <article class="stage"><b>03</b><h3>Grow</h3><p>Plan and manage crop cycles against real buyer demand and what the land and season will actually carry.</p><ul><li>Crop cycles planned against demand</li><li>Agronomy managed to a schedule</li><li>Field work recorded as it happens</li></ul></article>
+      <article class="stage"><b>04</b><h3>Deliver value</h3><p>Sell the produce and deliver the agreed benefit back to the school.</p><ul><li>Produce sold on agreed terms</li><li>Benefit delivered to the school</li><li>Payment reconciled to delivery</li></ul></article>
+      <article class="stage"><b>05</b><h3>Measure and repeat</h3><p>Record costs, work, yields, school benefit and lessons, so that the next farm starts better than the last one did.</p><ul><li>Costs and work recorded</li><li>Outcomes measured against a baseline</li><li>Lessons carried to the next farm</li></ul></article>
     </div>
     <div class="chain">
       <div><b>Inputs</b><p>School land, operating capital, local labour and agricultural management.</p></div>
@@ -273,10 +315,10 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
       <p>Every outcome comes from the same productive asset. They are not four disconnected programmes that happen to share a field.</p>
     </div>
     <div class="outcomes">
-      <article class="outcome"><i style="background:#0e3b2e"></i><h3>Meals</h3><p>Productive land helps fund or supply meals for the students who learn on it.</p></article>
-      <article class="outcome"><i style="background:#c2562b"></i><h3>Work</h3><p>Farms create paid local work, with an emphasis on opportunities for women in the surrounding community.</p></article>
-      <article class="outcome"><i style="background:#8aa33f"></i><h3>Learning</h3><p>Schools gain a practical agricultural learning environment on their own ground.</p></article>
-      <article class="outcome"><i style="background:#34689a"></i><h3>Future farmers</h3><p>Young people gain real operational experience and a route into agriculture as a career.</p></article>
+      <article class="outcome"><i style="background:#0e3b2e"></i><h3>Meals</h3><p>Productive land helps fund or supply meals for the students who learn on it.</p><dl><div><dt>Delivered</dt><dd>To the school that hosts the farm</dd></div><div><dt>Recorded</dt><dd>What the school received, not what was promised</dd></div></dl></article>
+      <article class="outcome"><i style="background:#c2562b"></i><h3>Work</h3><p>Farms create paid local work, with an emphasis on opportunities for women in the surrounding community.</p><dl><div><dt>Prioritised</dt><dd>Women and young people living nearby</dd></div><div><dt>Recorded</dt><dd>Who worked, for how long, and what they were paid</dd></div></dl></article>
+      <article class="outcome"><i style="background:#8aa33f"></i><h3>Learning</h3><p>Schools gain a practical agricultural learning environment on their own ground.</p><dl><div><dt>On site</dt><dd>A working farm on the school's own ground</dd></div><div><dt>Open to</dt><dd>Students, teachers and the wider community</dd></div></dl></article>
+      <article class="outcome"><i style="background:#34689a"></i><h3>Future farmers</h3><p>Young people who want to farm rarely get near a commercial operation. On a school farm they work on one.</p><dl><div><dt>Offered</dt><dd>Real operational experience, not a workshop</dd></div><div><dt>Leads to</dt><dd>A route into agriculture as a career</dd></div></dl></article>
     </div>
   </div>
 </section>
@@ -295,6 +337,13 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
       <article><h3>Measured before it is claimed</h3><p>Costs, work and outcomes are recorded as they happen. We publish what is verified and say plainly what is still being tested.</p></article>
       <article><h3>Built to repeat</h3><p>Every farm is designed so that the next one is easier — not so that the first one looks good.</p></article>
     </div>
+  </div>
+</section>
+
+<section class="purpose">
+  <div class="wrap">
+    <blockquote>A Kenyan public school can earn money for its children&rsquo;s meals from the land it already sits on.</blockquote>
+    <p class="by"><b>Matthew Benjamin</b> Founder, School Farm Network</p>
   </div>
 </section>
 
