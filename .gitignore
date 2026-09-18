@@ -1,2 +1,8 @@
-# Local Netlify folder
-.netlify
+node_modules/
+dist/
+.prerender/
+.sites-runtime/
+.netlify/
+.env
+.env.*
+*.log
