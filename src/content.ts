@@ -6,7 +6,7 @@ export const content = {
   location: 'Starting in Kenya. Building for the long term.',
   purposeHeading: 'School is a place to grow.',
   purpose: 'We believe school farms can contribute to a better future for children and the communities around them. Our focus is lasting opportunity, rooted in the places where young people learn.',
-  fieldHeading: 'Rooted in real work.',
+  fieldHeading: 'School days. Full of possibility.',
   prioritiesHeading: "What we're working towards.",
   priorities: [
     {title:'Better nutrition',text:'Helping more children access the nourishment they need to learn.'},
