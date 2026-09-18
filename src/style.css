@@ -67,3 +67,5 @@ a:focus-visible,button:focus-visible{outline:3px solid #c2562b;outline-offset:4p
 @media(max-width:359px){.hero{padding-top:235px}.priority-copy{padding-inline:22px}.contact{padding-inline:20px}.purpose{padding-inline:20px}}
 
 @media(max-width:767px){.footer-bottom .back-top{display:none}}
+
+@media(max-width:999px),(max-height:699px){.growth-object{overflow:hidden}.growth-object picture{transform-origin:66% 45%;will-change:transform}}

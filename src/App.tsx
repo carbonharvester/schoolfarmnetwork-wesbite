@@ -37,6 +37,9 @@ export default function App(){
      return()=>{purposePosition.current=null};
     });
     mm.add('(max-width: 999px), (max-height: 699px)',()=>{
+     // Keep touch scrolling natural; animate the photo independently of its entrance.
+     gsap.fromTo('.growth-object picture',{scale:1},{scale:1.12,yPercent:4,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:.35,invalidateOnRefresh:true}});
+
      gsap.from('.purpose h2',{y:40,opacity:0,duration:.9,scrollTrigger:{trigger:'.purpose',start:'top 85%',once:true}});
      gsap.fromTo('.field-image',{clipPath:'inset(28% 5% 6% 5% round 90px)'},{clipPath:'inset(0% 0% 0% 0% round 0px)',ease:'none',scrollTrigger:{trigger:'.field-stage',start:'top 60%',end:'top 5%',scrub:.4}});
      gsap.to('.field-title',{opacity:0,y:-30,scrollTrigger:{trigger:'.field-stage',start:'top 35%',end:'top 5%',scrub:.4}});
