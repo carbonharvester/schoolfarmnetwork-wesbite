@@ -34,15 +34,22 @@ export default function App(){
      gsap.fromTo('.growth-object picture',{scale:1},{scale:1.12,yPercent:4,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:.35,invalidateOnRefresh:true}});
 
      gsap.from('.purpose h2',{y:40,opacity:0,duration:.9,scrollTrigger:{trigger:'.purpose',start:'top 85%',once:true}});
-     gsap.fromTo('.field-image',{clipPath:'inset(28% 5% 6% 5% round 90px)'},{clipPath:'inset(0% 0% 0% 0% round 0px)',ease:'none',scrollTrigger:{trigger:'.field-stage',start:'top 60%',end:'top 5%',scrub:.4}});
-     gsap.to('.field-title',{opacity:0,y:-30,scrollTrigger:{trigger:'.field-stage',start:'top 35%',end:'top 5%',scrub:.4}});
+     const headerHeight=()=>document.querySelector('.header')?.getBoundingClientRect().height||72;
+     const field=gsap.timeline({scrollTrigger:{trigger:'.field-stage',start:()=>`top ${headerHeight()}px`,end:()=>'+='+Math.round(document.documentElement.clientHeight*.7),pin:true,scrub:.35,anticipatePin:1,invalidateOnRefresh:true}});
+     field.fromTo('.field-image',{clipPath:'inset(30% 12% 12% 12% round 100px)'},{clipPath:'inset(0% 0% 0% 0% round 0px)',duration:1,ease:'none'},0)
+      .to('.field-title',{opacity:0,y:-65,duration:.45,ease:'none'},.12);
     });
     mm.add('(max-width: 767px)',()=>{
      gsap.utils.toArray<HTMLElement>('.purpose-body p, .priorities-heading, .first-farm h2, .first-farm-copy p, .contact-top h2, .contact-copy').forEach(el=>{
       gsap.fromTo(el,{y:48,opacity:.25},{y:0,opacity:1,ease:'none',scrollTrigger:{trigger:el,start:'top 96%',end:'top 66%',scrub:.3,invalidateOnRefresh:true}});
      });
-     gsap.utils.toArray<HTMLElement>('.priority-card').forEach(card=>{
-      gsap.fromTo(card,{y:65,scale:.94},{y:0,scale:1,ease:'none',scrollTrigger:{trigger:card,start:'top 98%',end:'top 58%',scrub:.35,invalidateOnRefresh:true}});
+     gsap.utils.toArray<HTMLElement>('.priority-card').forEach((card,i,cards)=>{
+      // Let tall cards be read fully before holding them behind the next card.
+      const pinTop=()=>Math.min(88+i*10,document.documentElement.clientHeight-card.offsetHeight-16);
+      if(i<cards.length-1){
+       ScrollTrigger.create({trigger:card,start:()=>`top ${pinTop()}px`,endTrigger:'.priority-stack',end:'bottom bottom',pin:true,pinSpacing:false,anticipatePin:1,invalidateOnRefresh:true});
+       gsap.fromTo(card,{scale:1,filter:'brightness(1)'},{scale:.94,filter:'brightness(.85)',ease:'none',scrollTrigger:{trigger:cards[i+1],start:'top 80%',end:()=>`top ${pinTop()+24}px`,scrub:.3,invalidateOnRefresh:true}});
+      }
       const photo=card.querySelector('.priority-visual picture');
       gsap.fromTo(photo,{scale:1.16,yPercent:3},{scale:1,yPercent:0,ease:'none',scrollTrigger:{trigger:photo,start:'top bottom',end:'bottom 35%',scrub:.4,invalidateOnRefresh:true}});
      });
