@@ -2,7 +2,7 @@ export const content = {
   email: 'matthew@schoolfarmnetwork.com',
   enquirySubject: 'School Farm Network enquiry',
   headline: 'School land, funding school meals',
-  intro: "Most public schools in Kenya sit on land they can't afford to farm. We farm it, sell the harvest, and pay towards meals for the school's children.",
+  intro: "Many public schools in Kenya have unused or underused land, while millions of children go without a daily meal. For many, a school meal is the only meal they’ll eat that day. We put that land to work, sell the harvest, and contribute towards nutritious school meals.",
   purposeHeading: 'School is a place to grow.',
   purpose: "The school gives us permission to use an agreed patch of land. We bring the infrastructure, the workers and the route to market. We're paid for what the farm produces, and from that we contribute towards the school's meals for every pupil, every school day.",
   meals: "That contribution goes wherever the school's meals already come from: to the organisation that feeds the pupils, or to the school's own kitchen. Either way it's spent on food sourced from local smallholder farmers.",
