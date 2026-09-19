@@ -8,7 +8,7 @@ test('Prerendered content and metadata survive without JavaScript',()=>{
  for(const text of ['School Farm Network | School land, funding school meals','How it','School days. Full of possibility.','Meals children can rely','Paid work for','A farm to learn','Oloosirkon','School%20Farm%20Network%20enquiry']) assert.ok(visibleText.includes(text)||html.includes(text),text);
  assert.ok(html.includes('rel="canonical" href="https://schoolfarmnetwork.com/"'));
  assert.ok(!html.includes("noindex"));
- assert.ok(html.includes("https://schoolfarmnetwork.com/social-preview.png"));
+ assert.ok(html.includes("https://schoolfarmnetwork.com/sfn-symbol.png"));
 });
 test('Homepage anchors resolve to real sections',()=>{
  const ids=new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]));
