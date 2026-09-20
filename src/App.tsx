@@ -7,7 +7,7 @@ import './style.css';
 function Mark(){return <img className="brand-symbol" src="/sfn-symbol.png" width="64" height="64" alt="" aria-hidden="true"/>}
 const Arrow=({direction='diagonal'}:{direction?:'diagonal'|'down'|'up'})=> <span className={`action-icon arrow-${direction}`} aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M6 18 18 6M6 6h12v12"/></svg></span>;
 export default function App(){
- const scope=useRef<HTMLDivElement>(null), purposePosition=useRef<number|null>(null);
+ const scope=useRef<HTMLDivElement>(null);
  const [ready,setReady]=useState(false);
  const motion=true;
  useEffect(()=>{setReady(true)},[]);
@@ -22,16 +22,28 @@ export default function App(){
    const ctx=gsap.context(()=>{
     gsap.from('.hero-title span',{y:55,opacity:0,duration:1.1,stagger:.12,ease:'power3.out',clearProps:'all'});
     gsap.from('.object-tilt',{scale:1.045,duration:1.6,ease:'power3.out',clearProps:'transform'});
+    // Keep the editorial transition separate from the longer, readable explanation.
+    mm.add({wide:'(min-width: 1000px) and (min-height: 700px)',compact:'(max-width: 999px), (max-height: 699px)'},context=>{
+     const wide=!!context.conditions?.wide;
+     const headerHeight=()=>document.querySelector('.header')?.getBoundingClientRect().height||72;
+     const stage=scope.current!.querySelector<HTMLElement>('.growth-stage')!;
+     gsap.set('.growth-reveal',{visibility:'visible',opacity:0,y:50});
+     const story=gsap.timeline({scrollTrigger:{trigger:stage,start:()=>stage.offsetHeight>document.documentElement.clientHeight-headerHeight()+1?'bottom bottom':`top ${headerHeight()}px`,end:()=>'+='+Math.round(document.documentElement.clientHeight*1.35),pin:true,scrub:.6,anticipatePin:1,invalidateOnRefresh:true}});
+     story.to('.hero-title',{y:-90,opacity:0,duration:.3},0)
+      .to('.hero-meta',{y:30,autoAlpha:0,duration:.2},0)
+      .to('.growth-object',wide?{clipPath:'inset(7% 4% 7% 51% round 4px)',duration:.8,ease:'power1.inOut'}:{top:()=>stage.offsetHeight-(document.documentElement.clientHeight-headerHeight())*.43,left:'5%',width:'90%',height:()=>(document.documentElement.clientHeight-headerHeight())*.38,clipPath:'inset(0% round 4px)',duration:.8,ease:'power1.inOut'},0)
+      .to('.hero-shade',{opacity:0,duration:.4},0)
+      .to('.growth-reveal',{y:0,opacity:1,duration:.4},.4)
+      .fromTo('.growth-reveal-rule',{scaleX:0},{scaleX:1,duration:.4},.55).to({},{duration:.15});
+    });
     mm.add('(min-width: 1000px) and (min-height: 700px)',()=>{
      gsap.from('.purpose h2',{y:40,opacity:0,duration:.9,scrollTrigger:{trigger:'.purpose',start:'top 85%',once:true}});
      const field=gsap.timeline({scrollTrigger:{trigger:'.field-stage',start:'top 84px',end:()=>'+='+innerHeight*.95,pin:true,scrub:.5,invalidateOnRefresh:true}});
      field.fromTo('.field-image',{clipPath:'inset(28% 29% 12% 29% round 180px)'},{clipPath:'inset(0% 0% 0% 0% round 0px)',duration:1,ease:'none'},0)
       .to('.field-title',{y:-100,opacity:0,duration:.45},.12);
-     return()=>{purposePosition.current=null};
+
     });
     mm.add('(max-width: 999px), (max-height: 699px)',()=>{
-     // Keep touch scrolling natural; animate the photo independently of its entrance.
-     gsap.fromTo('.growth-object picture',{scale:1},{scale:1.12,yPercent:4,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:.35,invalidateOnRefresh:true}});
 
      gsap.from('.purpose h2',{y:40,opacity:0,duration:.9,scrollTrigger:{trigger:'.purpose',start:'top 85%',once:true}});
      const headerHeight=()=>document.querySelector('.header')?.getBoundingClientRect().height||72;
@@ -59,23 +71,23 @@ export default function App(){
     });
     gsap.from('.footer-wordmark span',{yPercent:105,stagger:.12,ease:'power3.out',duration:1.2,scrollTrigger:{trigger:'.footer-wordmark',start:'top 90%',once:true}});
    },scope);
-   clean=()=>{mm.revert();ctx.revert();purposePosition.current=null;};
+   clean=()=>{mm.revert();ctx.revert();};
    ScrollTrigger.refresh();
   }).catch(()=>{/* Static content stays complete. */});
   return()=>{cancelled=true;clean()};
  },[motion,ready]);
- function goPurpose(e:React.MouseEvent<HTMLAnchorElement>){if(purposePosition.current!==null){e.preventDefault();window.scrollTo({top:purposePosition.current,behavior:'smooth'});history.replaceState(null,'','#purpose')}}
  const mailto=`mailto:${content.email}?subject=${encodeURIComponent(content.enquirySubject)}`;
  return <div ref={scope} id="top" className="direction-photo"><a className="skip-link" href="#main">Skip to content</a>
-  <header className="header"><a href="#top" className="brand" aria-label="School Farm Network home"><Mark/><span>School Farm<br/>Network</span></a><nav aria-label="Main navigation"><a className="nav-link" href="#purpose" onClick={goPurpose}>How it works</a><a className="nav-link" href="#first-farm">Our first farm</a><a className="pill" href="#contact">Let's talk <Arrow/></a></nav></header>
+  <header className="header"><a href="#top" className="brand" aria-label="School Farm Network home"><Mark/><span>School Farm<br/>Network</span></a><nav aria-label="Main navigation"><a className="nav-link" href="#purpose">How it works</a><a className="nav-link" href="#first-farm">Our first farm</a><a className="pill" href="#contact">Let's talk <Arrow/></a></nav></header>
   <main id="main" tabIndex={-1}>
    <div className="growth-story"><div className="growth-stage">
     <section className="hero" aria-labelledby="hero-heading"><h1 className="hero-title" id="hero-heading"><span>School land,</span><span>funding</span><span>school meals</span></h1>
      <div className="growth-object"><div className="object-tilt"><picture><source srcSet={media.hero.srcSet} sizes="100vw"/><img src={media.hero.src} width="1344" height="752" fetchPriority="high" alt={media.hero.alt}/></picture><div className="hero-shade"/></div></div>
-     <div className="hero-meta"><div className="hero-footnote"><a href="#purpose" onClick={goPurpose} className="explore">See how it works <Arrow direction="down"/></a></div><div className="hero-intro"><p>{content.intro}</p><a className="text-link" href="#contact">Start a conversation <Arrow/></a></div></div>
+     <div className="hero-meta"><div className="hero-footnote"><a href="#purpose" className="explore">See how it works <Arrow direction="down"/></a></div><div className="hero-intro"><p>{content.intro}</p><a className="text-link" href="#contact">Start a conversation <Arrow/></a></div></div>
     </section>
-    <section className="purpose" id="purpose" aria-labelledby="purpose-heading"><h2 id="purpose-heading">How it <em>works.</em></h2><div className="purpose-body"><p>{content.purpose}</p><p>{content.meals}</p><div className="network-copy"><h3>Stronger together.</h3><p>{content.network}</p></div></div></section>
+    <div className="growth-reveal"><h2>School is a<br/>place to <em>grow.</em></h2><div className="growth-reveal-rule"/></div>
    </div></div>
+    <section className="purpose" id="purpose" aria-labelledby="purpose-heading"><h2 id="purpose-heading">How it <em>works.</em></h2><div className="purpose-body"><p>{content.purpose}</p><p>{content.meals}</p><div className="network-copy"><h3>Stronger together.</h3><p>{content.network}</p></div></div></section>
 
    <section className="priorities" aria-labelledby="priorities-heading"><div className="priorities-heading"><h2 id="priorities-heading">What the<br/><em>school gets.</em></h2></div><div className="priority-stack">{content.priorities.map((item,i)=><article className={`priority-card priority-${i}`} key={item.title}><div className="priority-copy"><h3>{i===0?<>Meals children<br/>can <span className="keep-together">rely on</span></>:item.title}</h3><p>{item.text}</p><Mark/></div><div className="priority-visual"><picture><source type="image/webp" srcSet={media.priorities[i].srcSet} sizes="(max-width:767px) 100vw, 45vw"/><img src={media.priorities[i].src} alt={media.priorities[i].alt} width={media.priorities[i].width} height={media.priorities[i].height} loading="lazy"/></picture></div></article>)}</div></section>
 

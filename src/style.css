@@ -76,3 +76,10 @@ a:focus-visible,button:focus-visible{outline:3px solid #c2562b;outline-offset:4p
 .keep-together{white-space:nowrap}.network-copy{border-top:1px solid #123c2d33;padding-top:28px;margin-top:32px}.network-copy h3{font-size:32px;margin-bottom:18px}.first-farm-visual img{margin-top:36px;aspect-ratio:3/2;object-fit:cover}.priority-copy h3{font-size:clamp(36px,4vw,64px)}@media(max-width:767px){.priority-copy h3{font-size:clamp(30px,8vw,44px)}.first-farm-visual{margin-bottom:32px}}
 @media(max-width:999px),(max-height:699px){.field-stage{height:calc(100svh - 84px);min-height:0}}
 @media(max-width:767px){.field-stage{height:calc(100svh - 72px)}.priority-stack{position:relative;isolation:isolate;padding-bottom:24px}.priority-card{transform-origin:center top;margin-bottom:40px}.priority-0{z-index:1}.priority-1{z-index:2}.priority-2{z-index:3}.priority-visual,.priority-0 .priority-visual,.priority-1 .priority-visual,.priority-2 .priority-visual{height:clamp(190px,32svh,280px);min-height:0}.field-title{top:9%;font-size:clamp(42px,10vw,76px)}}
+
+/* Restored scroll story. Full operational copy follows outside the pinned stage. */
+.growth-reveal{position:absolute;z-index:4;left:5%;width:40%;top:25%;visibility:hidden;pointer-events:none;color:var(--forest)}
+.growth-reveal h2{font-size:clamp(60px,6.5vw,105px)}
+.growth-reveal-rule{height:1px;background:#123c2d44;width:100%;margin-top:34px;transform-origin:left}
+@media(max-width:999px),(max-height:699px){.growth-reveal{top:auto;bottom:calc((100svh - 84px)*.52);left:6%;width:88%}.growth-reveal h2{font-size:clamp(40px,min(8vw,10svh),76px)}.growth-reveal-rule{margin-top:22px;max-width:420px}}
+@media(max-width:767px){.growth-reveal{bottom:calc((100svh - 72px)*.52)}.growth-reveal h2{font-size:clamp(40px,min(12vw,10svh),72px)}}
