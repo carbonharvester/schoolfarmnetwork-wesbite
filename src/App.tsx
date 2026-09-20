@@ -3,6 +3,7 @@ import { content } from './content';
 import { media } from './media';
 import pilotPhoto from '../assets/img/pilot-site-900.jpg';
 import './style.css';
+import IllustratedNetwork from './IllustratedNetwork';
 
 function Mark(){return <img className="brand-symbol" src="/sfn-symbol.png" width="64" height="64" alt="" aria-hidden="true"/>}
 const Arrow=({direction='diagonal'}:{direction?:'diagonal'|'down'|'up'})=> <span className={`action-icon arrow-${direction}`} aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M6 18 18 6M6 6h12v12"/></svg></span>;
@@ -37,22 +38,19 @@ export default function App(){
       .fromTo('.growth-reveal-rule',{scaleX:0},{scaleX:1,duration:.4},.55).to({},{duration:.15});
     });
     mm.add('(min-width: 1000px) and (min-height: 700px)',()=>{
-     gsap.from('.purpose h2',{y:40,opacity:0,duration:.9,scrollTrigger:{trigger:'.purpose',start:'top 85%',once:true}});
      const field=gsap.timeline({scrollTrigger:{trigger:'.field-stage',start:'top 84px',end:()=>'+='+innerHeight*.95,pin:true,scrub:.5,invalidateOnRefresh:true}});
      field.fromTo('.field-image',{clipPath:'inset(28% 29% 12% 29% round 180px)'},{clipPath:'inset(0% 0% 0% 0% round 0px)',duration:1,ease:'none'},0)
       .to('.field-title',{y:-100,opacity:0,duration:.45},.12);
 
     });
     mm.add('(max-width: 999px), (max-height: 699px)',()=>{
-
-     gsap.from('.purpose h2',{y:40,opacity:0,duration:.9,scrollTrigger:{trigger:'.purpose',start:'top 85%',once:true}});
      const headerHeight=()=>document.querySelector('.header')?.getBoundingClientRect().height||72;
      const field=gsap.timeline({scrollTrigger:{trigger:'.field-stage',start:()=>`top ${headerHeight()}px`,end:()=>'+='+Math.round(document.documentElement.clientHeight*.7),pin:true,scrub:.35,anticipatePin:1,invalidateOnRefresh:true}});
      field.fromTo('.field-image',{clipPath:'inset(30% 12% 12% 12% round 100px)'},{clipPath:'inset(0% 0% 0% 0% round 0px)',duration:1,ease:'none'},0)
       .to('.field-title',{opacity:0,y:-65,duration:.45,ease:'none'},.12);
     });
     mm.add('(max-width: 767px)',()=>{
-     gsap.utils.toArray<HTMLElement>('.purpose-body p, .priorities-heading, .first-farm h2, .first-farm-copy p, .contact-top h2, .contact-copy').forEach(el=>{
+     gsap.utils.toArray<HTMLElement>('.priorities-heading, .first-farm h2, .first-farm-copy p, .contact-top h2, .contact-copy').forEach(el=>{
       gsap.fromTo(el,{y:48,opacity:.25},{y:0,opacity:1,ease:'none',scrollTrigger:{trigger:el,start:'top 96%',end:'top 66%',scrub:.3,invalidateOnRefresh:true}});
      });
      gsap.utils.toArray<HTMLElement>('.priority-card').forEach((card,i,cards)=>{
@@ -72,6 +70,7 @@ export default function App(){
     gsap.from('.footer-wordmark span',{yPercent:105,stagger:.12,ease:'power3.out',duration:1.2,scrollTrigger:{trigger:'.footer-wordmark',start:'top 90%',once:true}});
    },scope);
    clean=()=>{mm.revert();ctx.revert();};
+   ScrollTrigger.sort();
    ScrollTrigger.refresh();
   }).catch(()=>{/* Static content stays complete. */});
   return()=>{cancelled=true;clean()};
@@ -87,7 +86,7 @@ export default function App(){
     </section>
     <div className="growth-reveal"><h2>School is a<br/>place to <em>grow.</em></h2><div className="growth-reveal-rule"/><p>We believe school farms can contribute to a better future for children and the communities around them. Our focus is lasting opportunity, rooted in the places where young people learn.</p><a href="#field" className="text-link">Explore the vision <Arrow direction="down"/></a></div>
    </div></div>
-    <section className="purpose" id="purpose" aria-labelledby="purpose-heading"><h2 id="purpose-heading">How it <em>works.</em></h2><div className="purpose-body"><p>{content.purpose}</p><p>{content.meals}</p><div className="network-copy"><h3>Stronger together.</h3><p>{content.network}</p></div></div></section>
+    <IllustratedNetwork variant="clusters" production/>
 
    <section className="priorities" aria-labelledby="priorities-heading"><div className="priorities-heading"><h2 id="priorities-heading">What the<br/><em>school gets.</em></h2></div><div className="priority-stack">{content.priorities.map((item,i)=><article className={`priority-card priority-${i}`} key={item.title}><div className="priority-copy"><h3>{i===0?<>Meals children<br/>can <span className="keep-together">rely on</span></>:item.title}</h3><p>{item.text}</p><Mark/></div><div className="priority-visual"><picture><source type="image/webp" srcSet={media.priorities[i].srcSet} sizes="(max-width:767px) 100vw, 45vw"/><img src={media.priorities[i].src} alt={media.priorities[i].alt} width={media.priorities[i].width} height={media.priorities[i].height} loading="lazy"/></picture></div></article>)}</div></section>
 
