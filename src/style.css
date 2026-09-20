@@ -87,24 +87,3 @@ a:focus-visible,button:focus-visible{outline:3px solid #c2562b;outline-offset:4p
 .growth-reveal{top:15%;pointer-events:auto}.growth-reveal p{font-size:19px;line-height:1.6;margin-top:26px;max-width:38ch}
 @media(max-width:999px),(max-height:699px){.growth-reveal{top:auto;bottom:calc((100svh - 84px)*.33)}.growth-reveal h2{font-size:clamp(36px,min(10vw,7svh),60px)}.growth-reveal p{font-size:16px;line-height:1.45;margin-top:16px;max-width:52ch}.growth-reveal-rule{margin-top:18px}.growth-reveal .text-link{margin-top:16px}}
 @media(max-width:767px){.growth-reveal{bottom:calc((100svh - 72px)*.33)}}
-.purpose.how-section{display:block;padding:110px 5% 65px;border-top:1px solid #123c2d22}
-.how-section>h2{margin-bottom:70px}
-.how-story{display:grid;grid-template-columns:45% 55%;align-items:start;position:relative}
-.how-step{min-height:70svh;display:flex;align-items:center;padding:60px 12% 60px 0}
-.how-copy h3{font-size:clamp(42px,4.5vw,70px);line-height:1.04;letter-spacing:-.055em}
-.how-copy h3 em{display:block}
-.how-section .how-copy p{font-size:19px;line-height:1.6;margin:28px 0 0;max-width:34ch}
-.how-section .how-copy .how-network-note{font-size:16px;max-width:38ch;border-left:2px solid var(--forest);padding-left:18px;margin-top:24px}
-.how-desktop{position:sticky;top:calc(84px + 6svh);display:grid;align-items:center;height:calc(88svh - 84px)}
-.how-scene{width:100%;max-height:100%;color:var(--forest);overflow:visible;transform-origin:center}
-.how-desktop .how-scene{grid-area:1/1}
-.how-desktop .how-scene:not(:first-child){opacity:0}
-.how-scene text{font:19px Geist,Arial,sans-serif;letter-spacing:-.02em;text-anchor:middle;fill:currentColor}
-.how-scene text[fill="#f7f5ef"]{fill:var(--paper)}.how-scene text[fill="#d7e96b"]{fill:var(--lime)}
-.how-scene .small-label{font-size:16px}
-.how-mobile{display:none}
-.how-detail{border-top:1px solid #123c2d44;border-bottom:1px solid #123c2d44;margin-top:45px}
-.how-detail summary{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:25px 0;cursor:pointer;list-style:none;font-size:22px;letter-spacing:-.025em}
-.how-detail summary::-webkit-details-marker{display:none}.how-detail summary:focus-visible{outline:3px solid #c2562b;outline-offset:5px}.how-detail summary span{font-size:28px;transition:transform .25s}.how-detail[open] summary span{transform:rotate(45deg)}
-.how-detail-body{display:grid;grid-template-columns:1fr 1fr;gap:28px 8%;padding:15px 0 40px}.how-detail-body>div{grid-column:1/-1;max-width:850px}.how-detail-body h3{font-size:30px;margin-bottom:20px}.how-section .how-detail-body p{max-width:none;margin:0;font-size:17px}
-@media(max-width:899px){.purpose.how-section{padding:70px 22px 40px}.how-section>h2{margin-bottom:45px}.how-story{display:block}.how-desktop{display:none}.how-step{display:block;min-height:0;padding:30px 0 65px}.how-copy h3{font-size:clamp(38px,8.5vw,66px);max-width:15ch}.how-section .how-copy p{font-size:17px;max-width:40ch;margin-top:24px}.how-mobile{display:block;margin:25px -8px 0}.how-scene{display:block;max-width:600px;margin:auto}.how-detail{margin-top:0}.how-detail summary{font-size:18px}.how-detail-body{display:block}.how-section .how-detail-body p{margin-bottom:24px}.how-detail-body h3{margin-top:35px}}
