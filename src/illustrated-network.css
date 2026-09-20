@@ -8,3 +8,18 @@
 @media(max-width:767px){.variant-clusters .abstract-stage{gap:6px}.variant-clusters .abstract-text{display:contents}.variant-clusters .abstract-visual{order:2;padding-right:0}.variant-clusters .abstract-nav{order:3}.network-options{max-width:calc(100% - 20px);gap:1px}.network-options button{min-width:0!important;padding:9px 10px!important;font-size:12px!important}.variant-rings .abstract-visual{max-width:290px}}
 
 .abstract-copy[aria-hidden="true"]{visibility:hidden}
+
+/* Keep the full story inside the viewport below the mobile header. */
+@media(max-width:767px){
+ .abstract-stage,.variant-clusters .abstract-stage{height:calc(100svh - 72px);min-height:0;padding:18px 20px;display:grid;grid-template-columns:1fr;grid-template-rows:auto auto minmax(0,1fr) auto;gap:10px}
+ .abstract-title{grid-row:1;font-size:30px}
+ .abstract-copies{grid-row:2;min-height:0;margin:2px 0 0;max-width:none}
+ .abstract-copy :is(h2,h3){font-size:28px;max-width:none}
+ .abstract-copy p{margin-top:12px}
+ .abstract-visual,.variant-clusters .abstract-visual{grid-row:3;order:0;min-height:0;height:100%;max-width:none;margin:0;display:flex;flex-direction:column;align-items:center}
+ .abstract-visual svg{min-height:0;flex:1;width:100%}
+ .abstract-key{flex-shrink:0;font-size:11px;gap:16px;min-height:20px}
+ .abstract-nav,.variant-clusters .abstract-nav{grid-row:4;order:0;margin:0;max-width:none}
+ .abstract-nav button{min-height:44px;font-size:13px;opacity:.72}
+ .abstract-nav button[aria-current]{opacity:1}
+}

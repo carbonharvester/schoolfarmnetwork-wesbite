@@ -28,9 +28,8 @@ export default function IllustratedNetwork({variant='constellation',production=f
   gsap.set('.network-satellite,.community-node',{autoAlpha:0,scale:.15,transformOrigin:'center',transformBox:'fill-box'});
   gsap.set('.orbit-guide',{autoAlpha:0,scale:.2,transformOrigin:'300px 300px'});
   gsap.set('.abstract-edge',{strokeDasharray:1,strokeDashoffset:1,autoAlpha:0});gsap.set('.community-key,.network-pulses',{autoAlpha:0});
-  const copies=gsap.utils.toArray<HTMLElement>('.abstract-copy');gsap.set(copies.slice(1),{autoAlpha:0,y:20});
   const stage=root.current!.querySelector<HTMLElement>('.abstract-stage')!;
-  const tl=gsap.timeline({scrollTrigger:{trigger:stage,start:()=>stage.offsetHeight>innerHeight-(innerWidth<768?72:84)?'bottom bottom':`top ${innerWidth<768?72:84}px`,end:()=>'+='+innerHeight*(innerWidth<768?4.5:3.8),pin:true,pinType:'transform',scrub:.7,invalidateOnRefresh:true},onUpdate:()=>{const next=tl.time()<.24?0:tl.time()<.5?1:tl.time()<.76?2:3;if(next!==phase){phase=next;setActive(next);playback()}}});
+  const tl=gsap.timeline({scrollTrigger:{trigger:stage,start:()=>`top ${document.querySelector('.header')?.getBoundingClientRect().height||(innerWidth<768?72:84)}px`,end:()=>'+='+innerHeight*(innerWidth<768?4.5:3.8),pin:true,pinType:'transform',scrub:.7,invalidateOnRefresh:true},onUpdate:()=>{const next=tl.time()<.24?0:tl.time()<.5?1:tl.time()<.76?2:3;if(next!==phase){phase=next;setActive(next);playback()}}});
   tl.to('.network-satellite',{autoAlpha:1,scale:1,duration:.22,stagger:.016,ease:'power2.out'},.05)
   .to('.orbit-guide',{autoAlpha:1,scale:1,duration:.5,stagger:.08},.1)
   .to('.anchor-label',{autoAlpha:0,duration:.15},.2)
@@ -39,7 +38,6 @@ export default function IllustratedNetwork({variant='constellation',production=f
   .to('.community-node,.community-key',{autoAlpha:1,scale:1,duration:.2,stagger:.025},.76)
   .to('.community-edge',{autoAlpha:1,strokeDashoffset:0,duration:.22,stagger:.03},.78)
   .to({},{duration:.12});
-  [1,2,3].forEach(i=>{const at=[0,.24,.5,.76][i];tl.to(copies[i-1],{autoAlpha:0,y:-14,duration:.08},at-.08).to(copies[i],{autoAlpha:1,y:0,duration:.1},at)});
   root.current!.querySelectorAll<SVGCircleElement>('.travelling-pulse').forEach((dot,i)=>{const path=root.current!.querySelectorAll<SVGPathElement>('.school-edge')[i];const length=path.getTotalLength();const progress={p:0};pulseTweens.push(gsap.to(progress,{p:1,duration:5+i*.4,delay:i*.5,repeat:-1,ease:'none',paused:true,onUpdate:()=>{const point=path.getPointAtLength(progress.p*length);dot.setAttribute('cx',String(point.x));dot.setAttribute('cy',String(point.y))}}))});
   jump.current=n=>{const t=tl.scrollTrigger!;window.scrollTo({top:t.start+(t.end-t.start)*[0,.4,.63,1][n],behavior:'smooth'})};
   observer=new IntersectionObserver(([e])=>{visible=e.isIntersecting;playback()});observer.observe(stage);document.addEventListener('visibilitychange',playback);ScrollTrigger.refresh();

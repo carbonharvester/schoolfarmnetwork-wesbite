@@ -87,3 +87,11 @@ a:focus-visible,button:focus-visible{outline:3px solid #c2562b;outline-offset:4p
 .growth-reveal{top:15%;pointer-events:auto}.growth-reveal p{font-size:19px;line-height:1.6;margin-top:26px;max-width:38ch}
 @media(max-width:999px),(max-height:699px){.growth-reveal{top:auto;bottom:calc((100svh - 84px)*.33)}.growth-reveal h2{font-size:clamp(36px,min(10vw,7svh),60px)}.growth-reveal p{font-size:16px;line-height:1.45;margin-top:16px;max-width:52ch}.growth-reveal-rule{margin-top:18px}.growth-reveal .text-link{margin-top:16px}}
 @media(max-width:767px){.growth-reveal{bottom:calc((100svh - 72px)*.33)}}
+
+/* Leave room for the hero action within Safari's shorter visible viewport. */
+@media(max-width:767px){
+ .hero{padding:clamp(56px,12svh,105px) 22px 24px;gap:20px}
+ .hero-meta{gap:14px}
+ .hero-intro{line-height:1.45}
+ .hero-footnote .explore{margin-top:0}
+}

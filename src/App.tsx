@@ -29,7 +29,7 @@ export default function App(){
      const headerHeight=()=>document.querySelector('.header')?.getBoundingClientRect().height||72;
      const stage=scope.current!.querySelector<HTMLElement>('.growth-stage')!;
      gsap.set('.growth-reveal',{autoAlpha:0,y:50});
-     const story=gsap.timeline({scrollTrigger:{trigger:stage,start:()=>stage.offsetHeight>document.documentElement.clientHeight-headerHeight()+1?'bottom bottom':`top ${headerHeight()}px`,end:()=>'+='+Math.round(document.documentElement.clientHeight*1.35),pin:true,scrub:.6,anticipatePin:1,invalidateOnRefresh:true}});
+     const story=gsap.timeline({scrollTrigger:{trigger:stage,start:()=>stage.offsetHeight>document.documentElement.clientHeight-headerHeight()+1?'bottom bottom':`top ${headerHeight()}px`,end:()=>'+='+Math.round(document.documentElement.clientHeight*1.35),pin:true,pinType:wide?'fixed':'transform',scrub:.6,anticipatePin:wide?1:0,invalidateOnRefresh:true}});
      story.to('.hero-title',{y:-90,opacity:0,duration:.3},0)
       .to('.hero-meta',{y:30,autoAlpha:0,duration:.2},0)
       .to('.growth-object',wide?{clipPath:'inset(7% 4% 7% 51% round 4px)',duration:.8,ease:'power1.inOut'}:{top:()=>stage.offsetHeight-(document.documentElement.clientHeight-headerHeight())*.29,left:'5%',width:'90%',height:()=>(document.documentElement.clientHeight-headerHeight())*.25,clipPath:'inset(0% round 4px)',duration:.8,ease:'power1.inOut'},0)
