@@ -3,6 +3,7 @@ import { content } from './content';
 import { media } from './media';
 import pilotPhoto from '../assets/img/pilot-site-900.jpg';
 import './style.css';
+import HowItWorks from './HowItWorks';
 
 function Mark(){return <img className="brand-symbol" src="/sfn-symbol.png" width="64" height="64" alt="" aria-hidden="true"/>}
 const Arrow=({direction='diagonal'}:{direction?:'diagonal'|'down'|'up'})=> <span className={`action-icon arrow-${direction}`} aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M6 18 18 6M6 6h12v12"/></svg></span>;
@@ -87,7 +88,7 @@ export default function App(){
     </section>
     <div className="growth-reveal"><h2>School is a<br/>place to <em>grow.</em></h2><div className="growth-reveal-rule"/><p>We believe school farms can contribute to a better future for children and the communities around them. Our focus is lasting opportunity, rooted in the places where young people learn.</p><a href="#field" className="text-link">Explore the vision <Arrow direction="down"/></a></div>
    </div></div>
-    <section className="purpose" id="purpose" aria-labelledby="purpose-heading"><h2 id="purpose-heading">How it <em>works.</em></h2><div className="purpose-body"><p>{content.purpose}</p><p>{content.meals}</p><div className="network-copy"><h3>Stronger together.</h3><p>{content.network}</p></div></div></section>
+    <HowItWorks/>
 
    <section className="priorities" aria-labelledby="priorities-heading"><div className="priorities-heading"><h2 id="priorities-heading">What the<br/><em>school gets.</em></h2></div><div className="priority-stack">{content.priorities.map((item,i)=><article className={`priority-card priority-${i}`} key={item.title}><div className="priority-copy"><h3>{i===0?<>Meals children<br/>can <span className="keep-together">rely on</span></>:item.title}</h3><p>{item.text}</p><Mark/></div><div className="priority-visual"><picture><source type="image/webp" srcSet={media.priorities[i].srcSet} sizes="(max-width:767px) 100vw, 45vw"/><img src={media.priorities[i].src} alt={media.priorities[i].alt} width={media.priorities[i].width} height={media.priorities[i].height} loading="lazy"/></picture></div></article>)}</div></section>
 
