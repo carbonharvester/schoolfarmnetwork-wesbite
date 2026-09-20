@@ -27,13 +27,13 @@ export default function App(){
      const wide=!!context.conditions?.wide;
      const headerHeight=()=>document.querySelector('.header')?.getBoundingClientRect().height||72;
      const stage=scope.current!.querySelector<HTMLElement>('.growth-stage')!;
-     gsap.set('.growth-reveal',{visibility:'visible',opacity:0,y:50});
+     gsap.set('.growth-reveal',{autoAlpha:0,y:50});
      const story=gsap.timeline({scrollTrigger:{trigger:stage,start:()=>stage.offsetHeight>document.documentElement.clientHeight-headerHeight()+1?'bottom bottom':`top ${headerHeight()}px`,end:()=>'+='+Math.round(document.documentElement.clientHeight*1.35),pin:true,scrub:.6,anticipatePin:1,invalidateOnRefresh:true}});
      story.to('.hero-title',{y:-90,opacity:0,duration:.3},0)
       .to('.hero-meta',{y:30,autoAlpha:0,duration:.2},0)
-      .to('.growth-object',wide?{clipPath:'inset(7% 4% 7% 51% round 4px)',duration:.8,ease:'power1.inOut'}:{top:()=>stage.offsetHeight-(document.documentElement.clientHeight-headerHeight())*.43,left:'5%',width:'90%',height:()=>(document.documentElement.clientHeight-headerHeight())*.38,clipPath:'inset(0% round 4px)',duration:.8,ease:'power1.inOut'},0)
+      .to('.growth-object',wide?{clipPath:'inset(7% 4% 7% 51% round 4px)',duration:.8,ease:'power1.inOut'}:{top:()=>stage.offsetHeight-(document.documentElement.clientHeight-headerHeight())*.29,left:'5%',width:'90%',height:()=>(document.documentElement.clientHeight-headerHeight())*.25,clipPath:'inset(0% round 4px)',duration:.8,ease:'power1.inOut'},0)
       .to('.hero-shade',{opacity:0,duration:.4},0)
-      .to('.growth-reveal',{y:0,opacity:1,duration:.4},.4)
+      .to('.growth-reveal',{y:0,autoAlpha:1,duration:.4},.4)
       .fromTo('.growth-reveal-rule',{scaleX:0},{scaleX:1,duration:.4},.55).to({},{duration:.15});
     });
     mm.add('(min-width: 1000px) and (min-height: 700px)',()=>{
@@ -85,7 +85,7 @@ export default function App(){
      <div className="growth-object"><div className="object-tilt"><picture><source srcSet={media.hero.srcSet} sizes="100vw"/><img src={media.hero.src} width="1344" height="752" fetchPriority="high" alt={media.hero.alt}/></picture><div className="hero-shade"/></div></div>
      <div className="hero-meta"><div className="hero-footnote"><a href="#purpose" className="explore">See how it works <Arrow direction="down"/></a></div><div className="hero-intro"><p>{content.intro}</p><a className="text-link" href="#contact">Start a conversation <Arrow/></a></div></div>
     </section>
-    <div className="growth-reveal"><h2>School is a<br/>place to <em>grow.</em></h2><div className="growth-reveal-rule"/></div>
+    <div className="growth-reveal"><h2>School is a<br/>place to <em>grow.</em></h2><div className="growth-reveal-rule"/><p>We believe school farms can contribute to a better future for children and the communities around them. Our focus is lasting opportunity, rooted in the places where young people learn.</p><a href="#field" className="text-link">Explore the vision <Arrow direction="down"/></a></div>
    </div></div>
     <section className="purpose" id="purpose" aria-labelledby="purpose-heading"><h2 id="purpose-heading">How it <em>works.</em></h2><div className="purpose-body"><p>{content.purpose}</p><p>{content.meals}</p><div className="network-copy"><h3>Stronger together.</h3><p>{content.network}</p></div></div></section>
 
