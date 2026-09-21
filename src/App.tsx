@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { content } from './content';
 import { media } from './media';
-import pilotPhoto from '../assets/img/pilot-site-900.jpg';
+const pilotPhoto = 'https://res.cloudinary.com/dng12bd0a/image/upload/f_auto,q_auto,w_1600/v1790022131/DJI_20260915221906_0297_D_crzzjj.jpg';
 import './style.css';
 import IllustratedNetwork from './AfricaNetwork';
 
@@ -90,7 +90,7 @@ export default function App(){
 
    <section className="priorities" aria-labelledby="priorities-heading"><div className="priorities-heading"><h2 id="priorities-heading">What the<br/><em>school gets.</em></h2></div><div className="priority-stack">{content.priorities.map((item,i)=><article className={`priority-card priority-${i}`} key={item.title}><div className="priority-copy"><h3>{i===0?<>Meals children<br/>can <span className="keep-together">rely on</span></>:item.title}</h3><p>{item.text}</p><Mark/></div><div className="priority-visual"><picture><source type="image/webp" srcSet={media.priorities[i].srcSet} sizes="(max-width:767px) 100vw, 45vw"/><img src={media.priorities[i].src} alt={media.priorities[i].alt} width={media.priorities[i].width} height={media.priorities[i].height} loading="lazy"/></picture></div></article>)}</div></section>
 
-   <section className="first-farm" id="first-farm" aria-labelledby="first-farm-heading"><div className="first-farm-visual"><h2 id="first-farm-heading">Our <em>first farm.</em></h2><img src={pilotPhoto} width="900" height="600" loading="lazy" alt="The original school farm under cultivation, with classrooms and water tanks behind the field."/></div><div className="first-farm-copy"><p>{content.firstFarm}</p><p>{content.lessons}</p></div></section>
+   <section className="first-farm" id="first-farm" aria-labelledby="first-farm-heading"><div className="first-farm-visual"><h2 id="first-farm-heading">Our <em>first farm.</em></h2><img src={pilotPhoto} width="1600" height="900" loading="lazy" alt="Aerial view of cultivated school farmland at Oloosirkon Primary School, beside the school grounds and surrounding community."/></div><div className="first-farm-copy"><p>{content.firstFarm}</p><p>{content.lessons}</p></div></section>
    <section className="field" id="field" aria-labelledby="field-heading"><div className="field-stage"><h2 className="field-title" id="field-heading">School days.<br/><em>Full of possibility.</em></h2><figure className="field-image"><picture><source type="image/webp" srcSet={media.school.srcSet} sizes="100vw"/><img src={media.school.src} alt={media.school.alt} width="1344" height="752" loading="lazy"/></picture></figure></div></section>
   </main>
   <footer className="contact" id="contact"><div className="contact-top"><h2>Let's grow<br/>something<br/><em>that lasts.</em></h2><div className="contact-copy"><p>{content.contact}</p><a className="pill pill-lime" href={mailto}>Start a conversation <Arrow/></a></div></div><div className="footer-wordmark" aria-hidden="true"><span>School Farm</span><span>Network<sup>●</sup></span></div><div className="footer-bottom"><p>School Farm Network · Nairobi, Kenya</p><p>© 2026</p></div></footer>
