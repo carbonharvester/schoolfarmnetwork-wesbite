@@ -28,14 +28,26 @@ export default function App(){
      const wide=!!context.conditions?.wide;
      const headerHeight=()=>document.querySelector('.header')?.getBoundingClientRect().height||72;
      const stage=scope.current!.querySelector<HTMLElement>('.growth-stage')!;
+     const wrapper=stage.parentElement!;
+     // Use the same stable small viewport as the CSS, not Safari's changing
+     // layout viewport when its address bar opens/closes during a swipe.
+     const availableHeight=()=>parseFloat(getComputedStyle(stage.querySelector('.hero')!).minHeight);
+     const updateSticky=()=>{
+      if(wide)return;
+      const available=availableHeight();
+      wrapper.style.height=`${stage.offsetHeight+available*1.35}px`;
+      stage.style.top=`${headerHeight()-Math.max(0,stage.offsetHeight-available)}px`;
+     };
+     if(!wide){wrapper.classList.add('growth-story-sticky');updateSticky();}
      gsap.set('.growth-reveal',{autoAlpha:0,y:50});
-     const story=gsap.timeline({scrollTrigger:{trigger:stage,start:()=>stage.offsetHeight>document.documentElement.clientHeight-headerHeight()+1?'bottom bottom':`top ${headerHeight()}px`,end:()=>'+='+Math.round(document.documentElement.clientHeight*1.35),pin:true,pinType:wide?'fixed':'transform',scrub:.6,anticipatePin:wide?1:0,invalidateOnRefresh:true}});
+     const story=gsap.timeline({scrollTrigger:{trigger:wide?stage:wrapper,start:()=>wide?(stage.offsetHeight>document.documentElement.clientHeight-headerHeight()+1?'bottom bottom':`top ${headerHeight()}px`):`top ${headerHeight()-Math.max(0,stage.offsetHeight-availableHeight())}px`,end:()=>'+='+Math.round((wide?document.documentElement.clientHeight:availableHeight())*1.35),pin:wide,pinType:'fixed',scrub:wide?.6:true,anticipatePin:wide?1:0,invalidateOnRefresh:true,onRefreshInit:updateSticky}});
      story.to('.hero-title',{y:-90,opacity:0,duration:.3},0)
       .to('.hero-meta',{y:30,autoAlpha:0,duration:.2},0)
-      .to('.growth-object',wide?{clipPath:'inset(7% 4% 7% 51% round 4px)',duration:.8,ease:'power1.inOut'}:{top:()=>stage.offsetHeight-(document.documentElement.clientHeight-headerHeight())*.29,left:'5%',width:'90%',height:()=>(document.documentElement.clientHeight-headerHeight())*.25,clipPath:'inset(0% round 4px)',duration:.8,ease:'power1.inOut'},0)
+      .to('.growth-object',wide?{clipPath:'inset(7% 4% 7% 51% round 4px)',duration:.8,ease:'power1.inOut'}:{top:()=>stage.offsetHeight-availableHeight()*.29,left:'5%',width:'90%',height:()=>availableHeight()*.25,clipPath:'inset(0% round 4px)',duration:.6,ease:'none'},0)
       .to('.hero-shade',{opacity:0,duration:.4},0)
-      .to('.growth-reveal',{y:0,autoAlpha:1,duration:.4},.4)
-      .fromTo('.growth-reveal-rule',{scaleX:0},{scaleX:1,duration:.4},.55).to({},{duration:.15});
+      .to('.growth-reveal',{y:0,autoAlpha:1,duration:.4},wide?.4:.6)
+      .fromTo('.growth-reveal-rule',{scaleX:0},{scaleX:1,duration:.4},wide?.55:.7).to({},{duration:.15});
+     return()=>{wrapper.classList.remove('growth-story-sticky');wrapper.style.removeProperty('height');stage.style.removeProperty('top');};
     });
     mm.add('(min-width: 1000px) and (min-height: 700px)',()=>{
      const field=gsap.timeline({scrollTrigger:{trigger:'.field-stage',start:'top 84px',end:()=>'+='+innerHeight*.95,pin:true,scrub:.5,invalidateOnRefresh:true}});
