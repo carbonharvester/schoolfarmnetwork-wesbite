@@ -96,7 +96,7 @@ export default function App(){
      <div className="growth-object"><div className="object-tilt"><picture><source srcSet={media.hero.srcSet} sizes="100vw"/><img src={media.hero.src} width="1344" height="752" fetchPriority="high" alt={media.hero.alt}/></picture><div className="hero-shade"/></div></div>
      <div className="hero-meta"><div className="hero-footnote"><a href="#purpose" className="explore">See how it works <Arrow direction="down"/></a></div><div className="hero-intro"><p>{content.intro}</p><a className="text-link" href="#contact">Start a conversation <Arrow/></a></div></div>
     </section>
-    <div className="growth-reveal"><h2>School is a<br/>place to <em>grow.</em></h2><div className="growth-reveal-rule"/><p>We believe school farms can contribute to a better future for children and the communities around them. Our focus is lasting opportunity, rooted in the places where young people learn.</p><a href="#field" className="text-link">Explore the vision <Arrow direction="down"/></a></div>
+    <div className="growth-reveal"><h2>School is a<br/>place to <em>grow.</em></h2><div className="growth-reveal-rule"/><p>We believe school farms can contribute to a better future for children and the communities around them. Our focus is lasting opportunity, rooted in the places where young people learn.</p><a href="#purpose" className="text-link">See how it works <Arrow direction="down"/></a></div>
    </div></div>
     <IllustratedNetwork/>
 
