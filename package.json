@@ -19,6 +19,7 @@
   "devDependencies": {
     "@fontsource-variable/fraunces": "^5.2.8",
     "@fontsource-variable/geist": "^5.2.8",
+    "@netlify/edge-functions": "^4.0.2",
     "@netlify/plugin-lighthouse": "^6.0.4",
     "@tailwindcss/vite": "^4.1.13",
     "@types/react": "^19.1.13",
